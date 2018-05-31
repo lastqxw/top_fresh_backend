@@ -168,6 +168,17 @@ export const appRouter = [
 
         ]
     },
+    {
+        path: '/order',
+        icon: 'android-checkbox',
+        name: 'order',
+        title: '订单管理',
+        component: Main,
+        children: [
+            { path: 'ordermanagement', title: '订单管理', name: 'ordermanagement', icon: 'compose', component: () => import('@/views/order/ordermanagement/ordermanagement.vue') },
+            { path: 'orderawait', title: '待配送订单', name: 'orderawait', icon: 'compose', component: () => import('@/views/order/orderawait/orderawait.vue') },
+        ]
+	},
 ];
 
 // 所有上面定义的路由都要写在下面的routers里
