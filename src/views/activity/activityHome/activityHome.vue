@@ -5,19 +5,18 @@
     <div>
         <Row>
             <Card>
-                <span>订单号：</span>
-                <Input v-model="value" placeholder="请输入商品名称" clearable style="width: 200px"></Input>
+                <span>活动名称：</span>
+                <Input v-model="value" placeholder="请输入" clearable style="width: 200px"></Input>
                 <span class="margin-left-10">类型：</span>
                 <Select v-model="model1" style="width:200px">
                     <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                 </Select>
                 <span class="margin-left-10">状态：</span>
-                <Select v-model="model1" style="width:200px">
-                    <Option v-for="item in statusList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                <Select v-model="model2" style="width:200px">
+                    <Option v-for="item in objectList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                 </Select>
-                <span class="margin-left-10">时间范围：</span>
-                <DatePicker type="daterange" placement="bottom-end" placeholder="选择时间" style="width: 200px"></DatePicker>
-                <Button class="margin-left-10" type="success" icon="android-add">查找</Button>
+                <Button class="margin-left-10" type="primary" icon="ios-search">查找</Button>
+                <Button class="margin-left-10" type="success" icon="android-add">新增</Button>
             </Card>
         </Row>
         <Row>
@@ -37,97 +36,118 @@
         data () {
             return {
                 value: '',
-                model1: '全部',
+                model1: '',
+                model2: '',
+                defaultList: [
+                    {
+                        'name': 'a42bdcc1178e62b4694c830f028db5c0',
+                        'url': 'https://o5wwk8baw.qnssl.com/a42bdcc1178e62b4694c830f028db5c0/avatar'
+                    },
+                    {
+                        'name': 'bc7521e033abdd1e92222d733590f104',
+                        'url': 'https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar'
+                    }
+                ],
+                imgName: '',
+                visible: false,
+                uploadList: [],
                 cityList: [
                     {
                         value: '全部',
                         label: '全部'
                     },
                     {
-                        value: '卡券',
-                        label: '卡券'
+                        value: '优惠卷领取',
+                        label: '优惠卷领取'
                     },
                     {
-                        value: '现货',
-                        label: '现货'
+                        value: '多人拼团',
+                        label: '多人拼团'
+                    },
+                    {
+                        value: '商品集锦',
+                        label: '商品集锦'
+                    },
+                    {
+                        value: '静态活动展示',
+                        label: '静态活动展示'
+                    },
+                    {
+                        value: '外链活动',
+                        label: '外链活动'
                     }
                 ],
-                statusList: [
+                objectList: [
                     {
-                        value: '全部',
-                        label: '全部'
-                    },
-                    {
-                        value: '待付款',
-                        label: '待付款'
-                    },
-                    {
-                        value: '已超时',
-                        label: '已超时'
-                    },
-                    {
-                        value: '待配送',
-                        label: '待配送'
-                    },
-                    {
-                        value: '配送中',
-                        label: '配送中'
+                        value: '进行中',
+                        label: '进行中'
                     },
                     {
                         value: '已完成',
                         label: '已完成'
-                    },
-                    {
-                        value: '退款订单',
-                        label: '退款订单'
                     }
                 ],
                 tableData1: this.mockTableData1(10),
                 tableColumns1: [
                     {
-                        title: '编号',
+                        title: '序号',
                         key: 'id',
+                        width: 80,
                         align: 'center'
                     },
                     {
-                        title: '指向类型',
+                        title: '活动名称',
+                        key: 'activityName',
+                        align: 'center'
+                    },
+                    {
+                        title: '主图',
+                        key: 'img',
+                        align: 'center',
+                        render: (h, params) => {
+                            return h('img', {
+                                attrs: {
+                                    src: params.row.img,
+                                    width: 100,
+                                    height: 100
+                                },
+                                on: {
+                                    click: () => {
+                                        // console.log(params,'12')
+                                        // this.show(params.index)
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    {
+                        title: '活动时间',
+                        key: 'activityDate',
+                        align: 'center'
+                    },
+                    {
+                        title: '状态',
+                        key: 'status',
+                        align: 'center'
+                    },
+                    {
+                        title: '类型',
                         key: 'type',
                         align: 'center'
                     },
                     {
-                        title: '指向对象',
-                        key: 'Object',
+                        title: '热度',
+                        key: 'heat',
                         align: 'center'
                     },
                     {
-                        title: '编号',
-                        key: 'id',
-                        align: 'center'
-                    },
-                    {
-                        title: '指向类型',
-                        key: 'type',
-                        align: 'center'
-                    },
-                    {
-                        title: '指向对象',
-                        key: 'Object',
-                        align: 'center'
-                    },
-                    {
-                        title: '指向对象',
-                        key: 'Object',
-                        align: 'center'
-                    },
-                    {
-                        title: '指向对象',
-                        key: 'Object',
+                        title: '参与人数',
+                        key: 'numberOfpeople',
                         align: 'center'
                     },
                     {
                         title: '操作',
                         key: 'action',
-                        width: 200,
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
@@ -136,37 +156,43 @@
                                         type: 'primary',
                                         size: 'small'
                                     },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
                                     on: {
                                         click: () => {
                                             this.remove(params.index)
                                         }
                                     }
-                                }, '物流'),
+                                }, '查看'),
                                 h('Button', {
                                     props: {
                                         type: 'success',
                                         size: 'small'
                                     },
                                     style: {
-                                        margin: '5px'
+                                        marginRight: '5px'
                                     },
                                     on: {
                                         click: () => {
                                             this.remove(params.index)
                                         }
                                     }
-                                }, '详情'),
+                                }, '编辑'),
                                 h('Button', {
                                     props: {
                                         type: 'error',
                                         size: 'small'
                                     },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
                                     on: {
                                         click: () => {
                                             this.remove(params.index)
                                         }
                                     }
-                                }, '退款')
+                                }, '删除')
                             ]);
                         }
                     }
@@ -179,10 +205,13 @@
                 for (let i = 0; i < pageSize; i++) {
                     data.push({
                         id: i + 1,
-                        name: '阳澄湖大闸蟹6对礼盒装',
-                        type: '商品',
-                        Object: '阳澄湖4对装礼品卡',
+                        activityName: '阳澄湖大闸蟹8对',
                         img: '//img12.360buyimg.com/n1/jfs/t19426/264/1610686010/451016/9b083eb8/5ad0334bNde6fb162.jpg',
+                        activityDate: '2018.03.21-2018.04.21',
+                        status: '已完成',
+                        type: '多人拼团',
+                        heat: '10000',
+                        numberOfpeople: '199'
                     });
                 }
                 return data;
@@ -196,9 +225,10 @@
                 return y + '-' + m + '-' + d;
             },
             changePage (pageSize) {
-                // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
                 this.tableData1 = this.mockTableData1(pageSize);
             }
+        },
+        mounted () {
         }
     };
 </script>
