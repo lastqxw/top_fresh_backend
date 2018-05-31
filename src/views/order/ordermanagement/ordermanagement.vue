@@ -1,196 +1,179 @@
+<style lang="less">
+    @import '../../../styles/common.less';
+</style>
 <template>
     <div>
-        <Col span="16">
+        <Row>
             <Card>
-                <p slot="title">
-                    <Icon type="android-contact"></Icon>
-                    订单管理
-                </p>
-                <Row>
-                    <!--头部表单-->
-                    <Col span="18">
-                        <Form :model="formTop" label-position="left" inline>
-                            <FormItem label="订单号">
-                                <Input v-model="formTop.input1"></Input>
-                            </FormItem>
-                            <FormItem label="类型">
-                                <Select v-model="formTop.selectOne">
-                                    <Option value="全部">全部</Option>
-                                    <Option value="卡卷">卡卷</Option>
-                                    <Option value="礼货">礼货</Option>
-                                </Select>
-                            </FormItem>
-                            <FormItem label="状态">
-                                <Select v-model="formTop.selectTwo" style="width: 100px;">
-                                    <Option value="全部">全部</Option>
-                                    <Option value="待付款">待付款</Option>
-                                    <Option value="已超时">已超时</Option>
-                                    <Option value="待配送">待配送</Option>
-                                    <Option value="配送中">配送中</Option>
-                                    <Option value="已完成">已完成</Option>
-                                    <Option value="退款订单">退款订单</Option>
-                                </Select>
-                            </FormItem>
-                            <FormItem label="时间范围">
-                                <FormItem prop="date">
-                                    <DatePicker type="date" placeholder="开始时间" v-model="formTop.date"></DatePicker>
-                                    <DatePicker type="date" placeholder="结束时间" v-model="formTop.dateEnd"></DatePicker>
-                                </FormItem>
-                            </FormItem>
-                        </Form>
-                    </Col>
-                    <Col span="2" style="margin-top: 33px">
-                        <Button type="primary" shape="circle" icon="ios-search">查找</Button>
-                    </Col>
-                </Row>
-                <!--底部表格-->
-                <div style="margin-bottom: 10px">
-                    <Table border :columns="columns" :data="info"></Table>
-                </div>
-                <ButtonGroup shape="circle">
-                    <Button type="ghost">上一页</Button>
-                    <Button type="ghost">1/12</Button>
-                    <Button type="ghost">上一页</Button>
-                </ButtonGroup>
+                <span>订单号：</span>
+                <Input v-model="value" placeholder="请输入商品名称" clearable style="width: 200px"></Input>
+                <span class="margin-left-10">类型：</span>
+                <Select v-model="model1" style="width:200px">
+                    <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                </Select>
+                <span class="margin-left-10">状态：</span>
+                <Select v-model="model1" style="width:200px">
+                    <Option v-for="item in statusList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                </Select>
+                <span class="margin-left-10">时间范围：</span>
+                <DatePicker type="daterange" placement="bottom-end" placeholder="选择时间" style="width: 200px"></DatePicker>
+                <Button class="margin-left-10" type="success" icon="android-add">新增</Button>
             </Card>
-        </Col>
+        </Row>
+        <Row>
+            <Card>
+                <Table stripe border :columns="tableColumns1" :data="tableData1"></Table>
+                <div style="margin: 10px;overflow: hidden">
+                    <div style="float: right;">
+                        <Page show-elevator show-sizer @on-page-size-change="changePage" :total="100" :current="1" @on-change="changePage(10)"></Page>
+                    </div>
+                </div>
+            </Card>
+        </Row>
     </div>
 </template>
-
 <script>
     export default {
         data () {
             return {
-                formTop: {
-                    input1: '',
-                    selectOne: '',
-                    selectTwo: '',
-                    date: '',
-                    dateEnd: ''
-                },
-                // 表单表头
-                columns: [
+                value: '',
+                model1: '全部',
+                cityList: [
                     {
-                        title: '订单号',
-                        key: 'orderNumber'
+                        value: '全部',
+                        label: '全部'
                     },
                     {
-                        title: '商品名称',
-                        key: 'productName'
+                        value: '卡券',
+                        label: '卡券'
                     },
                     {
-                        title: '联系人',
-                        key: 'name'
-                    },
-                    {
-                        title: '收货地址',
-                        key: 'address'
-                    },
-                    {
-                        title: '联系方式',
-                        key: 'contact'
-                    },
-                    {
-                        title: '状态',
-                        key: 'status'
-                    },
-                    {
-                        title: '下单时间',
-                        key: 'date'
-                    },
-                    {
-                        title: '管理',
-                        key: 'management'
+                        value: '现货',
+                        label: '现货'
                     }
                 ],
-                // 表单数据
-                info: [
+                statusList: [
                     {
-                        orderNumber: '3993010',
-                        productName: '阳澄湖大闸蟹4对装礼品卡',
-                        name: '马云',
-                        contact: '17753757670',
-                        address: '中国日本省东京市',
-                        status: '配送中',
-                        date: '2018.03.12 12:12:12',
-                        management: '物流 详情 退款'
+                        value: '全部',
+                        label: '全部'
                     },
                     {
-                        orderNumber: '3993010',
-                        productName: '阳澄湖大闸蟹4对装礼品卡',
-                        name: '马云',
-                        contact: '17753757670',
-                        address: '中国日本省东京市',
-                        status: '配送中',
-                        date: '2018.03.12 12:12:12',
-                        management: '物流 详情 退款'
+                        value: '待付款',
+                        label: '待付款'
                     },
                     {
-                        orderNumber: '3993010',
-                        productName: '阳澄湖大闸蟹4对装礼品卡',
-                        name: '马云',
-                        contact: '17753757670',
-                        address: '中国日本省东京市',
-                        status: '配送中',
-                        date: '2018.03.12 12:12:12',
-                        management: '物流 详情 退款'
+                        value: '已超时',
+                        label: '已超时'
                     },
                     {
-                        orderNumber: '3993010',
-                        productName: '阳澄湖大闸蟹4对装礼品卡',
-                        name: '马云',
-                        contact: '17753757670',
-                        address: '中国日本省东京市',
-                        status: '配送中',
-                        date: '2018.03.12 12:12:12',
-                        management: '物流 详情 退款'
+                        value: '待配送',
+                        label: '待配送'
                     },
                     {
-                        orderNumber: '3993010',
-                        productName: '阳澄湖大闸蟹4对装礼品卡',
-                        name: '马云',
-                        contact: '17753757670',
-                        address: '中国日本省东京市',
-                        status: '配送中',
-                        date: '2018.03.12 12:12:12',
-                        management: '物流 详情 退款'
+                        value: '配送中',
+                        label: '配送中'
                     },
                     {
-                        orderNumber: '3993010',
-                        productName: '阳澄湖大闸蟹4对装礼品卡',
-                        name: '马云',
-                        contact: '17753757670',
-                        address: '中国日本省东京市',
-                        status: '配送中',
-                        date: '2018.03.12 12:12:12',
-                        management: '物流 详情 退款'
+                        value: '已完成',
+                        label: '已完成'
                     },
                     {
-                        orderNumber: '3993010',
-                        productName: '阳澄湖大闸蟹4对装礼品卡',
-                        name: '马云',
-                        contact: '17753757670',
-                        address: '中国日本省东京市',
-                        status: '配送中',
-                        date: '2018.03.12 12:12:12',
-                        management: '物流 详情 退款'
+                        value: '退款订单',
+                        label: '退款订单'
+                    }
+                ],
+                tableData1: this.mockTableData1(10),
+                tableColumns1: [
+                    {
+                        title: '编号',
+                        key: 'id',
+                        align: 'center'
                     },
                     {
-                        orderNumber: '3993010',
-                        productName: '阳澄湖大闸蟹4对装礼品卡',
-                        name: '马云',
-                        contact: '17753757670',
-                        address: '中国日本省东京市',
-                        status: '配送中',
-                        date: '2018.03.12 12:12:12',
-                        management: '物流 详情 退款'
+                        title: '指向类型',
+                        key: 'type',
+                        align: 'center'
+                    },
+                    {
+                        title: '指向对象',
+                        key: 'Object',
+                        align: 'center'
+                    },
+                    {
+                        title: '编号',
+                        key: 'id',
+                        align: 'center'
+                    },
+                    {
+                        title: '指向类型',
+                        key: 'type',
+                        align: 'center'
+                    },
+                    {
+                        title: '指向对象',
+                        key: 'Object',
+                        align: 'center'
+                    },
+                    {
+                        title: '指向对象',
+                        key: 'Object',
+                        align: 'center'
+                    },
+                    {
+                        title: '指向对象',
+                        key: 'Object',
+                        align: 'center'
+                    },
+                    {
+                        title: '操作',
+                        key: 'action',
+                        width: 150,
+                        align: 'center',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'error',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.remove(params.index)
+                                        }
+                                    }
+                                }, '删除')
+                            ]);
+                        }
                     }
                 ]
             };
+        },
+        methods: {
+            mockTableData1 (pageSize) {
+                let data = [];
+                for (let i = 0; i < pageSize; i++) {
+                    data.push({
+                        id: i + 1,
+                        name: '阳澄湖大闸蟹6对礼盒装',
+                        type: '商品',
+                        Object: '阳澄湖4对装礼品卡',
+                        img: '//img12.360buyimg.com/n1/jfs/t19426/264/1610686010/451016/9b083eb8/5ad0334bNde6fb162.jpg',
+                    });
+                }
+                return data;
+            },
+            formatDate (date) {
+                const y = date.getFullYear();
+                let m = date.getMonth() + 1;
+                m = m < 10 ? '0' + m : m;
+                let d = date.getDate();
+                d = d < 10 ? ('0' + d) : d;
+                return y + '-' + m + '-' + d;
+            },
+            changePage (pageSize) {
+                // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
+                this.tableData1 = this.mockTableData1(pageSize);
+            }
         }
     };
 </script>
-
-<style>
-
-</style>

@@ -21,59 +21,40 @@
             return {
                 value: '',
                 model1: '全部',
+                cityList: [
+                    {
+                        value: '全部',
+                        label: '全部'
+                    },
+                    {
+                        value: '礼券',
+                        label: '礼券'
+                    },
+                    {
+                        value: '现货',
+                        label: '现货'
+                    }
+                ],
                 tableData1: this.mockTableData1(10),
                 tableColumns1: [
                     {
-                        title: '订单号',
+                        title: '编号',
                         key: 'id',
-                        align: 'center'
-                    },
-                    {
-                        title: '商品名称',
-                        key: 'type',
-                        align: 'center'
-                    },
-                    {
-                        title: '联系人',
-                        key: 'Object',
-                        align: 'center'
-                    },
-                    {
-                        title: '收货地址',
-                        key: 'id',
-                        align: 'center'
-                    },
-                    {
-                        title: '联系方式',
-                        key: 'type',
-                        align: 'center'
-                    },
-                    {
-                        title: '下单时间',
-                        key: 'Object',
-                        align: 'center'
-                    },
-                    {
-                        title: '管理',
-                        key: 'action',
-                        width: 150,
                         align: 'center',
+                        width: 100
+                    },
+                    {
+                        title: '功能区',
+                        key: 'type',
+                        align: 'center'
+                    },
+                    {
+                        title: '操作',
+                        key: 'action',
+                        align: 'center',
+                        width: 100,
                         render: (h, params) => {
                             return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small'
-                                    },
-                                    style: {
-                                        marginRight: '5px'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.remove(params.index);
-                                        }
-                                    }
-                                }, '发货'),
                                 h('Button', {
                                     props: {
                                         type: 'error',
@@ -81,10 +62,10 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.remove(params.index);
+                                            this.remove(params.index)
                                         }
                                     }
-                                }, '拒单')
+                                }, '设置')
                             ]);
                         }
                     }
@@ -114,7 +95,6 @@
                 return y + '-' + m + '-' + d;
             },
             changePage (pageSize) {
-                // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
                 this.tableData1 = this.mockTableData1(pageSize);
             }
         }

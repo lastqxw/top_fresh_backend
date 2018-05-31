@@ -179,6 +179,17 @@ export const appRouter = [
             { path: 'orderawait', title: '待配送订单', name: 'orderawait', icon: 'compose', component: () => import('@/views/order/orderawait/orderawait.vue') },
         ]
 	},
+    {
+        path: '/app',
+        icon: 'android-checkbox',
+        name: 'app',
+        title: 'APP首屏配置',
+        component: Main,
+        children: [
+            { path: 'appHome', title: 'APP首屏配置', name: 'appHome', icon: 'compose', component: () => import('@/views/app/appHome/appHome.vue') },
+            { path: 'appBanner', title: 'BANNER管理', name: 'appBanner', icon: 'compose', component: () => import('@/views/app/appBanner/appBanner.vue') },
+        ]
+    },
 ];
 
 // 所有上面定义的路由都要写在下面的routers里
