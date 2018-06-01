@@ -34,6 +34,9 @@ export const otherRouter = {
         { path: 'ownspace', title: '个人中心', name: 'ownspace_index', component: () => import('@/views/own-space/own-space.vue') },
 		{ path: 'message', title: '消息中心', name: 'message_index', component: () => import('@/views/message/message.vue') },
 		{ path: 'product/:product_id', title: '商品详情', name: 'product-info', component: () => import('../views/products/products/component/product-detail.vue') },
+		{ path: 'user/:product_id', title: '用户详情', name: 'user-info', component: () => import('../views/user/userInfo/userInfo.vue') },
+		{ path: 'cardManagement/cardInfo', title: '录入卡券', name: 'card-info', component: () => import('../views/cardManagement/cardInfo/cardInfo.vue') },
+	
 
     ]
 };
@@ -169,6 +172,38 @@ export const appRouter = [
         ]
     },
     {
+        path: '/marketing',
+        icon: 'grid',
+        name: 'marketing',
+        title: '营销设置',
+        component: Main,
+        children: [
+			{ path: 'market', title: '营销管理', name: 'market', icon: 'grid', component: () => import('@/views/marketing/marketing.vue') },
+            { path: 'envelopes', title: '红包设置', name: 'envelopes', icon: 'arrow-swap', component: () => import('@/views/marketing/envelopes/envelopes.vue') },
+            { path: 'grant', title: '红包发放途径设置', name: 'grant', icon: 'arrow-swap', component: () => import('@/views/marketing/grant/grant.vue') }
+        ]
+    },
+    {
+        path: '/user',
+        icon: 'grid',
+        name: 'user',
+        title: '用户管理',
+        component: Main,
+        children: [
+			{ path: 'users', title: '用户设置', name: 'users', icon: 'arrow-swap', component: () => import('@/views/user/user.vue') },
+        ]
+    },
+    {
+        path: '/cardManagement',
+        icon: 'grid',
+        name: 'cardManagement',
+        title: '卡券管理',
+        component: Main,
+        children: [
+			{ path: 'card', title: '卡券设置', name: 'card', icon: 'arrow-swap', component: () => import('@/views/cardManagement/cardManagement.vue') },
+        ]
+    },
+{
         path: '/order',
         icon: 'android-checkbox',
         name: 'order',
