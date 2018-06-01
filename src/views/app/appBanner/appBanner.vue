@@ -156,12 +156,12 @@ export default {
                                     type: 'error',
                                     size: 'small'
                                 },
-                                style:{
+                                style: {
                                     marginRight: '5px'
                                 },
                                 on: {
                                     click: () => {
-                                        this.remove(params.index)
+                                        this.confirm('删除', params.index);
                                     }
                                 }
                             }, '删除')
@@ -172,6 +172,18 @@ export default {
         };
     },
     methods: {
+        confirm (type, index) {
+            this.$Modal.confirm({
+                title: '你确定要' + type + '吗？',
+                onOk: () => {
+                    this.$Message.info(type + '成功');
+                    this.tableData1.splice(index, 1);
+                },
+                onCancel: () => {
+                    this.$Message.info('取消成功');
+                }
+            });
+        },
         mockTableData1 (pageSize) {
             let data = [];
             for (let i = 0; i < pageSize; i++) {
@@ -183,7 +195,7 @@ export default {
                     img: '//img12.360buyimg.com/n1/jfs/t19426/264/1610686010/451016/9b083eb8/5ad0334bNde6fb162.jpg'
                 });
             }
-            return data;
+            return data
         },
         formatDate (date) {
             const y = date.getFullYear();

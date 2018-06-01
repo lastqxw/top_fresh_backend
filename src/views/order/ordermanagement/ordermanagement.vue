@@ -38,6 +38,7 @@
             return {
                 value: '',
                 model1: '全部',
+                Refund: false,
                 cityList: [
                     {
                         value: '全部',
@@ -163,7 +164,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.remove(params.index)
+                                            this.confirm();
                                         }
                                     }
                                 }, '退款')
@@ -186,6 +187,17 @@
                     });
                 }
                 return data;
+            },
+            confirm () {
+                this.$Modal.confirm({
+                    title: '你确定要退款吗？',
+                    onOk: () => {
+                        this.$Message.info('退款成功');
+                    },
+                    onCancel: () => {
+                        this.$Message.info('取消成功');
+                    }
+                });
             },
             formatDate (date) {
                 const y = date.getFullYear();

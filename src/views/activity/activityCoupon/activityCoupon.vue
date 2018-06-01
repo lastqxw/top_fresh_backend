@@ -154,7 +154,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.remove(params.index)
+                                            this.confirm('删除', params.index);
                                         }
                                     }
                                 }, '删除')
@@ -165,6 +165,18 @@
             };
         },
         methods: {
+            confirm (type, index) {
+                this.$Modal.confirm({
+                    title: '你确定要' + type + '吗？',
+                    onOk: () => {
+                        this.$Message.info(type + '成功');
+                        this.tableData1.splice(index, 1);
+                    },
+                    onCancel: () => {
+                        this.$Message.info('取消成功');
+                    }
+                });
+            },
             mockTableData1 (pageSize) {
                 let data = [];
                 for (let i = 0; i < pageSize; i++) {
