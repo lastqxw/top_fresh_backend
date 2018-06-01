@@ -202,7 +202,44 @@ export const appRouter = [
         children: [
 			{ path: 'card', title: '卡券设置', name: 'card', icon: 'arrow-swap', component: () => import('@/views/cardManagement/cardManagement.vue') },
         ]
-    }
+    },
+{
+        path: '/order',
+        icon: 'android-checkbox',
+        name: 'order',
+        title: '订单管理',
+        component: Main,
+        children: [
+            { path: 'ordermanagement', title: '订单管理', name: 'ordermanagement', icon: 'compose', component: () => import('@/views/order/ordermanagement/ordermanagement.vue') },
+            { path: 'orderawait', title: '待配送订单', name: 'orderawait', icon: 'compose', component: () => import('@/views/order/orderawait/orderawait.vue') },
+        ]
+	},
+    {
+        path: '/app',
+        icon: 'android-checkbox',
+        name: 'app',
+        title: 'APP首屏配置',
+        component: Main,
+        children: [
+            { path: 'appHome', title: 'APP首屏配置', name: 'appHome', icon: 'compose', component: () => import('@/views/app/appHome/appHome.vue') },
+            { path: 'appBanner', title: 'BANNER管理', name: 'appBanner', icon: 'compose', component: () => import('@/views/app/appBanner/appBanner.vue') },
+            { path: 'appHomeOrder', title: '首页活动管理', name: 'appHomeOrder', icon: 'compose', component: () => import('@/views/app/appHomeOrder/appHomeOrder.vue') },
+            { path: 'appRecommendedProducts', title: '推荐商品管理', name: 'appRecommendedProducts', icon: 'compose', component: () => import('@/views/app/appRecommendedProducts/appRecommendedProducts.vue') },
+        ]
+    },
+    {
+        path: '/activity',
+        icon: 'android-checkbox',
+        name: 'activity',
+        title: '活动管理',
+        component: Main,
+        children: [
+            { path: 'activityHome', title: '活动管理', name: 'activityHome', icon: 'compose', component: () => import('@/views/activity/activityHome/activityHome.vue') },
+            { path: 'activityTeamwork', title: '拼团详情及编辑', name: 'activityTeamwork', icon: 'compose', component: () => import('@/views/activity/activityTeamwork/activityTeamwork.vue') },
+            { path: 'activityCollection', title: '集锦详情及编辑', name: 'activityCollection', icon: 'compose', component: () => import('@/views/activity/activityCollection/activityCollection.vue') },
+            { path: 'activityCoupon', title: '优惠券详情及编辑', name: 'activityCoupon', icon: 'compose', component: () => import('@/views/activity/activityCoupon/activityCoupon.vue') },
+        ]
+    },
 ];
 
 // 所有上面定义的路由都要写在下面的routers里
