@@ -70,7 +70,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.remove(params.index);
+                                            this.confirm('发货');
                                         }
                                     }
                                 }, '发货'),
@@ -81,7 +81,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.remove(params.index);
+                                            this.confirm('拒单');
                                         }
                                     }
                                 }, '拒单')
@@ -116,6 +116,17 @@
             changePage (pageSize) {
                 // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
                 this.tableData1 = this.mockTableData1(pageSize);
+            },
+            confirm (type) {
+                this.$Modal.confirm({
+                    title: '你确定要' + type + '吗？',
+                    onOk: () => {
+                        this.$Message.info(type + '成功');
+                    },
+                    onCancel: () => {
+                        this.$Message.info('取消成功');
+                    }
+                });
             }
         }
     };
