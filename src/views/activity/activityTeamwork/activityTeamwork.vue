@@ -193,7 +193,11 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.remove(params.index)
+                                            let argu = { id: params.row.id };
+                                            this.$router.push({
+                                                name: 'activityTeamwork-info',
+                                                params: argu
+                                            });
                                         }
                                     }
                                 }, '查看'),

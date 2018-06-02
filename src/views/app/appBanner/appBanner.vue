@@ -45,7 +45,7 @@
                 <Select v-model="model2" style="width:200px">
                     <Option v-for="item in objectList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                 </Select>
-                <Button class="margin-left-10" type="success" icon="android-add">新增</Button>
+                <Button class="margin-left-10" type="success" icon="android-add" @click="addBanner">新增</Button>
             </Card>
         </Row>
         <Row>
@@ -172,6 +172,9 @@ export default {
         };
     },
     methods: {
+        addBanner () {
+            alert('判断不为空向后台发送数据');
+        },
         confirm (type, index) {
             this.$Modal.confirm({
                 title: '你确定要' + type + '吗？',
