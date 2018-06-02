@@ -17,7 +17,7 @@
                 </Select>
                 <span class="margin-left-10">时间范围：</span>
                 <DatePicker type="daterange" placement="bottom-end" placeholder="选择时间" style="width: 200px"></DatePicker>
-                <Button class="margin-left-10" type="success" icon="android-add">查找</Button>
+                <Button class="margin-left-10" type="success" icon="android-add" @click="Search">查找</Button>
             </Card>
         </Row>
         <Row>
@@ -30,6 +30,41 @@
                 </div>
             </Card>
         </Row>
+        <!--物流-->
+        <Modal
+                v-model="Logistics"
+                title="物流详情">
+            <ul class="logistics">
+                <li>
+                    <p>2018年6月2日 上午8:54:49</p>
+                    济南市|济南市【济南历城五部001】，【吴虎/15688882514】正在派件
+                </li>
+                <li>
+                    <p>2018年6月2日 上午8:54:49</p>
+                    济南市|到济南市【济南历城五部001】
+                </li>
+                <li>
+                    <p>2018年6月2日 上午8:54:49</p>
+                    济南市|济南市【济南转运中心】，正发往【济南历城五部001】
+                </li>
+                <li>
+                    <p>2018年6月2日 上午8:54:49</p>
+                    济南市|到济南市【济南转运中心】
+                </li>
+                <li>
+                    <p>2018年6月2日 上午8:54:49</p>
+                    金华市|金华市【义乌转运中心】，正发往【济南转运中心】
+                </li>
+                <li>
+                    <p>2018年6月2日 上午8:54:49</p>
+                    金华市|金华市【义乌转运中心】，正发往【济南转运中心】
+                </li>
+                <li>
+                    <p>2018年6月2日 上午8:54:49</p>
+                    金华市|金华市【义乌转运中心】，正发往【济南转运中心】
+                </li>
+            </ul>
+        </Modal>
     </div>
 </template>
 <script>
@@ -39,6 +74,7 @@
                 value: '',
                 model1: '全部',
                 Refund: false,
+                Logistics: false,
                 cityList: [
                     {
                         value: '全部',
@@ -86,42 +122,37 @@
                 tableData1: this.mockTableData1(10),
                 tableColumns1: [
                     {
-                        title: '编号',
+                        title: '订单号',
                         key: 'id',
                         align: 'center'
                     },
                     {
-                        title: '指向类型',
+                        title: '商品名称',
                         key: 'type',
                         align: 'center'
                     },
                     {
-                        title: '指向对象',
+                        title: '联系人',
                         key: 'Object',
                         align: 'center'
                     },
                     {
-                        title: '编号',
+                        title: '收货地址',
                         key: 'id',
                         align: 'center'
                     },
                     {
-                        title: '指向类型',
+                        title: '联系方式',
                         key: 'type',
                         align: 'center'
                     },
                     {
-                        title: '指向对象',
+                        title: '状态',
                         key: 'Object',
                         align: 'center'
                     },
                     {
-                        title: '指向对象',
-                        key: 'Object',
-                        align: 'center'
-                    },
-                    {
-                        title: '指向对象',
+                        title: '下单时间',
                         key: 'Object',
                         align: 'center'
                     },
@@ -139,7 +170,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.remove(params.index)
+                                            this.Logistics = true;
                                         }
                                     }
                                 }, '物流'),
@@ -153,7 +184,11 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.remove(params.index)
+                                            let argu = { id: params.row.id };
+                                            this.$router.push({
+                                                name: 'ordermanagement-info',
+                                                params: argu
+                                            });
                                         }
                                     }
                                 }, '详情'),
@@ -175,6 +210,9 @@
             };
         },
         methods: {
+            Search () {
+                alert('判断不为空，向后台发送数据，给表格重新赋值')
+            },
             mockTableData1 (pageSize) {
                 let data = [];
                 for (let i = 0; i < pageSize; i++) {
@@ -214,3 +252,15 @@
         }
     };
 </script>
+<style lang="less" scoped>
+    li{
+        list-style: none;
+    }
+    .logistics{
+        p{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            color: #f54040;
+        }
+    }
+</style>
