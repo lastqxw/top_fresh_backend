@@ -78,10 +78,7 @@
                 for (let i = 0; i < pageSize; i++) {
                     data.push({
                         id: i + 1,
-                        name: '阳澄湖大闸蟹6对礼盒装',
-                        type: '商品',
-                        Object: '阳澄湖4对装礼品卡',
-                        img: '//img12.360buyimg.com/n1/jfs/t19426/264/1610686010/451016/9b083eb8/5ad0334bNde6fb162.jpg',
+                        type: 'BANNER管理'
                     });
                 }
                 return data;

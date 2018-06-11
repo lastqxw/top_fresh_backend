@@ -70,7 +70,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.confirm('发货');
+                                            this.confirm('发货', params.index);
                                         }
                                     }
                                 }, '发货'),
@@ -81,7 +81,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.confirm('拒单');
+                                            this.confirm('拒单', params.index);
                                         }
                                     }
                                 }, '拒单')
@@ -117,11 +117,12 @@
                 // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
                 this.tableData1 = this.mockTableData1(pageSize);
             },
-            confirm (type) {
+            confirm (type, index) {
                 this.$Modal.confirm({
                     title: '你确定要' + type + '吗？',
                     onOk: () => {
                         this.$Message.info(type + '成功');
+                        this.tableData1.splice(index, 1);
                     },
                     onCancel: () => {
                         this.$Message.info('取消成功');

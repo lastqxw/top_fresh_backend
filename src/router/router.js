@@ -32,13 +32,14 @@ export const otherRouter = {
     children: [
         { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: () => import('@/views/home/home.vue') },
         { path: 'ownspace', title: '个人中心', name: 'ownspace_index', component: () => import('@/views/own-space/own-space.vue') },
-		{ path: 'message', title: '消息中心', name: 'message_index', component: () => import('@/views/message/message.vue') },
-		{ path: 'product/:product_id', title: '商品详情', name: 'product-info', component: () => import('../views/products/products/component/product-detail.vue') },
-		{ path: 'user/:product_id', title: '用户详情', name: 'user-info', component: () => import('../views/user/userInfo/userInfo.vue') },
-		{ path: 'cardManagement/cardInfo', title: '录入卡券', name: 'card-info', component: () => import('../views/cardManagement/cardInfo/cardInfo.vue') },
-		{ path: 'marketing/:couponid', title: '优惠券', name: 'market-info', component: () => import('../views/marketing/marketInfo/marketInfo.vue') },
-	
-
+        { path: 'message', title: '消息中心', name: 'message_index', component: () => import('@/views/message/message.vue') },
+        { path: 'product/:product_id', title: '商品详情', name: 'product-info', component: () => import('../views/products/products/component/product-detail.vue') },
+        { path: 'user/:product_id', title: '用户详情', name: 'user-info', component: () => import('../views/user/userInfo/userInfo.vue') },
+        { path: 'cardManagement/cardInfo', title: '录入卡券', name: 'card-info', component: () => import('../views/cardManagement/cardInfo/cardInfo.vue') },
+        { path: 'marketing/:couponid', title: '优惠券', name: 'market-info', component: () => import('../views/marketing/marketInfo/marketInfo.vue') },
+        { path: 'ordermanagement-detail/:id', title: '订单详情', name: 'ordermanagement-info', component: () => import('../views/order/ordermanagement/component/ordermanagement-detail.vue') },
+        { path: 'activityHome-detail/:id', title: '活动查看', name: 'activityHome-info', component: () => import('../views/activity/activityHome/component/activityHome-detail.vue') },
+        { path: 'aactivityTeamwork-detail/:id', title: '拼团详情查看', name: 'activityTeamwork-info', component: () => import('../views/activity/activityTeamwork/component/activityTeamwork-detail.vue') },
     ]
 };
 

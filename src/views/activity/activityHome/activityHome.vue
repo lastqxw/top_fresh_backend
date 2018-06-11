@@ -15,8 +15,8 @@
                 <Select v-model="model2" style="width:200px">
                     <Option v-for="item in objectList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                 </Select>
-                <Button class="margin-left-10" type="primary" icon="ios-search">查找</Button>
-                <Button class="margin-left-10" type="success" icon="android-add">新增</Button>
+                <Button class="margin-left-10" type="primary" icon="ios-search" @click="Search">查找</Button>
+                <Button class="margin-left-10" type="success" icon="android-add" @click="addData">新增</Button>
             </Card>
         </Row>
         <Row>
@@ -161,7 +161,11 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.remove(params.index)
+                                            let argu = { id: params.row.id };
+                                            this.$router.push({
+                                                name: 'activityHome-info',
+                                                params: argu
+                                            });
                                         }
                                     }
                                 }, '查看'),
@@ -200,6 +204,12 @@
             };
         },
         methods: {
+            Search () {
+                alert('判断不为空，向后台发送数据，给表格重新赋值')
+            },
+            addData () {
+                alert('判断不为空，向后台发送数据，给表格重新赋值')
+            },
             confirm (type, index) {
                 this.$Modal.confirm({
                     title: '你确定要' + type + '吗？',
