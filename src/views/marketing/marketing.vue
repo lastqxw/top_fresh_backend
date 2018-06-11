@@ -29,12 +29,8 @@
                 </Row>
                 <Row style="width:19%;display:inline-table">
                     <Button class="margin-left-20" type="primary" icon="ios-search">搜索</Button>
-				    <Button class="margin-left-10" type="success" icon="android-add">新增</Button>
+				    <Button class="margin-left-10" type="success" icon="android-add" @click="addCoupon">新增</Button>
                 </Row>
-               
-				
-               
-				
 			</Card>
 		</Row>
 		<Row>
@@ -53,6 +49,8 @@
 	export default {
 		data() {
 			return {
+				modal2: false,
+				modal_loading: false,
                 type:"满减券",
                 range:"全部类",
                 value: '',
@@ -142,10 +140,10 @@
 									},
 									on: {
 										click: () => {
-											let argu = { product_id: params.row.id };
+											let argu = { couponid: params.row.id };
 											this.$router.push({
-												name: 'product-info',
-												params: argu
+												name: 'market-info',
+												params: argu,
 											});
 										}
 									}
@@ -157,7 +155,7 @@
 									},
 									on: {
 										click: () => {
-											this.remove(params.index)
+											this.confirm('删除', params.index);
 										}
 									}
 								}, '删除')
@@ -168,6 +166,18 @@
 			}
 		},
 		methods: {
+			confirm (type, index) {
+            this.$Modal.confirm({
+                title: '你确定要' + type + '吗？',
+                onOk: () => {
+                    this.$Message.info(type + '成功');
+                    this.tableData1.splice(index, 1);
+                },
+                onCancel: () => {
+                    this.$Message.info('取消成功');
+                }
+            });
+        },
 			mockTableData1(pageSize) {
 				let data = [];
 				for (let i = 0; i < pageSize; i++) {
@@ -196,6 +206,14 @@
 				// The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
 				this.tableData1 = this.mockTableData1(pageSize);
 			},
+			addCoupon(){
+				this.$router.push({
+					name: 'market-info',
+					params: {
+						couponid:0,
+					},
+				});
+			}
 		}
 	}
 </script>
