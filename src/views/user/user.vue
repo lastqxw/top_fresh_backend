@@ -1,5 +1,5 @@
 <style lang="less">
-	@import '../../styles/common.less';
+@import "../../styles/common.less";
 </style>
 <template>
 	<div>
@@ -8,17 +8,17 @@
                 <Row style="width:80%;display:inline-table">
                     <Col span="6">
                         <span class="margin-left-10">手机号:</span>
-				        <Input v-model="phone" placeholder="请输入用户手机号" clearable style="width: 200px"></Input>
+				        <Input v-model="staffPhone" placeholder="请输入用户手机号" clearable style="width: 200px"></Input>
                     </Col>
                     <Col span="6">
                         <span class="margin-left-10">状态:</span>
-                        <Select v-model="type" style="width:200px">
+                        <Select v-model="staffIsdel" style="width:200px">
                             <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </Col>
                 </Row>
                 <Row style="width:19%;display:inline-table">
-                    <Button class="margin-left-20" type="primary" icon="ios-search">查找</Button>
+                    <Button class="margin-left-20" type="primary" icon="ios-search" @click="search">查找</Button>
                 </Row>
 			</Card>
 		</Row>
@@ -27,7 +27,7 @@
 				<Table stripe border :columns="tableColumns1" :data="tableData1"></Table>
 				<div style="margin: 10px;overflow: hidden">
 					<div style="float: right;">
-						<Page show-elevator show-sizer @on-page-size-change="changePage" :total="100" :current="1" @on-change="changePage(10)"></Page>
+						<Page show-elevator show-sizer @on-page-size-change="changePageSize" :total="count" :current="1" @on-change="changePage"></Page>
 					</div>
 				</div>
 			</Card>
@@ -35,127 +35,210 @@
 	</div>
 </template>
 <script>
-	export default {
-		data() {
-			return {
-                type:"全部",
-                phone:"",
-                typeList: [
-					{
-						value: '全部',
-						label: '全部'
-					},
-					{
-						value: '正常',
-						label: '正常'
-					},
-					{
-						value: '封禁',
-						label: '封禁'
-					}
-				],
-				tableData1: this.mockTableData1(10),
-				tableColumns1: [
-					{
-						title: '编号',
-						key: 'id',
-						width: 80,
-						align: 'center',
-					},
-					{
-						title: '用户昵称',
-						key: 'name',
-						align: 'center',
-                    },
-                    {
-						title: '手机号',
-						key: 'phone',
-						align: 'center',
-                    },
-                    {
-						title: '代金券数',
-						key: 'range',
-						align: 'center',
-                    },
-                    {
-						title: '积分',
-						key: 'rule',
-						align: 'center',
-                    },
-                    {
-						title: '状态',
-						key: 'validity',
-						align: 'center',
-                    },
-					{
-						title: '操作',
-						key: 'action',
-						width: 150,
-						align: 'center',
-						render: (h, params) => {
-							return h('div', [
-								h('Button', {
-									props: {
-										type: 'primary',
-										size: 'small'
-									},
-									style: {
-										marginRight: '5px'
-									},
-									on: {
-										click: () => {
-											let argu = { product_id: params.row.id };
-											this.$router.push({
-												name: 'user-info',
-												params: argu
-											});
-										}
-									}
-								}, '查看'),
-								h('Button', {
-									props: {
-										type: 'error',
-										size: 'small'
-									},
-									on: {
-										click: () => {
-											this.remove(params.index)
-										}
-									}
-								}, '封禁')
-							]);
-						}
-					}
-				],
-			}
-		},
-		methods: {
-			mockTableData1(pageSize) {
-				let data = [];
-				for (let i = 0; i < pageSize; i++) {
-					data.push({
-                        id: i + 1,
-                        name: i % 3 == 0 ? '王大锤' : '娇儿郎',
-                        phone:i % 3 == 0 ? '17615833291' : '15666440735',
-						range:i % 3 == 0 ? '12' : '20',
-						rule:i % 5 == 0 ? "1024" : '2048',
-						validity:"正常",
-					})
-				}
-				return data;
-			},
-			formatDate(date) {
-				const y = date.getFullYear();
-				let m = date.getMonth() + 1;
-				m = m < 10 ? '0' + m : m;
-				let d = date.getDate();
-				d = d < 10 ? ('0' + d) : d;
-				return y + '-' + m + '-' + d;
-			},
-			changePage(pageSize) {
-				// The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
-				this.tableData1 = this.mockTableData1(pageSize);
-			},
-		}
-	}
+import Cookies from "js-cookie";
+import getUser from "../user/service/user.js";
+export default {
+  mixins: [getUser],
+  data() {
+    return {
+      staffIsdel: "0",
+      staffPhone: "",
+      count: null,
+      pageNum: 1,
+      pageSize: 10,
+      typeList: [
+        {
+          value: "0",
+          label: "全部"
+        },
+        {
+          value: "1",
+          label: "正常"
+        },
+        {
+          value: "2",
+          label: "封禁"
+        }
+      ],
+      tableData1: [],
+      tableColumns1: [
+        {
+          title: "编号",
+          key: "staffId",
+          width: 80,
+          align: "center"
+        },
+        {
+          title: "用户昵称",
+          key: "staffNickname",
+          align: "center"
+        },
+        {
+          title: "手机号",
+          key: "staffPhone",
+          align: "center"
+        },
+        {
+          title: "代金券数",
+          key: "range",
+          align: "center"
+        },
+        {
+          title: "积分",
+          key: "staffScore",
+          align: "center"
+        },
+        {
+          title: "状态",
+          key: "staffIsdel",
+          align: "center",
+          render: (h, params) => {
+            return h("span", [params.row.staffIsdel == 1 ? "正常" : "封禁"]);
+          }
+        },
+        {
+          title: "操作",
+          key: "action",
+          width: 150,
+          align: "center",
+          render: (h, params) => {
+            return h("div", [
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "primary",
+                    size: "small"
+                  },
+                  style: {
+                    marginRight: "5px"
+                  },
+                  on: {
+                    click: () => {
+                      let argu = { staffid: params.row.staffId };
+                      this.$router.push({
+                        name: "user-info",
+                        params: argu
+                      });
+                    }
+                  }
+                },
+                "查看"
+              ),
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "error",
+                    size: "small"
+                  },
+                  on: {
+                    click: () => {
+                      this.remove(params.row.staffId, params.row.staffIsdel);
+                    }
+                  }
+                },
+                params.row.staffIsdel == 1 ? "封禁" : "解封"
+              )
+            ]);
+          }
+        }
+      ]
+    };
+  },
+  methods: {
+    search() {
+      this.mockTableData1();
+    },
+    remove(id, type) {
+      var that = this;
+      if (type == 1) {
+        var params = {
+          token: Cookies.get("token"),
+          staffId: Cookies.get("staffId"),
+          staffid: id
+        };
+        this.updateStaffFeng(params).then(res => {
+          console.log(res);
+          if (res.code == 100000) {
+            this.$Message.success({
+              content: "用户封禁成功",
+              success: function() {
+                that.mockTableData1();
+              }
+            });
+          } else {
+            this.$Message.error(res.message);
+          }
+        });
+      } else {
+        var params = {
+          token: Cookies.get("token"),
+          staffId: Cookies.get("staffId"),
+          staffid: id
+        };
+        this.updateStaffJie(params).then(res => {
+          console.log(res);
+          if (res.code == 100000) {
+            this.$Message.success({
+              content: "用户解封成功",
+              success: function() {
+                that.mockTableData1();
+              }
+            });
+          } else {
+            this.$Message.error(res.message);
+          }
+        });
+      }
+    },
+    mockTableData1() {
+      var staffIsdel=this.staffIsdel;
+      var staffPhone=this.staffPhone;
+      var params = {
+        token: Cookies.get("token"),
+        staffId: Cookies.get("staffId"),
+        pageSize: this.pageSize,
+        pageNum: this.pageNum,
+      };
+      if(staffPhone != ""){
+        params.staffPhone=staffPhone
+      }
+      console.log(staffIsdel)
+      if(staffIsdel != "" && staffIsdel != "0"){
+        params.staffIsdel=staffIsdel
+      }
+      this.getStaffList(params).then(res => {
+        console.log(res);
+        if (res.code == 100000) {
+          var data = res.data;
+          this.count = res.count;
+          this.tableData1 = data;
+        } else {
+          this.$Message.error(res.message);
+        }
+      });
+    },
+    formatDate(date) {
+      const y = date.getFullYear();
+      let m = date.getMonth() + 1;
+      m = m < 10 ? "0" + m : m;
+      let d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      return y + "-" + m + "-" + d;
+    },
+    changePageSize(pageSize) {
+      this.pageSize = pageSize;
+      this.mockTableData1();
+    },
+    changePage(pageNum) {
+      this.pageNum = pageNum;
+      this.mockTableData1();      
+      // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
+    }
+  },
+  mounted() {
+    this.mockTableData1();
+  }
+};
 </script>

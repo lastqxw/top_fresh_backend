@@ -1,48 +1,51 @@
 <style lang="less">
-	@import '../../../styles/common.less';
+@import "../../../styles/common.less";
 </style>
 <template>
 	<div>
 		<Row>
 			<Card>
                 <Row>
-                    <Col span="6">
-                        <span class="margin-left-10">用户手机号:</span>
-				        <Input v-model="phone"   readonly style="width: 200px"></Input>
-                    </Col>
-                    <Col span="6">
-                        <span class="margin-left-10">用户昵称:</span>
-                       	<Input v-model="nickName"  readonly style="width: 200px"></Input>
-                    </Col>
-                    <Col span="6">
-                        <span class="margin-left-10">状态:</span>
-                       	<Input v-model="type"  readonly style="width: 200px"></Input>
-                    </Col>
-                    <Col span="6">
-                        <Button class="margin-left-20" type="error" >封禁</Button>
-                    </Col>
-                </Row>
-                <Row style='margin-top:20px'>
-                    <Col span="6">
-                        <span class="margin-left-10">代金券个数:</span>
-				        <Input v-model="coupon"   readonly style="width: 200px"></Input>
-                    </Col>
-                    <Col span="6">
-                        <span class="margin-left-10">积分数:</span>
-                       	<Input v-model="integral"  readonly style="width: 200px"></Input>
-                    </Col>
-                    <Col span="6">
-                        <span class="margin-left-10">参与活动次数:</span>
-                       	<Input v-model="active"  readonly style="width: 200px"></Input>
-                    </Col>
-                    <Col span="6">
-                        <Button class="margin-left-20" type="info" >发红包</Button>
-                    </Col>
-                </Row>
-               
-				
-               
-				
+					<Col span="6">
+						<img :src="staffPhotourl" alt="" style="width:80%;margin-left:10%">
+					</Col>
+					<Col span="18">
+						<Row>
+							<Col span="6">
+								<span class="margin-left-10">用户手机号:</span>
+								<Input v-model="phone"   readonly style="width: 200px"></Input>
+							</Col>
+							<Col span="6">
+								<span class="margin-left-10">用户昵称:</span>
+								<Input v-model="nickName"  readonly style="width: 200px"></Input>
+							</Col>
+							<Col span="6">
+								<span class="margin-left-10">状态:</span>
+								<Input v-model="type"  readonly style="width: 200px"></Input>
+							</Col>
+							<Col span="6">
+								<Button class="margin-left-20" type="error" >封禁</Button>
+							</Col>
+						</Row>
+						<Row style='margin-top:20px'>
+							<Col span="6">
+								<span class="margin-left-10">用户注册时间:</span>
+								<Input v-model="coupon"   readonly style="width: 200px"></Input>
+							</Col>
+							<Col span="6">
+								<span class="margin-left-10">积分数:</span>
+								<Input v-model="integral"  readonly style="width: 200px"></Input>
+							</Col>
+							<Col span="6">
+								<span class="margin-left-10"></span>
+								
+							</Col>
+							<Col span="6">
+								<Button class="margin-left-20" type="info" >发红包</Button>
+							</Col>
+						</Row>
+					</Col>
+                </Row>           
 			</Card>
 		</Row>
 		<Row style="margin-top:20px;">
@@ -50,7 +53,7 @@
 				<Table stripe border :columns="tableColumns1" :data="tableData1"></Table>
 				<div style="margin: 10px;overflow: hidden">
 					<div style="float: right;">
-						<Page show-elevator show-sizer @on-page-size-change="changePage" :total="100" :current="1" @on-change="changePage(10)"></Page>
+						<Page show-elevator show-sizer @on-page-size-change="changePageSize" :total="count" :current="1" @on-change="changePage"></Page>
 					</div>
 				</div>
 			</Card>
@@ -58,137 +61,217 @@
 	</div>
 </template>
 <script>
-	export default {
-		data() {
-			return {
-                coupon:"12个",
-                integral:"1024",
-                active:"10次",
-                type:"正常",
-                phone:"17615833291",
-                nickName:"王大锤",
-				tableData1: this.mockTableData1(10),
-				tableColumns1: [
-					{
-						title: '订单号',
-						key: 'id',
-						width: 80,
-						align: 'center',
-					},
-					{
-						title: '商品名称',
-						key: 'name',
-						align: 'center',
-                    },
-                    {
-						title: '联系人',
-						key: 'contacts',
-						align: 'center',
-                    },
-                    {
-						title: '收货地址',
-						key: 'address',
-						align: 'center',
-                    },
-                    {
-						title: '联系方式',
-						key: 'phone',
-						align: 'center',
-                    },
-                    {
-						title: '状态',
-						key: 'type',
-						align: 'center',
-                    },
-                    {
-						title: '下单时间',
-						key: 'orderTime',
-						align: 'center',
-                    },
-					{
-						title: '操作',
-						key: 'action',
-						width: 250,
-						align: 'center',
-						render: (h, params) => {
-							return h('div', [
-								h('Button', {
-									props: {
-										type: 'primary',
-										size: 'small'
-									},
-									style: {
-										marginRight: '5px'
-									},
-									on: {
-										click: () => {
-											let argu = { product_id: params.row.id };
-											this.$router.push({
-												name: 'product-info',
-												params: argu
-											});
-										}
-									}
-                                }, '详情'),
-                                h('Button', {
-									props: {
-										type: 'info',
-										size: 'small'
-									},
-									style: {
-										marginRight: '5px'
-									},
-									on: {
-										click: () => {
-											let argu = { product_id: params.row.id };
-										}
-									}
-								}, '物流'),
-								h('Button', {
-									props: {
-										type: 'error',
-										size: 'small'
-									},
-									on: {
-										click: () => {
-											this.remove(params.index)
-										}
-									}
-								}, '退款')
-							]);
-						}
-					}
-				],
-			}
-		},
-		methods: {
-			mockTableData1(pageSize) {
-				let data = [];
-				for (let i = 0; i < pageSize; i++) {
-					data.push({
-                        id: i + 1,
-                        name: i % 3 == 0 ? '阳澄湖大闸蟹4对装礼品卡' : '阳澄湖大闸蟹14对装现货',
-                        contacts:"王大锤",
-                        address:"山东省济南市历下区舜泰广场九号南楼1102室",
-                        phone:'15666440735',
-						type:i % 3 == 0 ? '待配送' : '已收货',
-						orderTime:i % 5 == 0 ? "2018.03.12 12:12:12" : '2018.06.16 16:16:16',
-					})
-				}
-				return data;
-			},
-			formatDate(date) {
-				const y = date.getFullYear();
-				let m = date.getMonth() + 1;
-				m = m < 10 ? '0' + m : m;
-				let d = date.getDate();
-				d = d < 10 ? ('0' + d) : d;
-				return y + '-' + m + '-' + d;
-			},
-			changePage(pageSize) {
-				// The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
-				this.tableData1 = this.mockTableData1(pageSize);
-			},
-		}
-	}
+import Cookies from "js-cookie";
+import user from "../service/user.js";
+export default {
+  mixins: [user],
+  data() {
+    return {
+      staffPhotourl:
+        "http://liushiming.oss-cn-qingdao.aliyuncs.com/picture/20180622/351449321529647739657.png",
+      coupon: "",
+      integral: "",
+      active: "",
+      type: "",
+      count:10,
+      pageSize:10,
+      pageNum:1,
+      phone: "",
+      nickName: "",
+      tableData1: [],
+      tableColumns1: [
+        {
+          title: "订单号",
+          key: "orderCode",
+          width: 150,
+          align: "center"
+        },
+        {
+          title: "收货地址信息",
+          key: "orderAddressinfo",
+          align: "center"
+        },
+        {
+          title: "联系方式",
+          key: "type",
+          align: "center"
+        },
+        {
+          title: "订单金额",
+          key: "orderAllmoney",
+          align: "center"
+        },
+        {
+          title: "订单时间",
+          key: "orderCreatetime",
+          align: "center"
+        },
+        {
+          title: "订单状态",
+          key: "orderState",
+          align: "center",
+          //   render: (h, params) => {
+          //     return h("span", [
+          //       h("span", {}, this.status(params.row.orderState))
+          //     ]);
+          //   }
+          render: (h, params) => {
+            return h("span", [
+              h("span", {}, this.status(params.row.orderState))
+            ]);
+          }
+        },
+        {
+          title: "操作",
+          key: "action",
+          width: 200,
+          align: "center",
+          render: (h, params) => {
+            return h("div", [
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "primary",
+                    size: "small"
+                  },
+                  on: {
+                    click: () => {
+                      this.remove(params.row.orderCode);
+                    }
+                  }
+                },
+                "物流"
+              ),
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "success",
+                    size: "small"
+                  },
+                  style: {
+                    margin: "5px"
+                  },
+                  on: {
+                    click: () => {
+                      this.info(params.row.orderId);
+                    }
+                  }
+                },
+                "详情"
+              ),
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "error",
+                    size: "small"
+                  },
+                  on: {
+                    click: () => {
+                      this.confirm();
+                    }
+                  }
+                },
+                "退款"
+              )
+            ]);
+          }
+        }
+      ]
+    };
+  },
+  methods: {
+    status(type) {
+      switch (type) {
+        case "1":
+          return "代付款";
+          break;
+        case "2":
+          return "已付款";
+          break;
+        case "3":
+          return "待收货";
+          break;
+        case "4":
+          return "已完成";
+          break;
+        case "5":
+          return "已取消";
+          break;
+      }
+    },
+    info(orderId) {
+      let argu = { orderId: orderId };
+      this.$router.push({
+        name: "order-info",
+        params: argu
+      });
+    },
+    mockTableData1() {
+       var token = Cookies.get("token");
+    var staffId = Cookies.get("staffId");
+    var staffid = this.$route.params.staffid;
+    var params = {
+      token,
+      staffid,
+      staffId,
+      pageSize:this.pageSize,
+      pageNum:this.pageNum
+    };
+      this.selectOrderListBack(params)
+      .then(res => {
+      console.log(res)
+      if(res.code==100000){
+        this.tableData1=res.data;
+        this.count=res.count
+      }
+    })
+    },
+    formatDate(date) {
+      const y = date.getFullYear();
+      let m = date.getMonth() + 1;
+      m = m < 10 ? "0" + m : m;
+      let d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      return y + "-" + m + "-" + d;
+    },
+     changePageSize(pageSize) {
+      this.pageSize=pageSize
+      // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
+      this.mockTableData1();
+    },
+    changePage(pageNum) {
+      this.pageNum=pageNum
+      // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
+      this.mockTableData1();
+    }
+  },
+  beforeMount() {
+    var token = Cookies.get("token");
+    var staffId = Cookies.get("staffId");
+    var staffid = this.$route.params.staffid;
+    this.mockTableData1()
+    var params = {
+      token,
+      staffid,
+      staffId
+    };
+    this.getStaffInfoBack(params).then(res => {
+      console.log(res);
+      if (res.code == 100000) {
+        this.phone = res.data.staffPhone;
+        this.nickName = res.data.staffNickname;
+        this.integral = res.data.staffScore;
+        this.type = res.data.staffType == 1 ? "正常" : "封禁";
+        this.coupon = res.data.staffCreatdate;
+        this.staffPhotourl = res.data.staffPhotourl
+          ? res.data.staffPhotourl
+          : this.staffPhotourl;
+      }
+    });
+    
+  }
+};
 </script>
