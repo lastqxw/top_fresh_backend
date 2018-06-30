@@ -18,6 +18,7 @@
                 <span class="margin-left-10">时间范围：</span>
                 <DatePicker type="daterange" placement="bottom-end" placeholder="选择时间" style="width: 200px" @on-change="data"></DatePicker>
                 <Button class="margin-left-10" type="success" icon="android-add" @click="search">查找</Button>
+
             </Card>
         </Row>
         <Row>
@@ -30,6 +31,41 @@
                 </div>
             </Card>
         </Row>
+        <!--物流-->
+        <Modal
+                v-model="Logistics"
+                title="物流详情">
+            <ul class="logistics">
+                <li>
+                    <p>2018年6月2日 上午8:54:49</p>
+                    济南市|济南市【济南历城五部001】，【吴虎/15688882514】正在派件
+                </li>
+                <li>
+                    <p>2018年6月2日 上午8:54:49</p>
+                    济南市|到济南市【济南历城五部001】
+                </li>
+                <li>
+                    <p>2018年6月2日 上午8:54:49</p>
+                    济南市|济南市【济南转运中心】，正发往【济南历城五部001】
+                </li>
+                <li>
+                    <p>2018年6月2日 上午8:54:49</p>
+                    济南市|到济南市【济南转运中心】
+                </li>
+                <li>
+                    <p>2018年6月2日 上午8:54:49</p>
+                    金华市|金华市【义乌转运中心】，正发往【济南转运中心】
+                </li>
+                <li>
+                    <p>2018年6月2日 上午8:54:49</p>
+                    金华市|金华市【义乌转运中心】，正发往【济南转运中心】
+                </li>
+                <li>
+                    <p>2018年6月2日 上午8:54:49</p>
+                    金华市|金华市【义乌转运中心】，正发往【济南转运中心】
+                </li>
+            </ul>
+        </Modal>
     </div>
 </template>
 <script>
@@ -301,3 +337,15 @@ export default {
   }
 };
 </script>
+<style lang="less" scoped>
+    li{
+        list-style: none;
+    }
+    .logistics{
+        p{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            color: #f54040;
+        }
+    }
+</style>

@@ -198,7 +198,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.confirm("删除", params.row.acId);
+                     this.confirm("删除", params.row.acId);
                     }
                   }
                 },
