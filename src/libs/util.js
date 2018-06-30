@@ -12,16 +12,48 @@ util.title = function (title) {
 };
 
 const ajaxUrl = env === 'development'
-    ? 'http://127.0.0.1:8888'
-    : env === 'production'
-        ? 'https://www.url.com'
-        : 'https://debug.url.com';
+    // 吴俊杰
+    // ?
+    // 'http://192.168.10.76:8080' :
+    // 白晨
+    // ?
+    // 'http://192.168.10.106:8090' :
+    // 刘世名
+    // ?
+    // 'http://192.168.10.141:8080' :
+    // 正式服务器
+    ?
+    'http://39.107.126.201:8080' :
+    env === 'production' ?
+    'https://www.url.com' :
+    'https://debug.url.com';
 
-util.ajax = axios.create({
-    baseURL: ajaxUrl,
-    timeout: 30000
-});
-
+axios.defaults.baseURL = ajaxUrl
+// axios.defaults.headers = { 'X-Requested-With': 'XMLHttpRequest' }
+// axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
+axios.defaults.timeout = 30000
+util.get = function (url, params) {
+    return new Promise((resolve, reject) => {
+        axios({
+            method: 'get',
+            url,
+            params: params,
+        }).then(res => {
+            resolve(res)
+        })
+    })
+}
+util.post = function (url, params) {
+    return new Promise((resolve, reject) => {
+        axios({
+            method: 'post',
+            url,
+            params: params,
+        }).then(res => {
+            resolve(res)
+        })
+    })
+}
 util.inOf = function (arr, targetArr) {
     let res = true;
     arr.forEach(item => {
@@ -98,16 +130,13 @@ util.setCurrentPath = function (vm, name) {
     });
     let currentPathArr = [];
     if (name === 'home_index') {
-        currentPathArr = [
-            {
-                title: util.handleTitle(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'home_index')),
-                path: '',
-                name: 'home_index'
-            }
-        ];
+        currentPathArr = [{
+            title: util.handleTitle(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'home_index')),
+            path: '',
+            name: 'home_index'
+        }];
     } else if ((name.indexOf('_index') >= 0 || isOtherRouter) && name !== 'home_index') {
-        currentPathArr = [
-            {
+        currentPathArr = [{
                 title: util.handleTitle(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'home_index')),
                 path: '/home',
                 name: 'home_index'
@@ -136,16 +165,13 @@ util.setCurrentPath = function (vm, name) {
             }
         })[0];
         if (currentPathObj.children.length <= 1 && currentPathObj.name === 'home') {
-            currentPathArr = [
-                {
-                    title: '首页',
-                    path: '',
-                    name: 'home_index'
-                }
-            ];
+            currentPathArr = [{
+                title: '首页',
+                path: '',
+                name: 'home_index'
+            }];
         } else if (currentPathObj.children.length <= 1 && currentPathObj.name !== 'home') {
-            currentPathArr = [
-                {
+            currentPathArr = [{
                     title: '首页',
                     path: '/home',
                     name: 'home_index'
@@ -160,8 +186,7 @@ util.setCurrentPath = function (vm, name) {
             let childObj = currentPathObj.children.filter((child) => {
                 return child.name === name;
             })[0];
-            currentPathArr = [
-                {
+            currentPathArr = [{
                     title: '首页',
                     path: '/home',
                     name: 'home_index'

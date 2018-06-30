@@ -1,23 +1,24 @@
 <style lang="less">
-    @import '../../../styles/common.less';
+@import "../../../styles/common.less";
 </style>
 <template>
     <div>
         <Row>
             <Card>
                 <span>订单号：</span>
-                <Input v-model="value" placeholder="请输入商品名称" clearable style="width: 200px"></Input>
-                <span class="margin-left-10">类型：</span>
+                <Input v-model="orderCode" placeholder="请输入订单编号" clearable style="width: 200px"></Input>
+                <!-- <span class="margin-left-10">类型：</span>
                 <Select v-model="model1" style="width:200px">
                     <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                </Select>
+                </Select> -->
                 <span class="margin-left-10">状态：</span>
-                <Select v-model="model1" style="width:200px">
+                <Select v-model="orderState" style="width:200px">
                     <Option v-for="item in statusList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                 </Select>
                 <span class="margin-left-10">时间范围：</span>
-                <DatePicker type="daterange" placement="bottom-end" placeholder="选择时间" style="width: 200px"></DatePicker>
-                <Button class="margin-left-10" type="success" icon="android-add" @click="Search">查找</Button>
+                <DatePicker type="daterange" placement="bottom-end" placeholder="选择时间" style="width: 200px" @on-change="data"></DatePicker>
+                <Button class="margin-left-10" type="success" icon="android-add" @click="search">查找</Button>
+
             </Card>
         </Row>
         <Row>
@@ -25,7 +26,7 @@
                 <Table stripe border :columns="tableColumns1" :data="tableData1"></Table>
                 <div style="margin: 10px;overflow: hidden">
                     <div style="float: right;">
-                        <Page show-elevator show-sizer @on-page-size-change="changePage" :total="100" :current="1" @on-change="changePage(10)"></Page>
+                        <Page show-elevator show-sizer @on-page-size-change="changePageSize" :total="count" :current="1" @on-change="changePage"></Page>
                     </div>
                 </div>
             </Card>
@@ -68,189 +69,273 @@
     </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                value: '',
-                model1: '全部',
-                Refund: false,
-                Logistics: false,
-                cityList: [
-                    {
-                        value: '全部',
-                        label: '全部'
-                    },
-                    {
-                        value: '卡券',
-                        label: '卡券'
-                    },
-                    {
-                        value: '现货',
-                        label: '现货'
-                    }
-                ],
-                statusList: [
-                    {
-                        value: '全部',
-                        label: '全部'
-                    },
-                    {
-                        value: '待付款',
-                        label: '待付款'
-                    },
-                    {
-                        value: '已超时',
-                        label: '已超时'
-                    },
-                    {
-                        value: '待配送',
-                        label: '待配送'
-                    },
-                    {
-                        value: '配送中',
-                        label: '配送中'
-                    },
-                    {
-                        value: '已完成',
-                        label: '已完成'
-                    },
-                    {
-                        value: '退款订单',
-                        label: '退款订单'
-                    }
-                ],
-                tableData1: this.mockTableData1(10),
-                tableColumns1: [
-                    {
-                        title: '订单号',
-                        key: 'id',
-                        align: 'center'
-                    },
-                    {
-                        title: '商品名称',
-                        key: 'type',
-                        align: 'center'
-                    },
-                    {
-                        title: '联系人',
-                        key: 'Object',
-                        align: 'center'
-                    },
-                    {
-                        title: '收货地址',
-                        key: 'id',
-                        align: 'center'
-                    },
-                    {
-                        title: '联系方式',
-                        key: 'type',
-                        align: 'center'
-                    },
-                    {
-                        title: '状态',
-                        key: 'Object',
-                        align: 'center'
-                    },
-                    {
-                        title: '下单时间',
-                        key: 'Object',
-                        align: 'center'
-                    },
-                    {
-                        title: '操作',
-                        key: 'action',
-                        width: 200,
-                        align: 'center',
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.Logistics = true;
-                                        }
-                                    }
-                                }, '物流'),
-                                h('Button', {
-                                    props: {
-                                        type: 'success',
-                                        size: 'small'
-                                    },
-                                    style: {
-                                        margin: '5px'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            let argu = { id: params.row.id };
-                                            this.$router.push({
-                                                name: 'ordermanagement-info',
-                                                params: argu
-                                            });
-                                        }
-                                    }
-                                }, '详情'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.confirm();
-                                        }
-                                    }
-                                }, '退款')
-                            ]);
-                        }
-                    }
-                ]
-            };
+import Cookies from "js-cookie";
+import order from "../service/order.js";
+export default {
+  mixins: [order],
+  data() {
+    return {
+      orderCode: "",
+      orderState: "",
+      count: 10,
+      orderPaytime: "",
+      orderCreatetime: "",
+      pageSize: 10,
+      pageNum: 1,
+      Refund: false,
+      cityList: [
+        {
+          value: "全部",
+          label: "全部"
         },
-        methods: {
-            Search () {
-                alert('判断不为空，向后台发送数据，给表格重新赋值')
-            },
-            mockTableData1 (pageSize) {
-                let data = [];
-                for (let i = 0; i < pageSize; i++) {
-                    data.push({
-                        id: i + 1,
-                        name: '阳澄湖大闸蟹6对礼盒装',
-                        type: '商品',
-                        Object: '阳澄湖4对装礼品卡',
-                        img: '//img12.360buyimg.com/n1/jfs/t19426/264/1610686010/451016/9b083eb8/5ad0334bNde6fb162.jpg',
-                    });
-                }
-                return data;
-            },
-            confirm () {
-                this.$Modal.confirm({
-                    title: '你确定要退款吗？',
-                    onOk: () => {
-                        this.$Message.info('退款成功');
-                    },
-                    onCancel: () => {
-                        this.$Message.info('取消成功');
-                    }
-                });
-            },
-            formatDate (date) {
-                const y = date.getFullYear();
-                let m = date.getMonth() + 1;
-                m = m < 10 ? '0' + m : m;
-                let d = date.getDate();
-                d = d < 10 ? ('0' + d) : d;
-                return y + '-' + m + '-' + d;
-            },
-            changePage (pageSize) {
-                // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
-                this.tableData1 = this.mockTableData1(pageSize);
-            }
+        {
+          value: "卡券",
+          label: "卡券"
+        },
+        {
+          value: "现货",
+          label: "现货"
         }
+      ],
+      statusList: [
+        {
+          value: "0",
+          label: "全部"
+        },
+        {
+          value: "1",
+          label: "待付款"
+        },
+        {
+          value: "2",
+          label: "已付款"
+        },
+        {
+          value: "3",
+          label: "待收货"
+        },
+        {
+          value: "4",
+          label: "已完成"
+        },
+        {
+          value: "5",
+          label: "已取消"
+        }
+      ],
+      tableData1: [],
+      tableColumns1: [
+        {
+          title: "订单号",
+          key: "orderCode",
+          width: 150,
+          align: "center"
+        },
+        {
+          title: "收货地址信息",
+          key: "orderAddressinfo",
+          align: "center"
+        },
+        {
+          title: "联系方式",
+          key: "type",
+          align: "center"
+        },
+        {
+          title: "订单金额",
+          key: "orderAllmoney",
+          align: "center"
+        },
+        {
+          title: "订单时间",
+          key: "orderCreatetime",
+          align: "center"
+        },
+        {
+          title: "订单状态",
+          key: "orderState",
+          align: "center",
+          //   render: (h, params) => {
+          //     return h("span", [
+          //       h("span", {}, this.status(params.row.orderState))
+          //     ]);
+          //   }
+          render: (h, params) => {
+            return h("span", [
+              h("span", {}, this.status(params.row.orderState))
+            ]);
+          }
+        },
+        {
+          title: "操作",
+          key: "action",
+          width: 200,
+          align: "center",
+          render: (h, params) => {
+            return h("div", [
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "primary",
+                    size: "small"
+                  },
+                  on: {
+                    click: () => {
+                      this.remove(params.row.orderCode);
+                    }
+                  }
+                },
+                "物流"
+              ),
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "success",
+                    size: "small"
+                  },
+                  style: {
+                    margin: "5px"
+                  },
+                  on: {
+                    click: () => {
+                      this.info(params.row.orderId);
+                    }
+                  }
+                },
+                "详情"
+              ),
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "error",
+                    size: "small"
+                  },
+                  on: {
+                    click: () => {
+                      this.confirm();
+                    }
+                  }
+                },
+                "退款"
+              )
+            ]);
+          }
+        }
+      ]
     };
+  },
+  methods: {
+    data(val) {
+      this.orderCreatetime = val[0];
+      this.orderPaytime = val[1];
+    },
+    search() {
+      this.mockTableData1();
+    },
+    info(orderId) {
+      let argu = { orderId: orderId };
+      this.$router.push({
+        name: "order-info",
+        params: argu
+      });
+    },
+
+    status(type) {
+      switch (type) {
+        case "1":
+          return "代付款";
+          break;
+        case "2":
+          return "已付款";
+          break;
+        case "3":
+          return "待收货";
+          break;
+        case "4":
+          return "已完成";
+          break;
+        case "5":
+          return "已取消";
+          break;
+      }
+    },
+
+    mockTableData1() {
+      var token = Cookies.get("token");
+      var staffId = Cookies.get("staffId");
+      var params = {
+        token,
+        staffId,
+        pageNum: this.pageNum,
+        pageSize: this.pageSize
+      };
+      var orderPaytime = this.orderPaytime;
+      var orderCode = this.orderCode;
+      var orderCreatetime = this.orderCreatetime;
+      var orderState = this.orderState == 0 ? "" : this.orderState;
+      console.log(orderPaytime, orderCode, orderCreatetime, orderState);
+      if (orderPaytime != "") {
+        params.orderPaytime = orderPaytime;
+      }
+      if (orderCode != "") {
+        params.orderCode = orderCode;
+      }
+      if (orderCreatetime != "") {
+        params.orderCreatetime = orderCreatetime;
+      }
+      if (orderState != "") {
+        params.orderState = orderState;
+      }
+      console.log(params);
+      this.selectOrderListBack(params).then(res => {
+        console.log(res);
+        if (res.code == 100000) {
+          this.tableData1 = res.data;
+          this.count = res.count;
+        } else {
+          this.$Message.error(res.message);
+        }
+      });
+    },
+    confirm() {
+      this.$Modal.confirm({
+        title: "你确定要退款吗？",
+        onOk: () => {
+          this.$Message.info("退款成功");
+        },
+        onCancel: () => {
+          this.$Message.info("取消成功");
+        }
+      });
+    },
+    formatDate(date) {
+      const y = date.getFullYear();
+      let m = date.getMonth() + 1;
+      m = m < 10 ? "0" + m : m;
+      let d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      return y + "-" + m + "-" + d;
+    },
+    changePageSize(pageSize) {
+      console.log(pageSize);
+      this.pageSize = pageSize;
+      this.mockTableData1();
+    },
+    changePage(pageNum) {
+      console.log(pageNum);
+      this.pageNum = pageNum;
+      this.mockTableData1();
+      // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
+      //   this.tableData1 = this.mockTableData1(pageNum);
+    }
+  },
+  mounted() {
+    this.mockTableData1();
+  }
+};
 </script>
 <style lang="less" scoped>
     li{
