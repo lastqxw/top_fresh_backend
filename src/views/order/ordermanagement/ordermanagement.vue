@@ -75,6 +75,7 @@ export default {
   mixins: [order],
   data() {
     return {
+      Logistics: false,
       orderCode: "",
       orderState: "",
       count: 10,
@@ -338,14 +339,14 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-    li{
-        list-style: none;
-    }
-    .logistics{
-        p{
-            margin-top: 10px;
-            margin-bottom: 10px;
-            color: #f54040;
-        }
-    }
+li {
+  list-style: none;
+}
+.logistics {
+  p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #f54040;
+  }
+}
 </style>

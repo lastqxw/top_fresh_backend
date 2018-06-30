@@ -6,7 +6,7 @@
 		<Row>
 			<Card>
                 <Row style="width:80%;display:inline-table">
-                    <Col span="6">
+                    <Col span="8">
                         <span class="margin-left-10">卡券编号:</span>
 				        <Input v-model="number" placeholder="请输入卡券编号" clearable style="width: 200px"></Input>
                     </Col>
@@ -14,17 +14,20 @@
                         <span class="margin-left-10">卡券名称:</span>
 				        <Input v-model="name" placeholder="请输入卡券名称" clearable style="width: 200px"></Input>
                     </Col> -->
-                    <Col span="6">
+                    <Col span="8">
                         <span class="margin-left-10">状态:</span>
                         <Select v-model="type" style="width:200px">
                             <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </Col>
+                    <Col span="8">
+                        <Button class="margin-left-20" type="primary" icon="ios-search" @click="search">查找</Button>
+                        <Button class="margin-left-20" type="info" icon="ios-plus-outline" @click="toPlush">录入卡券</Button>
+                    </Col>
                 </Row>
-                <Row style="width:19%;display:inline-table">
-                    <Button class="margin-left-20" type="primary" icon="ios-search" @click="search">查找</Button>
-                    <Button class="margin-left-20" type="info" icon="ios-plus-outline" @click="toPlush">录入卡券</Button>
-                </Row>
+                <!-- <Row style="width:19%;display:inline-table">
+                    
+                </Row> -->
 			</Card>
 		</Row>
 		<Row>
@@ -32,7 +35,7 @@
 				<Table stripe border :columns="tableColumns1" :data="tableData1"></Table>
 				<div style="margin: 10px;overflow: hidden">
                     <div style="float:left">
-                        <Button type="primary">批量导出</Button>
+                        <Button type="primary">批量激活</Button>
                     </div>
 					<div style="float: right;">
 						<Page show-elevator show-sizer @on-page-size-change="changePageSize" :total="count" :current="1" @on-change="changePage"></Page>
