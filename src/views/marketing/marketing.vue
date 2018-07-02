@@ -118,9 +118,10 @@ export default {
         {
           title: "使用范围",
           key: "useScope",
+          width: 150,
           align: "center",
           render: (h, params) => {
-            return h("span", [this.useScope(params.row.couponsType)]);
+            return h("span", [this.useScope(params.row.useScope)]);
           }
         },
         {

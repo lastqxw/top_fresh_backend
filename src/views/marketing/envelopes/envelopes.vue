@@ -131,6 +131,11 @@ export default {
     remove(redEnvelopeId) {
       var token = Cookies.get("token");
       var staffId = Cookies.get("staffId");
+      var params = {
+        token,
+        staffId,
+        redEnvelopeId
+      };
       this.deleteRedEnvelope(params).then(res => {
         console.log(res);
         if (res.code == 100000) {

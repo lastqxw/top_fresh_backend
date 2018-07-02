@@ -333,7 +333,14 @@ export default {
             that.value2 = res.data.productDetail;
             that.model1 = res.data.productPtype == 1 ? "礼券" : "现货";
             that.productId = productId;
-            that.defaultList = res.data.proImgs ? res.data.proImgs : [];
+            that.defaultList = res.data.proImgs
+              ? res.data.proImgs
+              : [
+                  {
+                    imgUrl: res.data.productIcon,
+                    imgName: res.data.productName
+                  }
+                ];
             // for(var i=0;i<res.data.proImgs;i++){
             // 	.push({
             // 		'imgUrl': res.data.proImgs[i].imgUrl,
@@ -492,9 +499,9 @@ export default {
         // 结束时间
         productEndDate: end_value,
         // 是否上架
-        productIsUse: this.model2
+        productIsUse: this.model2,
         // 商品轮播图list
-        // proImg:proImg,
+        proImg: proImg
       };
       console.log(params);
       this.addProduct(params).then(res => {

@@ -63,8 +63,8 @@
                                
                     </Col>
                     <Col span="12">
-                    <Button type="primary" :loading="loading" @click="toLoading">
-                        <span v-if="!loading" @click="save">保存</span>
+                    <Button type="primary" :loading="loading" @click="save">
+                        <span v-if="!loading">保存</span>
                         <span v-else>正在提交...</span>
                     </Button>
                     </Col>
@@ -239,6 +239,7 @@ export default {
     },
     save() {
       var that = this;
+      this.loading = true;
       var token = Cookies.get("token");
       var staffId = Cookies.get("staffId");
       var params = {
@@ -248,6 +249,7 @@ export default {
         setRedNumN: this.count,
         redEnvelopeId: this.type
       };
+      console.log(params);
       this.setRedEnvelope(params).then(res => {
         console.log(res);
         if (res.code == 100000) {

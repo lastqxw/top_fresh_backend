@@ -163,7 +163,7 @@ export default {
           if (res.code == 100000) {
             this.$Message.success({
               content: "用户封禁成功",
-              success: function() {
+              onClose: function() {
                 that.mockTableData1();
               }
             });
@@ -182,7 +182,7 @@ export default {
           if (res.code == 100000) {
             this.$Message.success({
               content: "用户解封成功",
-              success: function() {
+              onClose: function() {
                 that.mockTableData1();
               }
             });
@@ -193,20 +193,20 @@ export default {
       }
     },
     mockTableData1() {
-      var staffIsdel=this.staffIsdel;
-      var staffPhone=this.staffPhone;
+      var staffIsdel = this.staffIsdel;
+      var staffPhone = this.staffPhone;
       var params = {
         token: Cookies.get("token"),
         staffId: Cookies.get("staffId"),
         pageSize: this.pageSize,
-        pageNum: this.pageNum,
+        pageNum: this.pageNum
       };
-      if(staffPhone != ""){
-        params.staffPhone=staffPhone
+      if (staffPhone != "") {
+        params.staffPhone = staffPhone;
       }
-      console.log(staffIsdel)
-      if(staffIsdel != "" && staffIsdel != "0"){
-        params.staffIsdel=staffIsdel
+      console.log(staffIsdel);
+      if (staffIsdel != "" && staffIsdel != "0") {
+        params.staffIsdel = staffIsdel;
       }
       this.getStaffList(params).then(res => {
         console.log(res);
@@ -233,7 +233,7 @@ export default {
     },
     changePage(pageNum) {
       this.pageNum = pageNum;
-      this.mockTableData1();      
+      this.mockTableData1();
       // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
     }
   },
