@@ -32,10 +32,10 @@
 		</Row>
 		<Row>
 			<Card>
-				<Table stripe border :columns="tableColumns1" :data="tableData1"></Table>
+				<Table stripe border ref="selection" :columns="tableColumns1" :data="tableData1" @on-selection-change="jihuo1"></Table>
 				<div style="margin: 10px;overflow: hidden">
                     <div style="float:left">
-                        <Button type="primary">批量激活</Button>
+                        <Button type="primary" @click="jihuo">批量激活</Button>
                     </div>
 					<div style="float: right;">
 						<Page show-elevator show-sizer @on-page-size-change="changePageSize" :total="count" :current="1" @on-change="changePage"></Page>
@@ -58,6 +58,7 @@ export default {
       count: 10,
       pageSize: 10,
       pageNum: 1,
+      odIds: [],
       typeList: [
         {
           value: "0",
@@ -75,6 +76,12 @@ export default {
       tableData1: [],
       tableColumns1: [
         {
+          type: "selection",
+          key: "_disabled",
+          width: 60,
+          align: "center"
+        },
+        {
           title: "卡券编号",
           key: "card",
           width: 150,
@@ -90,7 +97,7 @@ export default {
           key: "state",
           align: "center",
           render: (h, params) => {
-            return h("span", [params.row.state == 1 ? "激活" : "未激活"]);
+            return h("span", [params.row.state == 6 ? "激活" : "未激活"]);
           }
         },
         {
@@ -119,25 +126,6 @@ export default {
           key: "usetime",
           width: 150,
           align: "center"
-        },
-        {
-          title: " ",
-          key: "checkbox",
-          width: 150,
-          align: "center",
-          render: (h, params) => {
-            return h("div", [
-              h(
-                "Checkbox",
-                {
-                  style: {
-                    marginRight: "5px"
-                  }
-                },
-                ""
-              )
-            ]);
-          }
         }
       ]
     };
@@ -145,6 +133,41 @@ export default {
   methods: {
     search() {
       this.mockTableData1();
+    },
+    jihuo1(selection) {
+      console.log(selection);
+      this.odIds = selection;
+    },
+    jihuo() {
+      var that = this;
+      var token = Cookies.get("token");
+      var staffId = Cookies.get("staffId");
+      var odid = "";
+      var odIds = this.odIds;
+      if (odIds.length == 0) {
+        this.$Message.error("请选择需要激活的卡券");
+      } else {
+        for (var i = 0; i < odIds.length; i++) {
+          odid += odIds[i].odId + ",";
+        }
+        console.log(odid.substr(0, odid.length - 1));
+        var params = {
+          token,
+          staffId,
+          odIds: odid.substr(0, odid.length - 1)
+        };
+        this.updateBatchState(params).then(res => {
+          console.log(res);
+          if (res.code == 100000) {
+            this.$Message.success({
+              content: "激活成功",
+              onClose: function() {
+                that.mockTableData1();
+              }
+            });
+          }
+        });
+      }
     },
     toPlush() {
       this.$router.push({
@@ -172,6 +195,13 @@ export default {
       this.getLadingList(params).then(res => {
         console.log(res);
         if (res.code == 100000) {
+          for (var i = 0; i < res.data.length; i++) {
+            if (res.data[i].state == 6) {
+              res.data[i]._disabled = true;
+            } else {
+              res.data[i]._disabled = false;
+            }
+          }
           this.tableData1 = res.data;
           this.count = res.count;
         } else {
