@@ -17,12 +17,12 @@
 						<Input v-model="productInfo"  icon="android-list" />
 					</FormItem>
 					<!-- 商品主图 -->
-					<FormItem label="商品主图">
+          	<FormItem label="商品主图">
 						<div class="demo-upload-list" v-for="item in uploadList">
-							<template v-if="item.status === 'finished'">
+							<template v-if="item.status == 'finished'">
 								<img :src="item.imgUrl">
 								<div class="demo-upload-list-cover">
-									<Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
+									<Icon type="ios-eye-outline" @click.native="handleView(item.imgUrl)"></Icon>
 									<Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
 								</div>
 							</template>
@@ -38,7 +38,30 @@
 							</div>
 						</Upload>
 						<Modal title="View Image" v-model="visible">
-							<img :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'" v-if="visible" style="width: 100%">
+							<img :src="imgName" v-if="visible" style="width: 100%">
+						</Modal>
+					</FormItem>	<FormItem label="商品轮播图">
+						<div class="demo-upload-list2" v-for="item in uploadList1">
+							<template v-if="item.status === 'finished'">
+								<img :src="item.imgUrl">
+								<div class="demo-upload-list-cover2">
+									<Icon type="ios-eye-outline" @click.native="handleView(item.imgUrl)"></Icon>
+									<Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
+								</div>
+							</template>
+							<template v-else>
+								<Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
+							</template>
+						</div>
+						<Upload ref="upload2" :show-upload-list="false" :default-file-list="defaultList1" :on-success="handleSuccess1" :format="['jpg','jpeg','png']"
+						 :max-size="2048" :on-format-error="handleFormatError1" :on-exceeded-size="handleMaxSize1" :before-upload="handleBeforeUpload1"
+						 multiple type="drag"  :action="url" style="display: inline-block;width:58px;">
+							<div style="width: 58px;height:58px;line-height: 58px;">
+								<Icon type="camera" size="20"></Icon>
+							</div>
+						</Upload>
+						<Modal title="View Image" v-model="visible">
+							<img :src="imgName" v-if="visible" style="width: 100%">
 						</Modal>
 					</FormItem>
 					<FormItem label="商品详情">
@@ -151,6 +174,7 @@ export default {
       url: "",
       isAdd: true,
       defaultList: [],
+      defaultList1: [],
       productId: "",
       productInfo: "",
       productDetail: null,
@@ -159,6 +183,7 @@ export default {
       imgName: "",
       visible: false,
       uploadList: [],
+      uploadList1: [],
       value: "",
       value1: "",
       value2: "",
@@ -333,22 +358,16 @@ export default {
             that.value2 = res.data.productDetail;
             that.model1 = res.data.productPtype == 1 ? "礼券" : "现货";
             that.productId = productId;
-            that.defaultList = res.data.proImgs
-              ? res.data.proImgs
-              : [
-                  {
-                    imgUrl: res.data.productIcon,
-                    imgName: res.data.productName
-                  }
-                ];
-            // for(var i=0;i<res.data.proImgs;i++){
-            // 	.push({
-            // 		'imgUrl': res.data.proImgs[i].imgUrl,
-            // 		'imgName':res.data.proImgs[i].imgName
-            // 	})
-            // }
+            that.defaultList = [
+              {
+                imgUrl: res.data.productIcon,
+                imgName: res.data.productName
+              }
+            ];
+            that.defaultList1 = res.data.proImgs;
             that.$nextTick(() => {
               that.uploadList = that.$refs.upload.fileList;
+              that.uploadList1 = that.$refs.upload2.fileList;
             });
             that.productImg = res.data.productImg;
             that.value4 = res.data.productAddress;
@@ -356,6 +375,7 @@ export default {
               ? res.data.productSendType
               : "";
             console.log(that.defaultList);
+            console.log(that.defaultList1);
             that.value6 = res.data.productBeginDate;
             that.value7 = res.data.productEndDate;
             that.value8 = res.data.productNum;
@@ -399,6 +419,42 @@ export default {
       });
     },
     handleBeforeUpload() {
+      const check = this.uploadList.length < 1;
+      if (!check) {
+        this.$Notice.warning({
+          title: "最多只能上传一张图片"
+        });
+      }
+      return check;
+    },
+    handleSuccess1(res, file) {
+      console.log(file);
+      console.log(res);
+      console.log(this.defaultList1);
+      this.defaultList1.push({
+        imgUrl: file.response.data,
+        imgName: file.name
+      });
+      this.$nextTick(() => {
+        this.uploadList1 = this.$refs.upload2.fileList;
+      });
+    },
+    handleFormatError1(file) {
+      this.$Notice.warning({
+        title: "The file format is incorrect",
+        desc:
+          "File format of " +
+          file.name +
+          " is incorrect, please select jpg or png."
+      });
+    },
+    handleMaxSize1(file) {
+      this.$Notice.warning({
+        title: "Exceeding file size limit",
+        desc: "File  " + file.name + " is too large, no more than 2M."
+      });
+    },
+    handleBeforeUpload1() {
       const check = this.uploadList.length < 5;
       if (!check) {
         this.$Notice.warning({
@@ -457,10 +513,10 @@ export default {
       var end_value =
         end.getFullYear() + "-" + (end.getMonth() + 1) + "-" + end.getDate();
       var proImg = [];
-      for (var i = 0; i < this.uploadList.length; i++) {
+      for (var i = 0; i < this.uploadList1.length; i++) {
         proImg.push({
-          imgUrl: this.uploadList[i].imgUrl,
-          imgName: this.uploadList[i].imgName,
+          imgUrl: this.uploadList1[i].imgUrl,
+          imgName: this.uploadList1[i].imgName,
           order: i
         });
       }
@@ -544,6 +600,7 @@ export default {
       this.staffId +
       "&type=1";
     this.uploadList = this.$refs.upload.fileList;
+    this.uploadList1 = this.$refs.upload2.fileList;
     var that = this;
     tinymce.init({
       selector: "#articleEditor",

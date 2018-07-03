@@ -28,6 +28,17 @@ export default {
 
                 })
         },
+        // 卡券批量激活
+        updateBatchState(params) {
+            return Util.get("fresh_show/orderTail/updateBatchState", params)
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data.code == 100000) {
+                        return res.data;
+                    }
+
+                })
+        },
 
     }
 }
