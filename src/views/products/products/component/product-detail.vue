@@ -38,7 +38,31 @@
 							</div>
 						</Upload>
 						<Modal title="View Image" v-model="visible">
-							<img :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'" v-if="visible" style="width: 100%">
+							<img :src="imgName" v-if="visible" style="width: 100%">
+						</Modal>
+					</FormItem>
+          <FormItem label="商品轮播图">
+						<div class="demo-upload-list2" v-for="item in uploadList2">
+							<template v-if="item.status === 'finished'">
+								<img :src="item.imgUrl">
+								<div class="demo-upload-list-cover2">
+									<Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
+									<Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
+								</div>
+							</template>
+							<template v-else>
+								<Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
+							</template>
+						</div>
+						<Upload ref="upload2" :show-upload-list="false" :default-file-list="defaultList2" :on-success="handleSuccess2" :format="['jpg','jpeg','png']"
+						 :max-size="2048" :on-format-error="handleFormatError2" :on-exceeded-size="handleMaxSize2" :before-upload="handleBeforeUpload2"
+						 multiple type="drag"  :action="url" style="display: inline-block;width:58px;">
+							<div style="width: 58px;height:58px;line-height: 58px;">
+								<Icon type="camera" size="20"></Icon>
+							</div>
+						</Upload>
+						<Modal title="View Image" v-model="visible">
+							<img :src="imgName" v-if="visible" style="width: 100%">
 						</Modal>
 					</FormItem>
 					<FormItem label="商品详情">
@@ -151,6 +175,7 @@ export default {
       url: "",
       isAdd: true,
       defaultList: [],
+      defaultList2: [],
       productId: "",
       productInfo: "",
       productDetail: null,
@@ -159,6 +184,7 @@ export default {
       imgName: "",
       visible: false,
       uploadList: [],
+      uploadList2: [],
       value: "",
       value1: "",
       value2: "",
@@ -236,10 +262,10 @@ export default {
       var end_value =
         end.getFullYear() + "-" + (end.getMonth() + 1) + "-" + end.getDate();
       var proImg = [];
-      for (var i = 0; i < this.uploadList.length; i++) {
+      for (var i = 0; i < this.uploadList2.length; i++) {
         proImg.push({
-          imgUrl: this.uploadList[i].imgUrl,
-          imgName: this.uploadList[i].imgName,
+          imgUrl: this.uploadList2[i].imgUrl,
+          imgName: this.uploadList2[i].imgName,
           order: i
         });
       }
@@ -291,7 +317,7 @@ export default {
             var params = {
               token: that.token,
               staffId: that.staffId,
-              imgProductId: res.data,
+              imgProductId: productId,
               imgName: proImg[i].imgName,
               imgUrl: proImg[i].imgUrl,
               order: proImg[i].order
@@ -331,16 +357,15 @@ export default {
             that.value = res.data.productOprice;
             that.value1 = res.data.productPrice;
             that.value2 = res.data.productDetail;
-            that.model1 = res.data.productPtype == 1 ? "礼券" : "现货";
+            that.model1 = res.data.productPtype;
             that.productId = productId;
-            that.defaultList = res.data.proImgs
-              ? res.data.proImgs
-              : [
-                  {
-                    imgUrl: res.data.productIcon,
-                    imgName: res.data.productName
-                  }
-                ];
+            that.defaultList = [
+              {
+                imgUrl: res.data.productIcon,
+                imgName: res.data.productName
+              }
+            ];
+            that.defaultList2 = res.data.proImgs ? res.data.proImgs : [];
             // for(var i=0;i<res.data.proImgs;i++){
             // 	.push({
             // 		'imgUrl': res.data.proImgs[i].imgUrl,
@@ -349,6 +374,7 @@ export default {
             // }
             that.$nextTick(() => {
               that.uploadList = that.$refs.upload.fileList;
+              that.uploadList2 = that.$refs.upload2.fileList;
             });
             that.productImg = res.data.productImg;
             that.value4 = res.data.productAddress;
@@ -399,6 +425,42 @@ export default {
       });
     },
     handleBeforeUpload() {
+      const check = this.uploadList.length < 1;
+      if (!check) {
+        this.$Notice.warning({
+          title: "最多只能上传一张图片"
+        });
+      }
+      return check;
+    },
+    handleSuccess2(res, file) {
+      console.log(file);
+      console.log(res);
+      console.log(this.defaultList);
+      this.defaultList2.push({
+        imgUrl: file.response.data,
+        imgName: file.name
+      });
+      this.$nextTick(() => {
+        this.uploadList2 = this.$refs.upload2.fileList;
+      });
+    },
+    handleFormatError2(file) {
+      this.$Notice.warning({
+        title: "The file format is incorrect",
+        desc:
+          "File format of " +
+          file.name +
+          " is incorrect, please select jpg or png."
+      });
+    },
+    handleMaxSize2(file) {
+      this.$Notice.warning({
+        title: "Exceeding file size limit",
+        desc: "File  " + file.name + " is too large, no more than 2M."
+      });
+    },
+    handleBeforeUpload2() {
       const check = this.uploadList.length < 5;
       if (!check) {
         this.$Notice.warning({
@@ -457,10 +519,10 @@ export default {
       var end_value =
         end.getFullYear() + "-" + (end.getMonth() + 1) + "-" + end.getDate();
       var proImg = [];
-      for (var i = 0; i < this.uploadList.length; i++) {
+      for (var i = 0; i < this.uploadList2.length; i++) {
         proImg.push({
-          imgUrl: this.uploadList[i].imgUrl,
-          imgName: this.uploadList[i].imgName,
+          imgUrl: this.uploadList2[i].imgUrl,
+          imgName: this.uploadList2[i].imgName,
           order: i
         });
       }
@@ -544,6 +606,7 @@ export default {
       this.staffId +
       "&type=1";
     this.uploadList = this.$refs.upload.fileList;
+    this.uploadList2 = this.$refs.upload2.fileList;
     var that = this;
     tinymce.init({
       selector: "#articleEditor",

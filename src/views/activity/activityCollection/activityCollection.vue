@@ -232,7 +232,8 @@ export default {
         staffId,
         pageNum: 1,
         pageSize: 1000000,
-        productPtype: val
+        productPtype: val,
+        productIsuse: 1
       };
       this.getProduct(params).then(res => {
         console.log(res);
@@ -342,7 +343,7 @@ export default {
     var token = Cookies.get("token");
     var staffId = Cookies.get("staffId");
     this.url =
-      "http://192.168.10.141:8080/fresh_show//User/uploadAll?token=" +
+      "http://39.107.126.201:8080/fresh_show//User/uploadAll?token=" +
       token +
       "&staffId=" +
       staffId +

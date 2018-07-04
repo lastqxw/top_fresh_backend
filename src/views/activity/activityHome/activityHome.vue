@@ -128,7 +128,7 @@ export default {
             return h("img", {
               attrs: {
                 src: params.row.acIcon,
-                width: 200
+                width: "100%"
               },
               on: {
                 click: () => {
@@ -198,7 +198,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                     this.confirm("删除", params.row.acId);
+                      this.confirm("删除", params.row.acId);
                     }
                   }
                 },

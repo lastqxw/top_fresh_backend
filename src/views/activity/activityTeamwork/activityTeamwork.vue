@@ -98,21 +98,9 @@
           	<Input v-model="product.priceTogether" placeholder="拼团可成功个数" style="width: 300px"></Input>
         </p>
         <p style="margin-bottom:30px">
-          <span>原价:</span>
-          	<Input v-model="product.originalPrice" placeholder="原件" style="width: 300px"></Input>
-        </p>
-        <p style="margin-bottom:30px">
           <span>拼团可成功个数	:</span>
           	<Input v-model="product.togetherOrderNum" placeholder="拼团可成功个数" style="width: 300px"></Input>
         </p>
-        <p style="margin-bottom:30px">
-          <span>拼团成功人数(满足该条件)		:</span>
-          	<Input v-model="product.successPeopleNum" placeholder="拼团成功人数(满足该条件)	" style="width: 300px"></Input>
-        </p>
-        <!-- <p>
-          <span>设置商品数量</span>
-          <Input v-model="productNum"  icon="android-list"  style="width:300px"/>
-        </p> -->
     </Modal>
     </div>
 </template>
@@ -126,9 +114,7 @@ export default {
       product: {
         productId: "",
         priceTogether: "",
-        togetherOrderNum: "",
-        successPeopleNum: "",
-        originalPrice: ""
+        togetherOrderNum: ""
       },
       isAdd: true,
       show: false,
@@ -149,7 +135,6 @@ export default {
         {
           value: "1",
           label: "礼卡"
-
         },
         {
           value: "2",
@@ -167,7 +152,7 @@ export default {
       tableData1: [],
       tableColumns1: [
         {
-          title: "序号",
+          title: "商品编号",
           key: "productId",
           width: 80,
           align: "center"
@@ -269,7 +254,8 @@ export default {
         staffId,
         pageNum: 1,
         pageSize: 1000000,
-        productPtype: val
+        productPtype: val,
+        productIsuse:1,
       };
       this.getProduct(params).then(res => {
         console.log(res);
@@ -314,7 +300,8 @@ export default {
         token,
         staffId,
         pageNum: this.pageNum,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
+        activityId: this.activeId
       };
       this.getTogetherOrderListHT(params).then(res => {
         console.log(res);

@@ -72,6 +72,10 @@ export default {
       couponsId: "",
       typeList: [
         {
+          value: "0",
+          label: "全部"
+        },
+        {
           value: "1",
           label: "满减券"
         },
@@ -81,6 +85,10 @@ export default {
         }
       ],
       cityList: [
+        {
+          value: "0",
+          label: "全部"
+        },
         {
           value: "ALL",
           label: "全部类"
@@ -262,6 +270,8 @@ export default {
       this.mockTableData1(1);
     },
     mockTableData1(pageNum) {
+      var couponsType = this.couponsType;
+      var usescope = this.usescope;
       var token = Cookies.get("token");
       var staffId = Cookies.get("staffId");
       var params = {
@@ -269,10 +279,10 @@ export default {
         staffId,
         pageSize: 10,
         pageNum,
-        couponsType: this.couponsType,
+        couponsType: this.couponsType == 0 ? "" : this.couponsType,
         couponsValue: this.couponsValue,
         couponsName: this.couponsName,
-        useScope: this.usescope
+        useScope: this.usescope == 0 ? "" : this.usescope
       };
       this.selectCouponsList(params).then(res => {
         if (res.code == 100000) {

@@ -89,6 +89,22 @@ export default {
                     console.log(res)
                     return res.data
                 })
-        }
+        },
+        // 积分设置查询
+        getList(params) {
+            return Util.get("fresh_show/score/getList", params)
+                .then(res => {
+                    console.log(res)
+                    return res.data
+                })
+        },
+        // 更新积分设置
+        updateScore(params) {
+            return Util.get("fresh_show/score/updateScore", params)
+                .then(res => {
+                    console.log(res)
+                    return res.data
+                })
+        },
     }
 }

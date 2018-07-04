@@ -46,7 +46,8 @@
 					    </span>
             </p>
             <div >
-							<textarea id="articleEditor"></textarea>
+							<!-- <textarea id="articleEditor"></textarea> -->
+              <vue-wangeditor id="editor" ref="child" v-model="text" :uploadImgUrl="url" height="430" width="720"></vue-wangeditor>
 						</div>            
            
       </Card>
@@ -85,9 +86,11 @@
 </template>
 
 <script>
-import tinymce from "tinymce";
+// import tinymce from "tinymce";
 import Cookies from "js-cookie";
 import active from "../service/active.js";
+import vueWangeditor from "vue-wangeditor";
+
 export default {
   name: "artical-publish",
   mixins: [active],
@@ -105,8 +108,44 @@ export default {
       articleTitle: "",
       acEndtime: "",
       acCreattime: "",
-      content:"",
-      activeId:"",
+      content: "",
+      activeId: "",
+      text: "",
+      menus: [
+        "source", // 源码模式
+        "|",
+        "bold", // 粗体
+        "underline", // 下划线
+        "italic", // 斜体
+        "strikethrough", // 中线
+        "eraser", // 清空格式
+        "forecolor", // 文字颜色
+        "bgcolor", // 背景颜色
+        "|",
+        "quote", // 引用
+        "fontfamily", // 字体
+        "fontsize", // 字号
+        "head", // 标题
+        "unorderlist", // 无序列表
+        "orderlist", // 有序列表
+        "alignleft", // 左对齐
+        "aligncenter", // 居中
+        "alignright", // 右对齐
+        "|",
+        "link", // 链接
+        "unlink", // 取消链接
+        "table", // 表格
+        "emotion", // 表情
+        "|",
+        "img", // 图片
+        "video", // 视频
+        "location", // 位置
+        "insertcode", // 插入代码
+        "|",
+        "undo", // 撤销
+        "redo", // 重做
+        "fullscreen" // 全屏
+      ]
     };
   },
   methods: {
@@ -158,8 +197,7 @@ export default {
         if (res.code == 100000) {
           this.$Message.success({
             content: "修改活动成功",
-            onClose: function() {
-            }
+            onClose: function() {}
           });
         } else {
           this.$Message.error(res.message);
@@ -174,7 +212,7 @@ export default {
         token,
         staffId,
         acId: this.activeId,
-        acImg:tinymce.activeEditor.getContent()
+        acImg: this.$refs.child.getHtml()
       };
       this.updateActivity(params).then(res => {
         console.log(res);
@@ -267,10 +305,10 @@ export default {
     }
   },
   mounted() {
-    var token=Cookies.get("token")
-    var staffId=Cookies.get("staffId")
+    var token = Cookies.get("token");
+    var staffId = Cookies.get("staffId");
     this.url =
-      "http://192.168.10.141:8080/fresh_show//User/uploadAll?token=" +
+      "http://39.107.126.201:8080/fresh_show//User/uploadAll?token=" +
       token +
       "&staffId=" +
       staffId +
@@ -298,54 +336,30 @@ export default {
           });
           this.value6 = res.data[0].acCreattime;
           this.value7 = res.data[0].acEndtime;
-          this.content=res.data[0].acImg
-          tinymce.activeEditor.setContent(res.data[0].acImg)
+          this.content = res.data[0].acImg;
+          this.$refs.child.setHtml(res.data[0].acImg);
         }
       });
     }
     var that = this;
-    tinymce.init({
-      selector: "#articleEditor",
-      branding: false,
-      elementpath: false,
-      height: 400,
-      language: "zh_CN.GB2312",
-      menubar: "edit insert view format table tools",
-      theme: "modern",
-      plugins: [
-        "advlist autolink lists link image charmap print preview hr anchor pagebreak imagetools",
-        "searchreplace visualblocks visualchars code fullscreen fullpage",
-        "insertdatetime media nonbreaking save table contextmenu directionality",
-        "emoticons paste   colorpicker textpattern imagetools codesample"
-      ],
-      toolbar1:
-        " newnote print fullscreen preview | undo redo | insert | styleselect | forecolor backcolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image emoticons media codesample",
-      autosave_interval: "20s",
-      image_advtab: true,
-      table_default_styles: {
-        width: "100%",
-        borderCollapse: "collapse"
-      }
-    });
   },
-  destroyed() {
-    tinymce.get("articleEditor").destroy();
+  components: {
+    vueWangeditor
   }
 };
 </script> 
 <style>
-.ivu-card-head p{
-  overflow:inherit
+.ivu-card-head p {
+  overflow: inherit;
 }
-.demo-upload-list1{
-   display: inline-block;
+.demo-upload-list1 {
+  display: inline-block;
   width: 60px;
   height: 60px;
   text-align: center;
   line-height: 60px;
   overflow: hidden;
   margin-right: 10px;
-
 }
 .demo-upload-list {
   display: inline-block;
