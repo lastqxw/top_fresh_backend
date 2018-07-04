@@ -1,5 +1,4 @@
 import Main from '@/views/Main.vue';
-
 // 不作为Main组件的子页面展示的页面单独写，如下
 export const loginRouter = {
     path: '/login',
@@ -10,15 +9,12 @@ export const loginRouter = {
     component: () =>
         import ('@/views/login.vue')
 };
-
-
 export const preview = {
     path: '/preview',
     name: 'preview',
     component: () =>
         import ('@/views/form/article-publish/preview.vue')
 };
-
 export const locking = {
     path: '/locking',
     name: 'locking',
@@ -184,6 +180,14 @@ export const appRouter = [{
                 icon: 'arrow-swap',
                 component: () =>
                     import ('@/views/marketing/grant/grant.vue')
+            },
+            {
+                path: 'score',
+                title: '积分设置',
+                name: 'score',
+                icon: 'arrow-swap',
+                component: () =>
+                    import ('@/views/marketing/score/score.vue')
             }
         ]
     },
@@ -286,6 +290,21 @@ export const appRouter = [{
             icon: 'compose',
             component: () =>
                 import ('@/views/activity/activityHome/activityHome.vue')
+        }]
+    },
+    {
+        path: '/im',
+        icon: 'android-checkbox',
+        name: 'im',
+        title: '客服',
+        component: Main,
+        children: [{
+            path: 'imAdmin',
+            title: '客服',
+            name: 'imAdmin',
+            icon: 'compose',
+            component: () =>
+                import ('@/views/im/im.vue')
         }]
     },
 ];

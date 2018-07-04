@@ -25,6 +25,14 @@ export default {
                     return res.data
                 })
         },
+        // 物流查询
+        chaxun(params) {
+            return Util.get('http://www.kuaidi100.com/chaxun', params)
+                .then(res => {
+                    console.log(res)
+                    return res.data
+                })
+        },
 
     }
 }

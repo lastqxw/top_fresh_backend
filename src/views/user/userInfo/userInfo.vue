@@ -73,9 +73,9 @@ export default {
       integral: "",
       active: "",
       type: "",
-      count:10,
-      pageSize:10,
-      pageNum:1,
+      count: 10,
+      pageSize: 10,
+      pageNum: 1,
       phone: "",
       nickName: "",
       tableData1: [],
@@ -210,24 +210,23 @@ export default {
       });
     },
     mockTableData1() {
-       var token = Cookies.get("token");
-    var staffId = Cookies.get("staffId");
-    var staffid = this.$route.params.staffid;
-    var params = {
-      token,
-      staffid,
-      staffId,
-      pageSize:this.pageSize,
-      pageNum:this.pageNum
-    };
-      this.selectOrderListBack(params)
-      .then(res => {
-      console.log(res)
-      if(res.code==100000){
-        this.tableData1=res.data;
-        this.count=res.count
-      }
-    })
+      var token = Cookies.get("token");
+      var staffId = Cookies.get("staffId");
+      var staffid = this.$route.params.staffid;
+      var params = {
+        token,
+        orderStaffid: staffid,
+        staffId,
+        pageSize: this.pageSize,
+        pageNum: this.pageNum
+      };
+      this.selectOrderListBack(params).then(res => {
+        console.log(res);
+        if (res.code == 100000) {
+          this.tableData1 = res.data;
+          this.count = res.count;
+        }
+      });
     },
     formatDate(date) {
       const y = date.getFullYear();
@@ -237,13 +236,13 @@ export default {
       d = d < 10 ? "0" + d : d;
       return y + "-" + m + "-" + d;
     },
-     changePageSize(pageSize) {
-      this.pageSize=pageSize
+    changePageSize(pageSize) {
+      this.pageSize = pageSize;
       // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
       this.mockTableData1();
     },
     changePage(pageNum) {
-      this.pageNum=pageNum
+      this.pageNum = pageNum;
       // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
       this.mockTableData1();
     }
@@ -252,7 +251,7 @@ export default {
     var token = Cookies.get("token");
     var staffId = Cookies.get("staffId");
     var staffid = this.$route.params.staffid;
-    this.mockTableData1()
+    this.mockTableData1();
     var params = {
       token,
       staffid,
@@ -271,7 +270,6 @@ export default {
           : this.staffPhotourl;
       }
     });
-    
   }
 };
 </script>

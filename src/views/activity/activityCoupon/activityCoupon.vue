@@ -46,6 +46,8 @@
                             <Select v-model="iId" style="width:200px">
                                 <Option v-for="item in couponList" :value="item.couponsId" :key="item.couponId">{{ item.couponsName }}</Option>
                             </Select>
+                            <span class="margin-left-10">设置优惠券数量：</span>
+                                <Input v-model="couponNum"  icon="android-list"  style="width:100px"/>
                             <Button type="primary" @click="addCoupon">添加代金卷</Button>
                         </div>
                     </Card>
@@ -99,6 +101,7 @@ export default {
     return {
       isAdd: false,
       // 活动标题
+      couponNum: "",
       data1: "",
       articleTitle: "",
       //   所选优惠券的id
@@ -140,7 +143,12 @@ export default {
         {
           title: "优惠券类型",
           key: "couponsType",
-          align: "center"
+          align: "center",
+          render: (h, params) => {
+            return h("span", [
+              params.row.couponsType == 1 ? "满减券" : "直减券"
+            ]);
+          }
         },
         {
           title: "适用范围",
@@ -154,7 +162,7 @@ export default {
         },
         {
           title: "可领取数量",
-          key: "couponsUsenum",
+          key: "couponsNum",
           align: "center"
         },
         {
@@ -255,7 +263,8 @@ export default {
         staffId,
         acType: 1,
         couponsId: this.iId,
-        activityId: this.activeId
+        activityId: this.activeId,
+        couponsNum: this.couponNum
       };
       this.editCoupons(params).then(res => {
         console.log(res);
@@ -366,8 +375,10 @@ export default {
     },
     handleSuccess(res, file) {
       console.log(file);
-      this.defaultList[0].imgUrl = file.response.data;
-      this.defaultList[0].imgName = file.name;
+      this.defaultList.push({
+        imgUrl: file.response.data,
+        imgName: file.name
+      });
       this.$nextTick(() => {
         this.uploadList = this.$refs.upload.fileList;
       });
@@ -389,10 +400,10 @@ export default {
       });
     },
     handleBeforeUpload() {
-      const check = this.uploadList.length < 5;
+      const check = this.uploadList.length < 1;
       if (!check) {
         this.$Notice.warning({
-          title: "Up to five pictures can be uploaded."
+          title: "最多只能上传1张图片"
         });
       }
       return check;
@@ -402,12 +413,12 @@ export default {
     var token = Cookies.get("token");
     var staffId = Cookies.get("staffId");
     this.url =
-      "http://192.168.10.141:8080/fresh_show//User/uploadAll?token=" +
+      "http://39.107.126.201:8080/fresh_show//User/uploadAll?token=" +
       token +
       "&staffId=" +
       staffId +
       "&type=1";
-    this.uploadList = this.$refs.upload.fileList;
+
     var type = this.$route.params.activeId;
     if (type != "add") {
       var params = {
@@ -419,7 +430,14 @@ export default {
         console.log(res);
         if (res.code == 100000) {
           this.articleTitle = res.data[0].acTitle;
-          this.defaultList[0].imgUrl = res.data[0].acIcon;
+          this.defaultList = [];
+          this.defaultList.push({
+            imgUrl: res.data[0].acIcon,
+            imgName: res.data[0].acTitle
+          });
+          this.$nextTick(() => {
+            this.uploadList = this.$refs.upload.fileList;
+          });
           this.data1 = res.data[0].acCreattime + "-" + res.data[0].acEndtime;
         }
       });

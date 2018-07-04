@@ -97,10 +97,6 @@
           <span>拼团价:</span>
           	<Input v-model="product.priceTogether" placeholder="拼团价格" style="width: 300px"></Input>
         </p>
-        <!-- <p style="margin-bottom:30px">
-          <span>原价:</span>
-          	<Input v-model="product.originalPrice" placeholder="原件" style="width: 300px"></Input>
-        </p>
         <p style="margin-bottom:30px">
           <span>拼团可成功个数	:</span>
           	<Input v-model="product.togetherOrderNum" placeholder="拼团可成功个数" style="width: 300px"></Input>
@@ -125,7 +121,8 @@ export default {
     return {
       product: {
         productId: "",
-        priceTogether: ""
+        priceTogether: "",
+        togetherOrderNum: ""
         // togetherOrderNum: "",
         // successPeopleNum: "",
         // originalPrice: ""
@@ -166,7 +163,7 @@ export default {
       tableData1: [],
       tableColumns1: [
         {
-          title: "序号",
+          title: "商品编号",
           key: "productId",
           width: 80,
           align: "center"
@@ -311,7 +308,8 @@ export default {
         staffId,
         pageNum: 1,
         pageSize: 1000000,
-        productPtype: val
+        productPtype: val,
+        productIsuse:1,
       };
       this.getProduct(params).then(res => {
         console.log(res);
@@ -356,7 +354,8 @@ export default {
         token,
         staffId,
         pageNum: this.pageNum,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
+        activityId: this.activeId
       };
       this.getTogetherOrderListHT(params).then(res => {
         console.log(res);

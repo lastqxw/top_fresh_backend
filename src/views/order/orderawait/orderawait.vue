@@ -39,15 +39,41 @@ export default {
         //   key: "type",
         //   align: "center"
         // },
-        // {
-        //   title: "联系人",
-        //   key: "Object",
-        //   align: "center"
-        // },
         {
-          title: "收货地址",
+          title: "联系人",
           key: "orderAddressinfo",
-          align: "center"
+          align: "center",
+          render: (h, params) => {
+            return h("span", [
+              params.row.orderAddressinfo
+                ? params.row.orderAddressinfo.split(",")[0]
+                : "暂无"
+            ]);
+          }
+        },
+        {
+          title: "收货地址信息",
+          key: "orderAddressinfo",
+          align: "center",
+          render: (h, params) => {
+            return h("span", [
+              params.row.orderAddressinfo
+                ? params.row.orderAddressinfo.split(",")[1]
+                : "暂无"
+            ]);
+          }
+        },
+        {
+          title: "联系方式",
+          key: "type",
+          align: "center",
+          render: (h, params) => {
+            return h("span", [
+              params.row.orderAddressinfo
+                ? params.row.orderAddressinfo.split(",")[2]
+                : "暂无"
+            ]);
+          }
         },
         {
           title: "订单金额",
@@ -83,23 +109,22 @@ export default {
                   }
                 },
                 "发货"
-              ),
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "error",
-                    size: "small"
-                  },
-                  on: {
-                    click: () => {
-                      this.confirm(params.row.orderId);
-
-                    }
-                  }
-                },
-                "拒单"
               )
+              // h(
+              //   "Button",
+              //   {
+              //     props: {
+              //       type: "error",
+              //       size: "small"
+              //     },
+              //     on: {
+              //       click: () => {
+              //         this.confirm(params.row.orderId);
+              //       }
+              //     }
+              //   },
+              //   "拒单"
+              // )
             ]);
           }
         }

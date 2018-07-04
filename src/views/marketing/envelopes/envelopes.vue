@@ -11,8 +11,8 @@
 				        <Input v-model="redEnvelopeName" placeholder="请输入代金券名称" clearable style="width: 200px"></Input>
                     </Col>
                     <Col span="12">
-                        <span class="margin-left-10">代金券个数:</span>
-				        <Input v-model="coupons" placeholder="请输入代金券个数" clearable style="width: 200px"></Input>
+                        <span class="margin-left-10">优惠券种类个数:</span>
+				        <Input v-model="coupons" placeholder="请输入优惠券种类个数" clearable style="width: 200px"></Input>
                     </Col>
                 </Row>
                 <Row style="width:19%;display:inline-table">

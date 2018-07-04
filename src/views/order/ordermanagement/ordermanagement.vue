@@ -34,6 +34,7 @@
         <!--物流-->
         <Modal
                 v-model="Logistics"
+                cancel-text	=""
                 title="物流详情">
             <ul class="logistics">
                 <li>
@@ -133,14 +134,40 @@ export default {
           align: "center"
         },
         {
+          title: "联系人",
+          key: "orderAddressinfo",
+          align: "center",
+          render: (h, params) => {
+            return h("span", [
+              params.row.orderAddressinfo
+                ? params.row.orderAddressinfo.split(",")[0]
+                : "暂无"
+            ]);
+          }
+        },
+        {
           title: "收货地址信息",
           key: "orderAddressinfo",
-          align: "center"
+          align: "center",
+          render: (h, params) => {
+            return h("span", [
+              params.row.orderAddressinfo
+                ? params.row.orderAddressinfo.split(",")[1]
+                : "暂无"
+            ]);
+          }
         },
         {
           title: "联系方式",
           key: "type",
-          align: "center"
+          align: "center",
+          render: (h, params) => {
+            return h("span", [
+              params.row.orderAddressinfo
+                ? params.row.orderAddressinfo.split(",")[2]
+                : "暂无"
+            ]);
+          }
         },
         {
           title: "订单金额",
@@ -179,11 +206,12 @@ export default {
                 {
                   props: {
                     type: "primary",
-                    size: "small"
+                    size: "small",
+                    disabled: this.type1(params.row.orderState)
                   },
                   on: {
                     click: () => {
-                      this.remove(params.row.orderCode);
+                      this.showMode(params.row.orderCode);
                     }
                   }
                 },
@@ -206,22 +234,22 @@ export default {
                   }
                 },
                 "详情"
-              ),
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "error",
-                    size: "small"
-                  },
-                  on: {
-                    click: () => {
-                      this.confirm();
-                    }
-                  }
-                },
-                "退款"
               )
+              // h(
+              //   "Button",
+              //   {
+              //     props: {
+              //       type: "error",
+              //       size: "small"
+              //     },
+              //     on: {
+              //       click: () => {
+              //         this.confirm();
+              //       }
+              //     }
+              //   },
+              //   "退款"
+              // )
             ]);
           }
         }
@@ -233,6 +261,16 @@ export default {
       this.orderCreatetime = val[0];
       this.orderPaytime = val[1];
     },
+    showMode(val) {
+      this.Logistics = true;
+      var params = {
+        com: "shunfeng",
+        on: val
+      };
+      this.chaxun(params).then(res => {
+        console.log(res);
+      });
+    },
     search() {
       this.mockTableData1();
     },
@@ -243,7 +281,25 @@ export default {
         params: argu
       });
     },
-
+    type1(type) {
+      switch (type) {
+        case "1":
+          return true;
+          break;
+        case "2":
+          return true;
+          break;
+        case "3":
+          return false;
+          break;
+        case "4":
+          return false;
+          break;
+        case "5":
+          return true;
+          break;
+      }
+    },
     status(type) {
       switch (type) {
         case "1":
