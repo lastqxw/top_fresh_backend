@@ -17,12 +17,12 @@
 						<Input v-model="productInfo"  icon="android-list" />
 					</FormItem>
 					<!-- 商品主图 -->
-					<FormItem label="商品主图">
+          	<FormItem label="商品主图">
 						<div class="demo-upload-list" v-for="item in uploadList">
-							<template v-if="item.status === 'finished'">
+							<template v-if="item.status == 'finished'">
 								<img :src="item.imgUrl">
 								<div class="demo-upload-list-cover">
-									<Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
+									<Icon type="ios-eye-outline" @click.native="handleView(item.imgUrl)"></Icon>
 									<Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
 								</div>
 							</template>
@@ -54,6 +54,7 @@
 								<Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
 							</template>
 						</div>
+
 						<Upload ref="upload2" :show-upload-list="false" :default-file-list="defaultList2" :on-success="handleSuccess2" :format="['jpg','jpeg','png']"
 						 :max-size="2048" :on-format-error="handleFormatError2" :on-exceeded-size="handleMaxSize2" :before-upload="handleBeforeUpload2"
 						 multiple type="drag"  :action="url" style="display: inline-block;width:58px;">
@@ -382,6 +383,7 @@ export default {
               ? res.data.productSendType
               : "";
             console.log(that.defaultList);
+            console.log(that.defaultList1);
             that.value6 = res.data.productBeginDate;
             that.value7 = res.data.productEndDate;
             that.value8 = res.data.productNum;
@@ -442,6 +444,7 @@ export default {
         imgName: file.name
       });
       this.$nextTick(() => {
+
         this.uploadList2 = this.$refs.upload2.fileList;
       });
     },

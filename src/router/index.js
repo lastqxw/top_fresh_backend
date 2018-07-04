@@ -13,6 +13,7 @@ Vue.use(VueRouter);
 
 // 路由配置
 const RouterConfig = {
+	base: '/admin',
     mode: 'history',
     routes: routers
 };

@@ -114,6 +114,17 @@ export default {
 
                 })
         },
+        // 删除拼团商品
+        deleteTogetherOrderInfo(params) {
+            return Util.get("fresh_show/togetherOrder/deleteTogetherOrderInfo", params)
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data.code == 100000) {
+                        return res.data;
+                    }
+
+                })
+        },
 
     }
 }

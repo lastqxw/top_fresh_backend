@@ -95,12 +95,20 @@
         </p>
         <p style="margin-bottom:30px"> 
           <span>拼团价:</span>
-          	<Input v-model="product.priceTogether" placeholder="拼团可成功个数" style="width: 300px"></Input>
+          	<Input v-model="product.priceTogether" placeholder="拼团价格" style="width: 300px"></Input>
         </p>
         <p style="margin-bottom:30px">
           <span>拼团可成功个数	:</span>
           	<Input v-model="product.togetherOrderNum" placeholder="拼团可成功个数" style="width: 300px"></Input>
         </p>
+        <p style="margin-bottom:30px">
+          <span>拼团成功人数(满足该条件)		:</span>
+          	<Input v-model="product.successPeopleNum" placeholder="拼团成功人数(满足该条件)	" style="width: 300px"></Input>
+        </p> -->
+        <!-- <p>
+          <span>设置商品数量</span>
+          <Input v-model="productNum"  icon="android-list"  style="width:300px"/>
+        </p> -->
     </Modal>
     </div>
 </template>
@@ -115,6 +123,9 @@ export default {
         productId: "",
         priceTogether: "",
         togetherOrderNum: ""
+        // togetherOrderNum: "",
+        // successPeopleNum: "",
+        // originalPrice: ""
       },
       isAdd: true,
       show: false,
@@ -168,19 +179,31 @@ export default {
           align: "center"
         },
         {
-          title: "原价",
-          key: "originalPrice",
-          align: "center"
-        },
-        {
-          title: "已开团个数",
-          key: "existingNum",
-          align: "center"
-        },
-        {
-          title: "已成功拼团数",
-          key: "successNum",
-          align: "center"
+          title: "操作",
+          key: "action",
+          align: "center",
+          render: (h, params) => {
+            return h("div", [
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "error",
+                    size: "small"
+                  },
+                  style: {
+                    marginRight: "5px"
+                  },
+                  on: {
+                    click: () => {
+                      this.confirm("删除", params.row.id);
+                    }
+                  }
+                },
+                "删除"
+              )
+            ]);
+          }
         }
       ]
     };
@@ -191,6 +214,37 @@ export default {
     },
     selectTime(val) {
       this.acCreattime = val;
+    },
+    confirm(type, index) {
+      var that = this;
+      this.$Modal.confirm({
+        title: "你确定要" + type + "吗？",
+        onOk: () => {
+          var token = Cookies.get("token");
+          var staffId = Cookies.get("staffId");
+          var params = {
+            token,
+            staffId,
+            id: index
+          };
+          this.deleteTogetherOrderInfo(params).then(res => {
+            console.log(res);
+            if (res.code == 100000) {
+              this.$Message.success({
+                content: "删除成功",
+                onClose: function() {
+                  that.mockTableData1();
+                }
+              });
+            } else {
+              this.$Message.error(res.message);
+            }
+          });
+        },
+        onCancel: () => {
+          this.$Message.info("取消成功");
+        }
+      });
     },
     save() {
       var that = this;

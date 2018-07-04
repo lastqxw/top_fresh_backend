@@ -193,6 +193,8 @@ export default {
           for (var i = 0; i < res.data.length; i++) {
             if (res.data[i].state == 6) {
               res.data[i]._disabled = true;
+            } else {
+              res.data[i]._disabled = false;
             }
           }
           this.tableData1 = res.data;

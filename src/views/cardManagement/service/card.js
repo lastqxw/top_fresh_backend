@@ -29,6 +29,7 @@ export default {
                 })
         },
         //卡券批量激活
+
         updateBatchState(params) {
             return Util.get("fresh_show/orderTail/updateBatchState", params)
                 .then(res => {
