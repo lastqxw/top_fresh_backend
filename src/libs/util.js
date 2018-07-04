@@ -29,8 +29,9 @@ const ajaxUrl = env === 'development'
     ?
     'http://39.107.126.201:8080' :
     env === 'production' ?
-    'https://www.url.com' :
-    'https://debug.url.com';
+    'http://39.107.126.201:8080' :
+
+    'http://39.107.126.201:8080' ;
 
 axios.defaults.baseURL = ajaxUrl
 // axios.defaults.headers = { 'X-Requested-With': 'XMLHttpRequest' }
