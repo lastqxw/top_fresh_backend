@@ -13,8 +13,8 @@ util.title = function (title) {
 
 const ajaxUrl = env === 'development'
     // 吴俊杰
-    ?
-    'http://192.168.10.76:8080' :
+    // ?
+    // 'http://192.168.10.76:8080' :
     // 白晨
     // ?
     // 'http://192.168.10.106:8090' :
@@ -22,8 +22,8 @@ const ajaxUrl = env === 'development'
     // ?
     // 'http://192.168.10.141:8080' :
     // 正式服务器
-    // ?
-    // 'http://39.107.126.201:8080' :
+    ?
+    'http://39.107.126.201:8080' :
     env === 'production' ?
     'https://www.url.com' :
     'https://debug.url.com';
