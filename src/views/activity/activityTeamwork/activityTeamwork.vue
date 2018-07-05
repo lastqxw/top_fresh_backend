@@ -104,7 +104,7 @@
         <p style="margin-bottom:30px">
           <span>拼团成功人数(满足该条件)		:</span>
           	<Input v-model="product.successPeopleNum" placeholder="拼团成功人数(满足该条件)	" style="width: 300px"></Input>
-        </p> -->
+        </p> 
         <!-- <p>
           <span>设置商品数量</span>
           <Input v-model="productNum"  icon="android-list"  style="width:300px"/>
@@ -283,6 +283,8 @@ export default {
       params.token = token;
       params.staffId = staffId;
       params.activityId = this.activeId;
+      params.startTime = this.acCreattime;
+      params.endTime = this.acEndtime;
       this.addTogetherOrderInfo(params).then(res => {
         console.log(res);
         if (res.code == 100000) {
@@ -309,7 +311,7 @@ export default {
         pageNum: 1,
         pageSize: 1000000,
         productPtype: val,
-        productIsuse:1,
+        productIsuse: 1
       };
       this.getProduct(params).then(res => {
         console.log(res);
@@ -448,6 +450,8 @@ export default {
           });
           this.start = res.data[0].acCreattime;
           this.end = res.data[0].acEndtime;
+          this.acCreattime = res.data[0].acCreattime;
+          this.acEndtime = res.data[0].acEndtime;
         }
       });
     }

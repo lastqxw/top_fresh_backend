@@ -4,7 +4,7 @@
 <template>
     <div>
         <Row>
-            <Col span="16">
+            <Col span="16" style="margin-right:20px">
                 <Row>
                     <Card>
                         <div style="border-bottom: 1px solid #ccc; margin-top: 20px">
@@ -61,32 +61,29 @@
                     </Card>
                 </Row>
             </Col>
-            <Col span="7" offset="1">
+            <Col span="7">
                 <Row>
                     <Card>
-                        <h4>内容属性</h4>
-                        <Card style="margin-top: 20px">
-                            <div style="margin: 20px 0">
-                                <span>活动时间</span>
-                                <DatePicker :value="data1" type="daterange" placement="bottom-end" placeholder="请选择" style="width: 200px; margin-left: 10px" @on-change="date"></DatePicker>
-                            </div>
-                            <div style="text-align: center" v-if="isAdd">
-                                <Button type="primary" style="width: 30%" @click="edit">修改</Button>
-                            </div>
-                            <div style="text-align: center" v-else>
-                                <Button type="primary" style="width: 30%" @click="add">添加</Button>
-                            </div>
-                        </Card>
-                    </Card>
-                </Row>
-                <Row style="margin-top: 10px">
-                    <Card>
-                        <h4>其他内容</h4>
-                        <div style="margin-top: 10px">
-                            <h4>热度：10000</h4>
-                            <h4>参与人数：100人</h4>
-                        </div>
-                    </Card>
+				<p slot="title">
+					<Icon type="paper-airplane"></Icon>
+					活动时间
+				</p>
+				<p class="margin-top-10">
+					<Icon type="android-time"></Icon>&nbsp;&nbsp;活动开始时间：
+					<DatePicker type="date" split-panels placeholder="Select date" style="width: 66%" v-model="value6"  @on-change="start"></DatePicker>
+
+				</p>
+				<p class="margin-top-10">
+					<Icon type="android-time"></Icon>&nbsp;&nbsp;活动截止时间：
+					<DatePicker type="date" split-panels placeholder="Select date" style="width: 66%" v-model="value7" @on-change="end"></DatePicker>
+
+				</p>
+				<Row class="margin-top-20 publish-button-con">
+					<span class="publish-button">
+						<Button  icon="ios-checkmark" style="width:90px;" type="success"  @click="edit">更新</Button>
+					</span>
+				</Row>
+			</Card>
                 </Row>
             </Col>
         </Row>
@@ -115,6 +112,8 @@ export default {
       pageSize: 10,
       pageNum: 1,
       count: 10,
+      value6: "",
+      value7: "",
       model1: "",
       model2: "",
       defaultList: [
@@ -196,6 +195,12 @@ export default {
     };
   },
   methods: {
+    end(val) {
+      this.acEndtime = val;
+    },
+    start(val) {
+      this.acCreattime = val;
+    },
     add() {
       var that = this;
       var token = Cookies.get("token");
@@ -438,7 +443,8 @@ export default {
           this.$nextTick(() => {
             this.uploadList = this.$refs.upload.fileList;
           });
-          this.data1 = res.data[0].acCreattime + "-" + res.data[0].acEndtime;
+          this.value6 = res.data[0].acCreattime;
+          this.value7 = res.data[0].acEndtime;
         }
       });
       this.isAdd = true;

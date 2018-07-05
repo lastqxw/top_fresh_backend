@@ -51,7 +51,7 @@ export default {
         },
         // 修改活动详情
         updateActivity(params) {
-            return Util.get('fresh_show/activity/updateActivity', params)
+            return Util.post('fresh_show/activity/updateActivity', params)
                 .then(res => {
                     console.log(res)
                     return res.data

@@ -51,6 +51,22 @@ export default {
                 console.log(res)
                 return res.data
             })
+        },
+        // 查询商品评价
+        selectevaluationlist(params){
+            return Util.get("fresh_show/evaluation/selectevaluationlist",params)
+            .then(res => {
+                console.log(res)
+                return res.data
+            })
+        },
+        // 删除商品评价
+        deleteEvaluation(params){
+            return Util.get("fresh_show/evaluation/deleteEvaluation",params)
+            .then(res => {
+                console.log(res)
+                return res.data
+            })
         }
     }
 }
