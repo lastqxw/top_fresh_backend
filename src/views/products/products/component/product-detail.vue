@@ -578,9 +578,9 @@ export default {
         // 结束时间
         productEndDate: end_value,
         // 是否上架
-        productIsUse: this.model2,
+        productIsUse: this.model2
         // 商品轮播图list
-        proImg: proImg
+        // proImg: proImg
       };
       console.log(params);
       this.addProduct(params).then(res => {
@@ -616,7 +616,7 @@ export default {
     showImageSelector(cb) {
       console.log(this.$refs.btn);
       $("#btn").click();
-    },
+    }
   },
   mounted() {
     this.productDetails();
