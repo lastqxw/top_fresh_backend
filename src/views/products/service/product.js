@@ -52,6 +52,22 @@ export default {
                 return res.data
             })
         },
+        // 删除轮播图
+        deteleProImg(params){
+            return Util.get("fresh_show/img/deteleProImg",params)
+            .then(res => {
+                console.log(res)
+                return res.data
+            })
+        },
+        // 修改轮播图
+        updateProImg(params){
+            return Util.get("fresh_show/img/updateProImg",params)
+            .then(res => {
+                console.log(res)
+                return res.data
+            })
+        },
         // 查询商品评价
         selectevaluationlist(params){
             return Util.get("fresh_show/evaluation/selectevaluationlist",params)

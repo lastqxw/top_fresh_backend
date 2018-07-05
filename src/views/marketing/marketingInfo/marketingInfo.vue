@@ -16,20 +16,20 @@
         <FormItem label="优惠券名称">
             <Input v-model="formItem.couponsName" placeholder="请输入优惠券名称" style="width: 300px"></Input>
         </FormItem>
-        <FormItem label="优惠券获取途径">
+        <FormItem label="优惠券类型">
             <Select v-model="formItem.couponsType" style="width: 300px">
-                <Option value="1">满减</Option>
-                <Option value="2">红包</Option>
+                <Option value="1">满减券</Option>
+                <Option value="2">直减券</Option>
             </Select>
         </FormItem>
-        <FormItem label="优惠券类型">
+        <!-- <FormItem label="优惠券类型">
             <Select v-model="formItem.couponsGet" style="width: 300px">
                 <Option value="1">注册送</Option>
                 <Option value="2">消费所得</Option>
                 <Option value="3">二级经销商赠送</Option>
                 <Option value="4">礼券中心领取</Option>
             </Select>
-        </FormItem>
+        </FormItem> -->
         <FormItem label="优惠券可领取数量	">
             <Input v-model="formItem.couponsUsenum" placeholder="请输入优惠券可领取数量	" style="width: 300px"></Input>
         </FormItem>
@@ -39,16 +39,16 @@
         <FormItem label="最低消费可用	">
             <Input v-model="formItem.couponsMin" placeholder="请输入最低消费可用" style="width: 300px"></Input>
         </FormItem>
-        <FormItem label="优惠券描述">
+        <!-- <FormItem label="优惠券描述">
             <Input v-model="formItem.couponsDes" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入简短的优惠券描述" style="width: 300px"></Input>
-        </FormItem>
-         <FormItem label="订单金额最低可送		">
+        </FormItem> -->
+         <!-- <FormItem label="订单金额最低可送		">
             <Input v-model="formItem.couponsOrderMoney" placeholder="请输入订单金额最低可送" style="width: 300px"></Input>
         </FormItem>
          <FormItem label="库存">
             <Input v-model="formItem.couponsNum" placeholder="请输入库存" style="width: 300px"></Input>
-        </FormItem>
-        <FormItem label="开始时间">
+        </FormItem> -->
+        <FormItem label="生效时间">
             <DatePicker type="date" v-model="formItem.couponsStartTime" format="yyyy-MM-dd" placeholder="选择开始时间" style="width: 200px" @on-change="start"></DatePicker>
         </FormItem>
         <FormItem label="失效时间">
@@ -87,7 +87,7 @@ export default {
       formItem: {
         couponsName: "",
         couponsType: "1",
-        couponsGet: "1",
+        // couponsGet: "1",
         staffId: "",
         token: "",
         couponsName: "",
@@ -96,9 +96,9 @@ export default {
         couponsUsenum: "",
         couponsValue: "",
         couponsMin: "",
-        couponsDes: "",
-        couponsOrderMoney: "",
-        couponsNum: "",
+        // couponsDes: "",
+        // couponsOrderMoney: "",
+        // couponsNum: "",
         couponsStartTime: "",
         couponsEndTime: "",
         useScope: "ALL",
@@ -119,6 +119,8 @@ export default {
       console.log("1111111");
       if (this.formItem.useScope == "商品") {
         this.block = "block";
+      } else {
+        this.block = "none";
       }
     },
     sub() {

@@ -380,6 +380,7 @@ export default {
     },
     handleSuccess(res, file) {
       console.log(file);
+      this.defaultList=[];
       this.defaultList.push({
         imgUrl: file.response.data,
         imgName: file.name

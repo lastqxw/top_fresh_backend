@@ -5,21 +5,17 @@
 	<div>
 		<Row>
 			<Card>
-                <Row style="width:80%;display:inline-table">
-                    <Col span="6">
-                        <span class="margin-left-10">手机号:</span>
-				        <Input v-model="staffPhone" placeholder="请输入用户手机号" clearable style="width: 200px"></Input>
-                    </Col>
-                    <Col span="6">
-                        <span class="margin-left-10">状态:</span>
-                        <Select v-model="staffIsdel" style="width:200px">
-                            <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                        </Select>
-                    </Col>
-                </Row>
-                <Row style="width:19%;display:inline-table">
-                    <Button class="margin-left-20" type="primary" icon="ios-search" @click="search">查找</Button>
-                </Row>
+        <Row style="width:38%;display:inline-table">
+          <span class="margin-left-10">手机号:</span>
+          <Input v-model="staffPhone" placeholder="请输入用户手机号" clearable style="width: 200px"></Input>
+          <span class="margin-left-10">状态:</span>
+          <Select v-model="staffIsdel" style="width:200px">
+            <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          </Select>
+        </Row>
+        <Row style="width:40%;display:inline-table">
+            <Button class="margin-left-20" type="primary" icon="ios-search" @click="search">查找</Button>
+        </Row>
 			</Card>
 		</Row>
 		<Row>
@@ -93,7 +89,7 @@ export default {
           key: "staffIsdel",
           align: "center",
           render: (h, params) => {
-            return h("span", [params.row.staffIsdel == 1 ? "正常" : "封禁"]);
+            return h("span", [params.row.staffIsdel==null ? "正常" : params.row.staffIsdel ==1 ? "正常": "封禁"]);
           }
         },
         {
@@ -216,16 +212,9 @@ export default {
           this.tableData1 = data;
         } else {
           this.$Message.error(res.message);
+          this.tableData1=[];
         }
       });
-    },
-    formatDate(date) {
-      const y = date.getFullYear();
-      let m = date.getMonth() + 1;
-      m = m < 10 ? "0" + m : m;
-      let d = date.getDate();
-      d = d < 10 ? "0" + d : d;
-      return y + "-" + m + "-" + d;
     },
     changePageSize(pageSize) {
       this.pageSize = pageSize;

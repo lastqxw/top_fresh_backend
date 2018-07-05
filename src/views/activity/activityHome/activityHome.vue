@@ -12,7 +12,7 @@
                     <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                 </Select>
                 <Button class="margin-left-10" type="primary" icon="ios-search" @click="search">查找</Button>
-                <Button class="margin-left-10" type="primary" icon="ios-add" @click="newActive">开启新活动</Button>                 
+                <Button class="margin-left-10" type="primary" icon="plus" @click="newActive">开启新活动</Button>                 
             </Card>
         </Row>
         <Row>
@@ -20,7 +20,7 @@
                 <Table stripe border :columns="tableColumns1" :data="tableData1"></Table>
                 <div style="margin: 10px;overflow: hidden">
                     <div style="float: right;">
-                        <Page show-elevator show-sizer @on-page-size-change="changePage" :total="count" :current="1" @on-change="changePage"></Page>
+                        <Page show-elevator show-sizer @on-page-size-change="changePageSize" :total="count" :current="1" @on-change="changePage"></Page>
                     </div>
                 </div>
             </Card>
@@ -107,10 +107,10 @@ export default {
           value: "1",
           label: "优惠卷领取"
         },
-        {
-          value: "2",
-          label: "多人拼团"
-        },
+        // {
+        //   value: "2",
+        //   label: "多人拼团"
+        // },
         {
           value: "3",
           label: "商品集锦"
@@ -197,11 +197,6 @@ export default {
               params.row.acCreattime + "-" + params.row.acEndtime
             ]);
           }
-        },
-        {
-          title: "状态",
-          key: "acType",
-          align: "center"
         },
         {
           title: "类型",

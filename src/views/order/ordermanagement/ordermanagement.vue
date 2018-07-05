@@ -70,6 +70,7 @@
     </div>
 </template>
 <script>
+
 import Cookies from "js-cookie";
 import order from "../service/order.js";
 export default {
@@ -211,7 +212,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.showMode(params.row.orderCode);
+                      this.showMode(params.row.orderSendcode);
                     }
                   }
                 },
@@ -263,9 +264,13 @@ export default {
     },
     showMode(val) {
       this.Logistics = true;
-      var params = {
+      var pams = {
         com: "shunfeng",
-        on: val
+        num: "044149697173"
+      };
+      var params = {
+        customer: "48CDE7F3198E0A9486DE797B6256ADE3",
+        sign: MD5(pams + "ObrhZHpv698348CDE7F3198E0A9486DE797B6256ADE3")
       };
       this.chaxun(params).then(res => {
         console.log(res);

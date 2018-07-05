@@ -27,7 +27,7 @@ export default {
         },
         // 物流查询
         chaxun(params) {
-            return Util.get('http://www.kuaidi100.com/chaxun', params)
+            return Util.post('http://poll.kuaidi100.com/poll/query.do', params)
                 .then(res => {
                     console.log(res)
                     return res.data
