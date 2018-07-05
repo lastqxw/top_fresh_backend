@@ -45,10 +45,7 @@
 						    <Button  icon="ios-checkmark" style="width:90px;" type="success"  @click="addContent">更新</Button>
 					    </span>
             </p>
-            <div >
-							<!-- <textarea id="articleEditor"></textarea> -->
-              <vue-wangeditor id="editor" ref="child" v-model="text" :uploadImgUrl="url" height="430" width="720"></vue-wangeditor>
-						</div>            
+            <textarea id="articleEditor" v-model="text"></textarea>            
            
       </Card>
 			</Col>  
@@ -81,16 +78,17 @@
 			</Card>
 			</Col>
 		</Row>
+     <Upload :action="url" :on-success="editorImg" style="display:none">
+        <Button type="ghost" icon="ios-cloud-upload-outline" ref="btn" id="btn">Upload files</Button>
+      </Upload>
 	</div>
-	
+  
 </template>
 
 <script>
-// import tinymce from "tinymce";
+import tinymce from "tinymce";
 import Cookies from "js-cookie";
 import active from "../service/active.js";
-import vueWangeditor from "vue-wangeditor";
-
 export default {
   name: "artical-publish",
   mixins: [active],
@@ -110,42 +108,7 @@ export default {
       acCreattime: "",
       content: "",
       activeId: "",
-      text: "",
-      menus: [
-        "source", // 源码模式
-        "|",
-        "bold", // 粗体
-        "underline", // 下划线
-        "italic", // 斜体
-        "strikethrough", // 中线
-        "eraser", // 清空格式
-        "forecolor", // 文字颜色
-        "bgcolor", // 背景颜色
-        "|",
-        "quote", // 引用
-        "fontfamily", // 字体
-        "fontsize", // 字号
-        "head", // 标题
-        "unorderlist", // 无序列表
-        "orderlist", // 有序列表
-        "alignleft", // 左对齐
-        "aligncenter", // 居中
-        "alignright", // 右对齐
-        "|",
-        "link", // 链接
-        "unlink", // 取消链接
-        "table", // 表格
-        "emotion", // 表情
-        "|",
-        "img", // 图片
-        "video", // 视频
-        "location", // 位置
-        "insertcode", // 插入代码
-        "|",
-        "undo", // 撤销
-        "redo", // 重做
-        "fullscreen" // 全屏
-      ]
+      text: ""
     };
   },
   methods: {
@@ -176,6 +139,15 @@ export default {
           this.$Message.error(res.message);
         }
       });
+    },
+    editorImg(file, res) {
+      console.log(file);
+      console.log(res);
+      tinymce.execCommand(
+        "mceInsertContent",
+        false,
+        '<img alt="Smiley face"  src="' + res.response.data + '"/>'
+      );
     },
     updata() {
       var that = this;
@@ -212,7 +184,7 @@ export default {
         token,
         staffId,
         acId: this.activeId,
-        acImg: this.$refs.child.getHtml()
+        acImg: tinymce.activeEditor.getContent()
       };
       this.updateActivity(params).then(res => {
         console.log(res);
@@ -267,6 +239,26 @@ export default {
       }
       return check;
     },
+    handleSuccess1(res, file) {
+      console.log(file);
+      this.$refs.child.insertImg(file.response.data);
+    },
+    handleFormatError1(file) {
+      this.$Notice.warning({
+        title: "The file format is incorrect",
+        desc:
+          "File format of " +
+          file.name +
+          " is incorrect, please select jpg or png."
+      });
+    },
+    handleMaxSize1(file) {
+      this.$Notice.warning({
+        title: "文件大小超出限制",
+        desc: "文件 " + file.name + " 大于限制的2M."
+      });
+    },
+    handleBeforeUpload1() {},
     handleArticletitleBlur() {
       if (this.articleTitle.length !== 0) {
         // this.articleError = '';
@@ -302,6 +294,10 @@ export default {
           });
         }, 1000);
       }
+    },
+    showImageSelector(cb) {
+      console.log(this.$refs.btn);
+      $("#btn").click();
     }
   },
   mounted() {
@@ -337,14 +333,44 @@ export default {
           this.value6 = res.data[0].acCreattime;
           this.value7 = res.data[0].acEndtime;
           this.content = res.data[0].acImg;
-          this.$refs.child.setHtml(res.data[0].acImg);
         }
       });
     }
     var that = this;
+    tinymce.init({
+      selector: "#articleEditor",
+      branding: false,
+      elementpath: false,
+      height: 600,
+      language: "zh_CN.GB2312",
+      menubar: "edit insert view format table tools",
+      theme: "modern",
+      plugins: [
+        "advlist autolink lists link image charmap print preview imageSelector hr anchor pagebreak imagetools",
+        "searchreplace visualblocks visualchars code fullscreen fullpage",
+        "insertdatetime media nonbreaking save table contextmenu directionality",
+        "emoticons paste   colorpicker textpattern imagetools codesample"
+      ],
+      toolbar1:
+        " newnote print fullscreen preview | undo redo | insert | styleselect | forecolor backcolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image emoticons media codesample imageSelector",
+      autosave_interval: "20s",
+      image_advtab: true,
+      imageSelectorCallback: this.showImageSelector,
+      table_default_styles: {
+        width: "100%",
+        borderCollapse: "collapse"
+      },
+      setup: function(editor) {
+        editor.on("init", function(e) {
+          if (that.content) {
+            editor.setContent(that.content);
+          }
+        });
+      }
+    });
   },
-  components: {
-    vueWangeditor
+  destroyed() {
+    tinymce.get("articleEditor").destroy();
   }
 };
 </script> 
@@ -377,7 +403,6 @@ export default {
 }
 .demo-upload-list img {
   width: 100%;
-  height: 100%;
 }
 .demo-upload-list-cover {
   display: none;

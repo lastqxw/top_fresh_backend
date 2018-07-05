@@ -3,7 +3,10 @@ const os = require('os');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HappyPack = require('happypack');
-var happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
+var happyThreadPool = HappyPack.ThreadPool({
+	size: os.cpus().length
+});
+
 function resolve(dir) {
 	return path.join(__dirname, dir);
 }
@@ -22,8 +25,7 @@ module.exports = {
 		},
 	},
 	module: {
-		rules: [
-			{
+		rules: [{
 				test: /\.vue$/,
 				loader: 'vue-loader',
 				options: {
@@ -82,6 +84,10 @@ module.exports = {
 			loaders: ['babel-loader'],
 			threadPool: happyThreadPool,
 			verbose: true
+		}),
+		new webpack.ProvidePlugin({
+			$: "jquery",
+			jQuery: "jquery"
 		})
 	],
 	resolve: {

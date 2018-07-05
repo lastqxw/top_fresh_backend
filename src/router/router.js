@@ -129,6 +129,13 @@ export const otherRouter = {
             component: () =>
                 import ('@/views/order/orderInfo/orderInfo.vue')
         },
+        {
+            path: 'product/:evaluateId',
+            title: '评价信息',
+            name: 'evaluate-info',
+            component: () =>
+                import ('../views/products/products/evaluate/evaluate.vue')
+        },
     ]
 }
 
@@ -306,6 +313,21 @@ export const appRouter = [{
             component: () =>
                 import ('@/views/im/im.vue')
         }]
+    },
+    {
+        path: '/feedback',
+        icon: 'grid',
+        name: 'feedback',
+        title: '用户反馈',
+        component: Main,
+        children: [{
+            path: 'feedbacks',
+            title: '用户反馈查看',
+            name: 'feedbacks',
+            icon: 'arrow-swap',
+            component: () =>
+                import ('@/views/feedback/feedback.vue')
+        }, ]
     },
 ];
 

@@ -151,6 +151,9 @@
 				</Row>
 			</Card>
 			</Col>
+      <Upload :action="url" :on-success="editorImg">
+        <Button type="ghost" icon="ios-cloud-upload-outline" @click="up" ref="btn" id="btn">Upload files</Button>
+      </Upload>
 		</Row>
 		<Modal
 			v-model="modal1"
@@ -225,6 +228,9 @@ export default {
     };
   },
   methods: {
+    up() {
+      console.log(111111);
+    },
     cancel() {
       this.$router.go(-1);
     },
@@ -411,6 +417,15 @@ export default {
         this.uploadList = this.$refs.upload.fileList;
       });
     },
+    editorImg(file, res) {
+      console.log(file);
+      console.log(res);
+      tinymce.execCommand(
+        "mceInsertContent",
+        false,
+        '<img alt="Smiley face"  src="' + res.response.data + '"/>'
+      );
+    },
     handleFormatError(file) {
       this.$Notice.warning({
         title: "The file format is incorrect",
@@ -444,7 +459,6 @@ export default {
         imgName: file.name
       });
       this.$nextTick(() => {
-
         this.uploadList2 = this.$refs.upload2.fileList;
       });
     },
@@ -598,7 +612,11 @@ export default {
           }
         }
       });
-    }
+    },
+    showImageSelector(cb) {
+      console.log(this.$refs.btn);
+      $("#btn").click();
+    },
   },
   mounted() {
     this.productDetails();
@@ -620,15 +638,16 @@ export default {
       menubar: "edit insert view format table tools",
       theme: "modern",
       plugins: [
-        "advlist autolink lists link image charmap print preview hr anchor pagebreak imagetools",
+        "advlist autolink lists link image charmap print preview imageSelector hr anchor pagebreak imagetools",
         "searchreplace visualblocks visualchars code fullscreen fullpage",
         "insertdatetime media nonbreaking save table contextmenu directionality",
         "emoticons paste   colorpicker textpattern imagetools codesample"
       ],
       toolbar1:
-        " newnote print fullscreen preview | undo redo | insert | styleselect | forecolor backcolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image emoticons media codesample",
+        " newnote print fullscreen preview | undo redo | insert | styleselect | forecolor backcolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image emoticons media codesample imageSelector",
       autosave_interval: "20s",
       image_advtab: true,
+      imageSelectorCallback: this.showImageSelector,
       table_default_styles: {
         width: "100%",
         borderCollapse: "collapse"

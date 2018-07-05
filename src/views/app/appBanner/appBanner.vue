@@ -48,7 +48,7 @@
                 <Col span="8" v-if="active">
                     <span class="margin-left-10">指定对象(活动)：</span>
                 <Select v-model="bannerLink" style="width:200px">
-                    <Option v-for="item in activeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    <Option v-for="item in activeList" :value="item.acId" :key="item.acId">{{ item.acTitle }}</Option>
                 </Select>
                 </Col>
                 <Col span="8" v-if="outer">
@@ -195,12 +195,8 @@ export default {
       this.addBanner(params).then(res => {
         console.log(res);
         if (res.code == 100000) {
-          thi.$Message.success({
-            content: "添加成功",
-            OnClose: function() {
-              that.mockTableData1();
-            }
-          });
+          this.$Message.success("添加成功");
+          that.mockTableData1();
         } else {
           this.$Message.error(res.message);
         }
@@ -258,12 +254,8 @@ export default {
           this.removeBanner(params).then(res => {
             console.log(res);
             if (res.code == 100000) {
-              this.$Message.success({
-                content: "删除成功",
-                OnClose: function() {
-                  that.mockTableData1();
-                }
-              });
+              this.$Message.success( "删除成功");
+              that.mockTableData1();
             } else {
               this.$Message.error(res.message);
             }
@@ -285,17 +277,6 @@ export default {
         console.log(res);
         this.tableData1 = res.data;
       });
-    },
-    formatDate(date) {
-      const y = date.getFullYear();
-      let m = date.getMonth() + 1;
-      m = m < 10 ? "0" + m : m;
-      let d = date.getDate();
-      d = d < 10 ? "0" + d : d;
-      return y + "-" + m + "-" + d;
-    },
-    changePage(pageSize) {
-      this.tableData1 = this.mockTableData1(pageSize);
     },
     // 图片上传
     handleView(name) {
@@ -362,6 +343,12 @@ export default {
       console.log(res);
       if (res.code == 100000) {
         this.productList = res.data;
+      }
+    });
+    this.selectlist(params).then(res => {
+      console.log(res);
+      if (res.code == 100000) {
+        this.activeList = res.data;
       }
     });
   }
