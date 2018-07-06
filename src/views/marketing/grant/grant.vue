@@ -13,10 +13,10 @@
                     触发式红包
                 </p>
                 <Row style="padding-bottom:10px;border-bottom:1px solid #e9eaec">
-                    <Col span="12">
+                    <Col span="6">
                         新注册用户，获取红包：
                     </Col>
-                    <Col span="12">
+                    <Col span="18">
                         <Select v-model="type" style="width:200px">
                             <Option v-for="item in typeList" :value="item.redEnvelopeId" :key="item.redEnvelopeId">{{ item.redEnvelopeName }}</Option>
                         </Select>
@@ -24,10 +24,10 @@
                     </Col>
                 </Row>
                 <Row style="padding-bottom:13px;padding-top:20px;border-bottom:1px solid #e9eaec">
-                    <Col span="12">
+                    <Col span="6">
                         订单实际付款金额满N元时，获取红包：
                     </Col>
-                    <Col span="12">
+                    <Col span="18">
                         <Input v-model="money" placeholder="请输入订单金额" clearable style="width: 200px"></Input>
                         <Select v-model="type1" style="width:200px">
                             <Option v-for="item in typeList" :value="item.redEnvelopeId" :key="item.redEnvelopeId">{{ item.redEnvelopeName }}</Option>
@@ -36,10 +36,10 @@
                     </Col>
                 </Row>
                 <Row style="padding-bottom:13px;padding-top:20px;border-bottom:1px solid #e9eaec">
-                    <Col span="12">
+                    <Col span="6">
                         用户第一次下单，获取红包：
                     </Col>
-                    <Col span="12">
+                    <Col span="18">
                         <Select v-model="type2" style="width:200px">
                             <Option v-for="item in typeList" :value="item.redEnvelopeId" :key="item.redEnvelopeId">{{ item.redEnvelopeName }}</Option>
                         </Select>
@@ -48,10 +48,10 @@
                     
                 </Row>
                 <Row style="padding-bottom:13px;padding-top:20px;border-bottom:1px solid #e9eaec">
-                    <Col span="12">
+                    <Col span="6">
                         用户下单后分享，好友领红包：
                     </Col>
-                    <Col span="12">
+                    <Col span="18">
                         <Select v-model="type3" style="width:200px">
                             <Option v-for="item in typeList" :value="item.redEnvelopeId" :key="item.redEnvelopeId">{{ item.redEnvelopeName }}</Option>
                         </Select>
@@ -242,86 +242,68 @@ export default {
       this.loading = true;
       var token = Cookies.get("token");
       var staffId = Cookies.get("staffId");
-      var params = {
+      if(this.count != "" && this.type != ""){
+        var params = {
         token,
         staffId,
         setRedEnvelope: 1,
         setRedNumN: this.count,
         redEnvelopeId: this.type
-      };
-      console.log(params);
-      this.setRedEnvelope(params).then(res => {
-        console.log(res);
-        if (res.code == 100000) {
-          this.$Message.success({
-            content: "新注册用户，获取红包设置成功",
-            onClose: function() {
-              var params1 = {
-                token,
-                staffId,
-                setRedEnvelope: 1,
-                setRedNumP: that.count1,
-                payNum: that.money,
-                redEnvelopeId: that.type1
-              };
-              that.setRedEnvelope(params1).then(res => {
-                console.log(res);
-                if (res.code == 100000) {
-                  this.$Message.success({
-                    content: "订单实际付款金额满N元时，获取红包设置成功",
-                    onClose: function() {
-                      var params2 = {
-                        token,
-                        staffId,
-                        setRedEnvelope: 1,
-                        setRedNumF: that.count2,
-                        redEnvelopeId: that.type2
-                      };
-                      that.setRedEnvelope(params2).then(res => {
-                        console.log(res);
-                        if (res.code == 100000) {
-                          this.$Message.success({
-                            content: "设置用户第一次下单，获取的红包设置成功",
-                            onClose: function() {
-                              var params3 = {
-                                token,
-                                staffId,
-                                setRedEnvelope: 1,
-                                setRedNumS: that.count3,
-                                redEnvelopeId: that.type3
-                              };
-                              that.setRedEnvelope(params3).then(res => {
-                                console.log(res);
-                                if (res.code == 100000) {
-                                  this.$Message.success({
-                                    content:
-                                      "用户下单后分享，好友领的红包设置成功",
-                                    onClose: function() {
-                                      that.loading = false;
-                                    }
-                                  });
-                                } else {
-                                  this.$Message.error(res.message);
-                                }
-                              });
-                            }
-                          });
-                        } else {
-                          this.$Message.error(res.message);
-                        }
-                      });
-                    }
-                  });
-                } else {
-                  this.$Message.error(res.message);
-                }
-              });
-            }
-          });
-        } else {
-          this.$Message.error(res.message);
-        }
-      });
+        };
+        console.log(params);
+        this.setRedEnvelope(params).then(res => {
+          console.log(res);
+          if (res.code == 100000) {
+            this.$Message.success("新注册用户，获取红包设置成功",)
+          }
+        })
+      }
+      if(that.count1 !="" && that.money != "" && that.type1 !=""){
+        var params1 = {
+          token,
+          staffId,
+          setRedEnvelope: 1,
+          setRedNumP: that.count1,
+          payNum: that.money,
+          redEnvelopeId: that.type1
+        };
+        that.setRedEnvelope(params1).then(res => {
+          console.log(res);
+          if (res.code == 100000) {
+            this.$Message.success("订单实际付款金额满N元时，获取红包设置成功");
+          }
+        })      
+      }
+      if(that.count2 != "" && that.type2 !=""){
+        var params2 = {
+          token,
+          staffId,
+          setRedEnvelope: 1,
+          setRedNumF: that.count2,
+          redEnvelopeId: that.type2
+        };
+        that.setRedEnvelope(params1).then(res => {
+          console.log(res);
+          if (res.code == 100000) {
+            this.$Message.success("设置用户第一次下单，获取的红包设置成功");
+          }
+        })     
+      }
+      if(that.count3 !="" && that.type3 !=""){
+        var params3 = {
+          token,
+          staffId,
+          setRedEnvelope: 1,
+          setRedNumS: that.count3,
+          redEnvelopeId: that.type3
+        };
+        that.setRedEnvelope(params1).then(res => {
+          console.log(res);
+          if (res.code == 100000) {
+            this.$Message.success("用户下单后分享，好友领的红包设置成功");
+          }
+        })   
+      }
     }
   },
   mounted() {

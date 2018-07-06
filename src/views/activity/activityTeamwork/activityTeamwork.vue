@@ -230,12 +230,8 @@ export default {
           this.deleteTogetherOrderInfo(params).then(res => {
             console.log(res);
             if (res.code == 100000) {
-              this.$Message.success({
-                content: "删除成功",
-                onClose: function() {
-                  that.mockTableData1();
-                }
-              });
+              this.$Message.success("删除成功");
+              that.mockTableData1();
             } else {
               this.$Message.error(res.message);
             }
@@ -386,6 +382,7 @@ export default {
     },
     handleSuccess(res, file) {
       console.log(file);
+      this.defaultList=[];
       this.defaultList.push({ imgUrl: file.response.data, imgName: file.name });
       this.$nextTick(() => {
         this.uploadList = this.$refs.upload.fileList;

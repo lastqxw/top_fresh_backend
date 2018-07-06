@@ -5,20 +5,16 @@
 	<div>
 		<Row>
 			<Card>
-                <Row style="width:80%;display:inline-table">
-                    <Col span="12">
-                        <span class="margin-left-10">名称:</span>
-				        <Input v-model="redEnvelopeName" placeholder="请输入代金券名称" clearable style="width: 200px"></Input>
-                    </Col>
-                    <Col span="12">
-                        <span class="margin-left-10">优惠券种类个数:</span>
-				        <Input v-model="coupons" placeholder="请输入优惠券种类个数" clearable style="width: 200px"></Input>
-                    </Col>
-                </Row>
-                <Row style="width:19%;display:inline-table">
-                    <Button class="margin-left-20" type="primary" icon="ios-search" @click="search">搜索</Button>
-				    <Button class="margin-left-10" type="success" icon="android-add" @click="add">新增</Button>
-                </Row>
+        <Row style="width:75%;display:inline-table">
+          <span class="margin-left-10">名称:</span>
+          <Input v-model="redEnvelopeName" placeholder="请输入代金券名称" clearable style="width: 200px"></Input>
+          <span class="margin-left-10">优惠券种类个数:</span>
+          <Input v-model="coupons" placeholder="请输入优惠券种类个数" clearable style="width: 200px"></Input>
+        </Row>
+        <Row style="width:22%;display:inline-table">
+          <Button class="margin-left-20" type="primary" icon="ios-search" @click="search">搜索</Button>
+          <Button class="margin-left-10" type="success" icon="android-add" @click="add">新增</Button>
+        </Row>
 			</Card>
 		</Row>
 		<Row>
@@ -26,7 +22,7 @@
 				<Table stripe border :columns="tableColumns1" :data="tableData1"></Table>
 				<div style="margin: 10px;overflow: hidden">
 					<div style="float: right;">
-						<Page show-elevator show-sizer @on-page-size-change="changePage" :total="count" :current="1" @on-change="changePage(10)"></Page>
+						<Page show-elevator show-sizer @on-page-size-change="changePageSize" :total="count" :current="1" @on-change="changePage"></Page>
 					</div>
 				</div>
 			</Card>
@@ -44,7 +40,8 @@ export default {
       coupons: "",
       count: 10,
       tableData1: [],
-      pageNum: "",
+      pageNum: 1,
+      pageSize: 10,
       tableColumns1: [
         {
           title: "编号",
@@ -126,7 +123,7 @@ export default {
       });
     },
     search() {
-      this.mockTableData1(1);
+      this.mockTableData1();
     },
     remove(redEnvelopeId) {
       var token = Cookies.get("token");
@@ -139,25 +136,21 @@ export default {
       this.deleteRedEnvelope(params).then(res => {
         console.log(res);
         if (res.code == 100000) {
-          this.$Message.success({
-            content: "删除成功",
-            onClose: function() {
-              this.mockTableData1(1);
-            }
-          });
+          this.$Message.success("删除成功");
+          this.mockTableData1();
         } else {
           this.$Message.error(res.message);
         }
       });
     },
-    mockTableData1(pageNum) {
+    mockTableData1() {
       var token = Cookies.get("token");
       var staffId = Cookies.get("staffId");
       var params = {
         token,
         staffId,
-        pageNum,
-        pageSize: 10,
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
         redEnvelopeName: this.redEnvelopeName,
         couponsNum: this.coupons
       };
@@ -171,18 +164,13 @@ export default {
         }
       });
     },
-    formatDate(date) {
-      const y = date.getFullYear();
-      let m = date.getMonth() + 1;
-      m = m < 10 ? "0" + m : m;
-      let d = date.getDate();
-      d = d < 10 ? "0" + d : d;
-      return y + "-" + m + "-" + d;
+    changePageSize(pageSize) {
+      this.pageSize = pageSize;
+      this.mockTableData1();
     },
     changePage(pageNum) {
       this.pageNum = pageNum;
-      // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
-      this.tableData1 = this.mockTableData1(pageNum);
+      this.mockTableData1();
     }
   },
   mounted() {

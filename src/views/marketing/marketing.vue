@@ -5,32 +5,24 @@
 	<div>
 		<Row>
 			<Card>
-                <Row style="width:80%;display:inline-table">
-                    <Col span="6">
-                        <span class="margin-left-10">类型:</span>
-                        <Select v-model="couponsType" style="width:200px">
-                            <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                        </Select>
-                    </Col>
-                    <Col span="6">
-                        <span class="margin-left-10">使用范围:</span>
-                        <Select v-model="usescope" style="width:200px">
-                            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                        </Select>
-                    </Col>
-                    <Col span="6">
-                        <span class="margin-left-10">折扣价格:</span>
-				        <Input v-model="couponsValue" placeholder="请输入折扣价格" clearable style="width: 200px"></Input>
-                    </Col>
-                    <Col span="6">
-                        <span class="margin-left-10">名称:</span>
-				        <Input v-model="couponsName" placeholder="请输入优惠券名称" clearable style="width: 200px"></Input>
-                    </Col>
-                </Row>
-                <Row style="width:19%;display:inline-table">
-                    <Button class="margin-left-20" type="primary" icon="ios-search" @click="search">搜索</Button>
-				    <Button class="margin-left-10" type="success" icon="android-add" @click="add">新增</Button>
-                </Row>
+        <Row style="width:75%;display:inline-table">
+          <span class="margin-left-10">类型:</span>
+          <Select v-model="couponsType" style="width:200px">
+              <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          </Select>
+          <span class="margin-left-10">使用范围:</span>
+          <Select v-model="usescope" style="width:200px">
+              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          </Select>
+          <span class="margin-left-10">折扣价格:</span>
+          <Input v-model="couponsValue" placeholder="请输入折扣价格" clearable style="width: 200px"></Input>
+          <span class="margin-left-10">名称:</span>
+          <Input v-model="couponsName" placeholder="请输入优惠券名称" clearable style="width: 200px"></Input>
+        </Row>
+        <Row style="width:22%;display:inline-table">
+          <Button class="margin-left-20" type="primary" icon="ios-search" @click="search">搜索</Button>
+          <Button class="margin-left-10" type="success" icon="android-add" @click="add">新增</Button>
+        </Row>
 			</Card>
 		</Row>
 		<Row>
@@ -38,7 +30,7 @@
 				<Table stripe border :columns="tableColumns1" :data="tableData1"></Table>
 				<div style="margin: 10px;overflow: hidden">
 					<div style="float: right;">
-						<Page show-elevator show-sizer @on-page-size-change="changePage" :total="count" :current="1" @on-change="changePage(10)"></Page>
+						<Page show-elevator show-sizer @on-page-size-change="changePageSize" :total="count" :current="1" @on-change="changePage"></Page>
 					</div>
 				</div>
 			</Card>
@@ -67,8 +59,9 @@ export default {
       couponsName: "",
       model1: "全部",
       modal: false,
-      count: null,
+      count: 10,
       pageNum: 1,
+      pageSize: 10,
       couponsId: "",
       typeList: [
         {
@@ -81,7 +74,7 @@ export default {
         },
         {
           value: "2",
-          label: "红包"
+          label: "直减券"
         }
       ],
       cityList: [
@@ -120,7 +113,9 @@ export default {
           key: "couponsType",
           align: "center",
           render: (h, params) => {
-            return h("span", [params.row.couponsType == 1 ? "满减" : "红包"]);
+            return h("span", [
+              params.row.couponsType == 1 ? "满减券" : "直减券"
+            ]);
           }
         },
         {
@@ -161,7 +156,7 @@ export default {
           align: "center"
         },
         {
-          title: "使用数量",
+          title: "可使用数量",
           key: "couponsUsenum",
           align: "center"
         },
@@ -246,7 +241,7 @@ export default {
           this.$Message.success({
             content: "删除成功",
             onClose: function() {
-              that.mockTableData1(1);
+              that.mockTableData1();
             }
           });
         }
@@ -267,9 +262,9 @@ export default {
       });
     },
     search() {
-      this.mockTableData1(1);
+      this.mockTableData1();
     },
-    mockTableData1(pageNum) {
+    mockTableData1() {
       var couponsType = this.couponsType;
       var usescope = this.usescope;
       var token = Cookies.get("token");
@@ -277,8 +272,8 @@ export default {
       var params = {
         token,
         staffId,
-        pageSize: 10,
-        pageNum,
+        pageSize: this.pageSize,
+        pageNum: this.pageNum,
         couponsType: this.couponsType == 0 ? "" : this.couponsType,
         couponsValue: this.couponsValue,
         couponsName: this.couponsName,
@@ -300,14 +295,17 @@ export default {
       d = d < 10 ? "0" + d : d;
       return y + "-" + m + "-" + d;
     },
+    changePageSize(pageSize) {
+      this.pageSize = pageSize;
+      this.mockTableData1();
+    },
     changePage(pageNum) {
       this.pageNum = pageNum;
-      // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
-      this.tableData1 = this.mockTableData1(pageNum);
+      this.mockTableData1();
     }
   },
   mounted() {
-    this.mockTableData1(1);
+    this.mockTableData1();
   }
 };
 </script>

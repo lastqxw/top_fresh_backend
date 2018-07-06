@@ -105,8 +105,8 @@ export default {
       articleTitle: "",
       acEndtime: "",
       acCreattime: "",
-      content:"",
-      activeId:"",
+      content: "",
+      activeId: ""
     };
   },
   methods: {
@@ -150,7 +150,7 @@ export default {
         acIcon: this.defaultList[0].imgUrl,
         acCreattime: this.acCreattime,
         acEndtime: this.acEndtime,
-        acType:5,
+        acType: 5,
         acId: this.activeId
       };
       this.updateActivity(params).then(res => {
@@ -158,8 +158,7 @@ export default {
         if (res.code == 100000) {
           this.$Message.success({
             content: "修改活动成功",
-            onClose: function() {
-            }
+            onClose: function() {}
           });
         } else {
           this.$Message.error(res.message);
@@ -174,7 +173,7 @@ export default {
         token,
         staffId,
         acId: this.activeId,
-        acSrc:this.content
+        acSrc: this.content
       };
       this.updateActivity(params).then(res => {
         console.log(res);
@@ -197,6 +196,7 @@ export default {
     },
     handleSuccess(res, file) {
       console.log(file);
+      this.defaultList = [];
       this.defaultList.push({
         imgUrl: file.response.data,
         imgName: file.name
@@ -228,11 +228,11 @@ export default {
         });
       }
       return check;
-    },
+    }
   },
   mounted() {
-    var token=Cookies.get("token")
-    var staffId=Cookies.get("staffId")
+    var token = Cookies.get("token");
+    var staffId = Cookies.get("staffId");
     this.url =
       "http://39.107.126.201:8080/fresh_show//User/uploadAll?token=" +
       token +
@@ -262,26 +262,25 @@ export default {
           });
           this.value6 = res.data[0].acCreattime;
           this.value7 = res.data[0].acEndtime;
-          this.content=res.data[0].acSrc
+          this.content = res.data[0].acSrc;
         }
       });
     }
-  },
+  }
 };
 </script> 
 <style>
-.ivu-card-head p{
-  overflow:inherit
+.ivu-card-head p {
+  overflow: inherit;
 }
-.demo-upload-list1{
-   display: inline-block;
+.demo-upload-list1 {
+  display: inline-block;
   width: 60px;
   height: 60px;
   text-align: center;
   line-height: 60px;
   overflow: hidden;
   margin-right: 10px;
-
 }
 .demo-upload-list {
   display: inline-block;

@@ -145,7 +145,7 @@ export default {
         },
         {
           title: "指向对象",
-          key: "bannerLink",
+          key: "bannerTitle",
           width: 200,
           align: "center"
         },

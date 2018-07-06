@@ -46,8 +46,8 @@
 							<template v-if="item.status === 'finished'">
 								<img :src="item.imgUrl">
 								<div class="demo-upload-list-cover2">
-									<Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
-									<Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
+									<Icon type="ios-eye-outline" @click.native="handleView2(item.imgUrl)"></Icon>
+									<Icon type="ios-trash-outline" @click.native="handleRemove2(item)"></Icon>
 								</div>
 							</template>
 							<template v-else>
@@ -82,15 +82,15 @@
 				</p>
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;原&nbsp;&nbsp;&nbsp; 价：
-					<Input v-model="value" placeholder="Enter something..." style="width: 70%"></Input>
+					<Input v-model="value" placeholder="请输入商品原价" style="width: 70%"></Input>
 				</p>
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;售&nbsp;&nbsp;&nbsp; 价：
-					<Input v-model="value1" placeholder="Enter something..." style="width: 70%"></Input>
+					<Input v-model="value1" placeholder="请输入商品售价" style="width: 70%"></Input>
 				</p>
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;规&nbsp;&nbsp;&nbsp; 格：
-					<Input v-model="value2" placeholder="Enter something..." style="width: 70%"></Input>
+					<Input v-model="value2" placeholder="请输入商品规格" style="width: 70%"></Input>
 				</p>
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;类&nbsp;&nbsp;&nbsp; 型：
@@ -106,29 +106,29 @@
 				</p>
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;提货日期/现货开售时间：
-					<DatePicker type="date" split-panels placeholder="Select date" style="width: 66%" v-model="value6"></DatePicker>
+					<DatePicker type="date" split-panels placeholder="选择开始时间" style="width: 66%" v-model="value6"></DatePicker>
 
 				</p>
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;提货截止日期/现货截止时间：
-					<DatePicker type="date" split-panels placeholder="Select date" style="width: 66%" v-model="value7"></DatePicker>
+					<DatePicker type="date" split-panels placeholder="选择结束时间" style="width: 66%" v-model="value7"></DatePicker>
 
 				</p>
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;库&nbsp;&nbsp;&nbsp; 存：
-					<Input v-model="value8" placeholder="Enter something..." style="width: 70%"></Input>
+					<Input v-model="value8" placeholder="请输入商品库存" style="width: 70%"></Input>
 				</p>
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;积&nbsp;&nbsp;&nbsp; 分：
-					<Input v-model="value9" placeholder="Enter something..." style="width: 70%"></Input>
+					<Input v-model="value9" placeholder="请输入商品积分" style="width: 70%"></Input>
 				</p>
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;商品产地：
-					<Input v-model="value4" placeholder="Enter something..." style="width: 66%"></Input>
+					<Input v-model="value4" placeholder="请输入商品产地" style="width: 66%"></Input>
 				</p>
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;配送方式：
-					<Input v-model="value5" placeholder="Enter something..." style="width: 66%"></Input>
+					<Input v-model="value5" placeholder="请输入商品配送方式" style="width: 66%"></Input>
 				</p>
 				<Row class="margin-top-20 publish-button-con" v-if="isAdd">
 					<span class="publish-button">
@@ -151,7 +151,7 @@
 				</Row>
 			</Card>
 			</Col>
-      <Upload :action="url" :on-success="editorImg">
+      <Upload :action="url" :on-success="editorImg" style="display:none">
         <Button type="ghost" icon="ios-cloud-upload-outline" @click="up" ref="btn" id="btn">Upload files</Button>
       </Upload>
 		</Row>
@@ -189,6 +189,7 @@ export default {
       visible: false,
       uploadList: [],
       uploadList2: [],
+      delList: [],
       value: "",
       value1: "",
       value2: "",
@@ -319,6 +320,18 @@ export default {
       this.updateProduct(params).then(res => {
         console.log(res);
         if (res.code == 100000) {
+          for (var i = 0; i < that.delList.length; i++) {
+            var params = {
+              token: that.token,
+              staffId: that.staffId,
+              imgId: that.delList[i].imgId
+            };
+            that.deteleProImg(params).then(res => {
+              console.log(res);
+              if (res.code == 100000) {
+              }
+            });
+          }
           // 调用添加商品轮播图的接口
           for (var i = 0; i < proImg.length; i++) {
             var params = {
@@ -373,6 +386,7 @@ export default {
               }
             ];
             that.defaultList2 = res.data.proImgs ? res.data.proImgs : [];
+            that.delList = res.data.proImgs ? res.data.proImgs : [];
             // for(var i=0;i<res.data.proImgs;i++){
             // 	.push({
             // 		'imgUrl': res.data.proImgs[i].imgUrl,
@@ -402,6 +416,10 @@ export default {
       }
     },
     handleView(name) {
+      this.imgName = name;
+      this.visible = true;
+    },
+    handleView2(name) {
       this.imgName = name;
       this.visible = true;
     },
@@ -509,6 +527,10 @@ export default {
     handleRemove(file) {
       const fileList = this.$refs.upload.fileList;
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+    },
+    handleRemove2(file) {
+      const fileList = this.$refs.upload2.fileList;
+      this.$refs.upload2.fileList.splice(fileList.indexOf(file), 1);
     },
     handlePublish() {
       if (this.canPublish()) {
