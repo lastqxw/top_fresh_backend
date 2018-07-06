@@ -98,7 +98,7 @@ export default {
             return h("img", {
               attrs: {
                 src: params.row.acIcon,
-                width: " 100%"
+                width: 200
               },
               on: {
                 click: () => {
@@ -195,7 +195,7 @@ export default {
                 that.selectlist(params).then(res => {
                   console.log(res);
                   if (res.code == 100000) {
-                    that.active = res.data;
+                    that.active = res.data.reverse();
                     console.log(that.active);
                   }
                 });
@@ -219,7 +219,7 @@ export default {
     this.selectlist(params).then(res => {
       console.log(res);
       if (res.code == 100000) {
-        this.active = res.data;
+        this.active = res.data.reverse();
       }
     });
   }
