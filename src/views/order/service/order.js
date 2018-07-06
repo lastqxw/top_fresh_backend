@@ -27,7 +27,7 @@ export default {
         },
         // 物流查询
         chaxun(params) {
-            return Util.post('http://poll.kuaidi100.com/poll/query.do', params)
+            return Util.post('fresh_show/staffC/kuaidiCode', params)
                 .then(res => {
                     console.log(res)
                     return res.data

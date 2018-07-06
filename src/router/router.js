@@ -300,21 +300,6 @@ export const appRouter = [{
         }]
     },
     {
-        path: '/im',
-        icon: 'android-checkbox',
-        name: 'im',
-        title: '客服',
-        component: Main,
-        children: [{
-            path: 'imAdmin',
-            title: '客服',
-            name: 'imAdmin',
-            icon: 'compose',
-            component: () =>
-                import ('@/views/im/im.vue')
-        }]
-    },
-    {
         path: '/feedback',
         icon: 'grid',
         name: 'feedback',

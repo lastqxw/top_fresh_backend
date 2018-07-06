@@ -427,6 +427,7 @@ export default {
       console.log(file);
       console.log(res);
       console.log(this.defaultList);
+      this.defaultList=[];
       this.defaultList.push({
         imgUrl: file.response.data,
         imgName: file.name
@@ -525,6 +526,7 @@ export default {
       }
     },
     handleRemove(file) {
+      this.defaultList=[];
       const fileList = this.$refs.upload.fileList;
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
     },

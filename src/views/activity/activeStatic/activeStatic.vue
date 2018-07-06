@@ -42,7 +42,7 @@
             <Icon type="ios-film-outline"></Icon>
               静态页详情
               <span class="publish-button" style="float:right;margin-right:25px">
-						    <Button  icon="ios-checkmark" style="width:90px;" type="success"  @click="addContent">更新</Button>
+						    <Button  icon="ios-checkmark" style="width:135px;" type="success"  @click="addContent">更新静态页内容</Button>
 					    </span>
             </p>
             <textarea id="articleEditor" v-model="text"></textarea>            
