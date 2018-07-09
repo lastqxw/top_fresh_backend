@@ -30,8 +30,8 @@
         </Form>
          <Table :columns="columns1" :data="redEnevlopeContent" border ></Table>
          <p style="border-bottom:1px solid #ddd;padding-bottom:20px;margin-bottom:20px"></p>
-         <Button type="primary" @click="add" v-if="isShow">添加</Button>
-         <Button type="primary" @click="updata" v-else >修改</Button>
+         <Button type="primary" @click="add" v-if="isShow">添加红包配置</Button>
+         <Button type="primary" @click="updata" v-else >修改红包配置</Button>
     </div>
 </template>
 <script>

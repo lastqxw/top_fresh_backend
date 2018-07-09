@@ -17,37 +17,20 @@
             <Input v-model="formItem.couponsName" placeholder="请输入优惠券名称" style="width: 300px"></Input>
         </FormItem>
         <FormItem label="优惠券类型">
-            <Select v-model="formItem.couponsType" style="width: 300px">
+            <Select v-model="formItem.couponsType" style="width: 300px" @on-change="isMan">
                 <Option value="1">满减券</Option>
                 <Option value="2">直减券</Option>
             </Select>
         </FormItem>
-        <!-- <FormItem label="优惠券类型">
-            <Select v-model="formItem.couponsGet" style="width: 300px">
-                <Option value="1">注册送</Option>
-                <Option value="2">消费所得</Option>
-                <Option value="3">二级经销商赠送</Option>
-                <Option value="4">礼券中心领取</Option>
-            </Select>
-        </FormItem> -->
-        <FormItem label="优惠券可领取数量	">
+        <FormItem label="优惠券可领取数量">
             <Input v-model="formItem.couponsUsenum" placeholder="请输入优惠券可领取数量	" style="width: 300px"></Input>
         </FormItem>
         <FormItem label="优惠券面值">
             <Input v-model="formItem.couponsValue" placeholder="请输入优惠券面值" style="width: 300px"></Input>
         </FormItem>
-        <FormItem label="最低消费可用	">
+        <FormItem label="最低消费可用	" v-if="isZui">
             <Input v-model="formItem.couponsMin" placeholder="请输入最低消费可用" style="width: 300px"></Input>
         </FormItem>
-        <!-- <FormItem label="优惠券描述">
-            <Input v-model="formItem.couponsDes" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入简短的优惠券描述" style="width: 300px"></Input>
-        </FormItem> -->
-         <!-- <FormItem label="订单金额最低可送		">
-            <Input v-model="formItem.couponsOrderMoney" placeholder="请输入订单金额最低可送" style="width: 300px"></Input>
-        </FormItem>
-         <FormItem label="库存">
-            <Input v-model="formItem.couponsNum" placeholder="请输入库存" style="width: 300px"></Input>
-        </FormItem> -->
         <FormItem label="生效时间">
             <DatePicker type="date" v-model="formItem.couponsStartTime" format="yyyy-MM-dd" placeholder="选择开始时间" style="width: 200px" @on-change="start"></DatePicker>
         </FormItem>
@@ -63,8 +46,8 @@
             </Select>
         </FormItem>
         <FormItem label="选择商品" :style="{'display':block}" style="width: 300px">
-            <Select v-model="formItem.useScope">
-                <Option v-for="item in productList" :value="item.productId" :key="item.value">{{ item.productName }}</Option>
+            <Select v-model="pruductId" @on-change="selectProduct" >
+                <Option v-for="item in productList" :value="item.productId" :key="item.productId">{{ item.productName }}</Option>
             </Select>
         </FormItem>
         <FormItem >
@@ -82,8 +65,9 @@ export default {
   data() {
     return {
       block: "none",
-
+      isZui: true,
       productList: null,
+      pruductId: "",
       formItem: {
         couponsName: "",
         couponsType: "1",
@@ -96,9 +80,6 @@ export default {
         couponsUsenum: "",
         couponsValue: "",
         couponsMin: "",
-        // couponsDes: "",
-        // couponsOrderMoney: "",
-        // couponsNum: "",
         couponsStartTime: "",
         couponsEndTime: "",
         useScope: "ALL",
@@ -110,6 +91,9 @@ export default {
     start(val) {
       console.log(val);
       this.formItem.couponsStartTime = val;
+    },
+    isMan(val) {
+      val == 2 ? (this.isZui = false) : (this.isZui = true);
     },
     end(val) {
       console.log(val);
@@ -123,6 +107,10 @@ export default {
         this.block = "none";
       }
     },
+    selectProduct(val) {
+      console.log(val);
+      // this.formItem.useScope = val;
+    },
     sub() {
       var that = this;
       var staffId = Cookies.get("staffId");
@@ -132,6 +120,9 @@ export default {
       console.log(this.formItem);
       var id = this.$route.params.couponId;
       var params = this.formItem;
+      if (this.formItem.useScope == "商品") {
+        this.formItem.useScope = this.pruductId;
+      }
       if (id == "add") {
         this.addCoupons(params).then(res => {
           console.log(res);

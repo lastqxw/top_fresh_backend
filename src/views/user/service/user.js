@@ -41,6 +41,30 @@ export default {
                     return res.data
                 })
         },
+        // 查询红包列表
+        getRedEnvelope(params) {
+            return Util.get("fresh_show/redEnvelope/getRedEnvelope", params)
+                .then(res => {
+                    console.log(res)
+                    return res.data
+                })
+        },
+        // 物流查询
+        chaxun(params) {
+            return Util.post('fresh_show/staffC/kuaidiCode', params)
+                .then(res => {
+                    console.log(res)
+                    return res.data
+                })
+        },
+        // 单用户发红包
+        comeDownRedEnvelope(params) {
+            return Util.get('fresh_show/redEnvelope/comeDownRedEnvelope', params)
+                .then(res => {
+                    console.log(res)
+                    return res.data
+                })
+        },
 
     }
 }
