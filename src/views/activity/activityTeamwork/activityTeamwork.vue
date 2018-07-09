@@ -34,14 +34,15 @@
                         <Modal title="View Image" v-model="visible">
                             <img :src=" imgName" style="width: 100%">
                         </Modal>
-                        <div style="border-bottom: 1px solid #ccc; margin-top: 20px">
-                            <h1>拼团商品列表</h1>
-                        </div>
-                        <div style="margin-top: 20px">
-                            <Button type="primary" @click="show = true">添加商品</Button>
-                        </div>
                     </Card>
                     <Card style="margin-top: 10px;">
+                      <p slot="title" style="height:35px">
+                      <Icon type="ios-film-outline"></Icon>
+                        拼团活动详情
+                        <span class="publish-button" style="float:right;margin-right:25px">
+                          <Button type="primary" @click="show = true">添加商品</Button>
+                        </span>
+                      </p>
                         <Table stripe border :columns="tableColumns1" :data="tableData1"></Table>
                         <div style="margin: 10px;overflow: hidden">
                             <div style="float: right;">
@@ -54,7 +55,7 @@
             <Col span="8" class="padding-left-10">
                 <Row>
                     <Card>
-                        <h4>内容属性</h4>
+                        <h4>活动时间设置</h4>
                         <Card style="margin-top: 20px">
                             <div style="margin: 20px 0">
                                 <span>活动开始时间</span>
@@ -382,7 +383,7 @@ export default {
     },
     handleSuccess(res, file) {
       console.log(file);
-      this.defaultList=[];
+      this.defaultList = [];
       this.defaultList.push({ imgUrl: file.response.data, imgName: file.name });
       this.$nextTick(() => {
         this.uploadList = this.$refs.upload.fileList;

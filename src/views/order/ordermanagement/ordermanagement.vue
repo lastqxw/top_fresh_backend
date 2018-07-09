@@ -36,47 +36,30 @@
                 v-model="Logistics"
                 cancel-text	=""
                 title="物流详情">
-            <ul class="logistics">
-                <li>
-                    <p>2018年6月2日 上午8:54:49</p>
-                    济南市|济南市【济南历城五部001】，【吴虎/15688882514】正在派件
+            <ul class="logistics" v-if="shouw">
+                <li v-for="item in wuliu">
+                    <p>{{item.ftime}}</p>
+                    {{item.context}}
                 </li>
+            </ul>
+            <ul class="logistics" v-else>
                 <li>
-                    <p>2018年6月2日 上午8:54:49</p>
-                    济南市|到济南市【济南历城五部001】
-                </li>
-                <li>
-                    <p>2018年6月2日 上午8:54:49</p>
-                    济南市|济南市【济南转运中心】，正发往【济南历城五部001】
-                </li>
-                <li>
-                    <p>2018年6月2日 上午8:54:49</p>
-                    济南市|到济南市【济南转运中心】
-                </li>
-                <li>
-                    <p>2018年6月2日 上午8:54:49</p>
-                    金华市|金华市【义乌转运中心】，正发往【济南转运中心】
-                </li>
-                <li>
-                    <p>2018年6月2日 上午8:54:49</p>
-                    金华市|金华市【义乌转运中心】，正发往【济南转运中心】
-                </li>
-                <li>
-                    <p>2018年6月2日 上午8:54:49</p>
-                    金华市|金华市【义乌转运中心】，正发往【济南转运中心】
+                   <p>暂无物流信息</p>
                 </li>
             </ul>
         </Modal>
     </div>
 </template>
 <script>
-
+import { Decrypt, Encrypt } from "../service/MD5.js";
 import Cookies from "js-cookie";
 import order from "../service/order.js";
 export default {
   mixins: [order],
   data() {
     return {
+      shouw: true,
+      wuliu: null,
       Logistics: false,
       orderCode: "",
       orderState: "",
@@ -236,21 +219,6 @@ export default {
                 },
                 "详情"
               )
-              // h(
-              //   "Button",
-              //   {
-              //     props: {
-              //       type: "error",
-              //       size: "small"
-              //     },
-              //     on: {
-              //       click: () => {
-              //         this.confirm();
-              //       }
-              //     }
-              //   },
-              //   "退款"
-              // )
             ]);
           }
         }
@@ -268,12 +236,19 @@ export default {
         com: "shunfeng",
         num: "044149697173"
       };
+      var code = "shunfeng," + val;
+      console.log(code);
+      console.log(Encrypt(code));
       var params = {
-        customer: "48CDE7F3198E0A9486DE797B6256ADE3",
-        sign: MD5(pams + "ObrhZHpv698348CDE7F3198E0A9486DE797B6256ADE3")
+        code: Encrypt("shunfeng," + val)
       };
       this.chaxun(params).then(res => {
         console.log(res);
+        if (res.status == 200) {
+          this.wuliu = res.data.reverse();
+        } else {
+          this.shouw = false;
+        }
       });
     },
     search() {
