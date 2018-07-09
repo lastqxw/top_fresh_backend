@@ -196,6 +196,12 @@ export default {
         console.log(res);
         if (res.code == 100000) {
           this.$Message.success("添加成功");
+          this.defaultList = [];
+          this.$nextTick(() => {
+            this.uploadList = this.$refs.upload.fileList;
+          });
+          this.bannerLink = "";
+          this.bannerType = "";
           that.mockTableData1();
         } else {
           this.$Message.error(res.message);

@@ -387,18 +387,13 @@ export default {
             ];
             that.defaultList2 = res.data.proImgs ? res.data.proImgs : [];
             that.delList = res.data.proImgs ? res.data.proImgs : [];
-            // for(var i=0;i<res.data.proImgs;i++){
-            // 	.push({
-            // 		'imgUrl': res.data.proImgs[i].imgUrl,
-            // 		'imgName':res.data.proImgs[i].imgName
-            // 	})
-            // }
             that.$nextTick(() => {
               that.uploadList = that.$refs.upload.fileList;
               that.uploadList2 = that.$refs.upload2.fileList;
             });
-            // that.productImg = res.data.productImg;
-            console.log(res.data.productImg);
+            that.productImg = res.data.productImg;
+            sessionStorage.setItem("productImg", res.data.productImg);
+            // console.log(res.data.productImg);
             tinymce.activeEditor.setContent(res.data.productImg);
             that.value4 = res.data.productAddress;
             that.value5 = res.data.productSendType
@@ -644,6 +639,7 @@ export default {
   },
   mounted() {
     this.productDetails();
+    var productId = this.$route.params.product_id;
     this.url =
       "http://39.107.126.201:8080/fresh_show//User/uploadAll?token=" +
       this.token +
@@ -675,14 +671,21 @@ export default {
       table_default_styles: {
         width: "100%",
         borderCollapse: "collapse"
+      },
+      setup: function(editor) {
+        editor.on("init", function(e) {
+          if (that.productImg) {
+            editor.setContent(that.productImg);
+          } else {
+            setTimeout(() => {
+              if (productId != "add") {
+                var productImg = sessionStorage.getItem("productImg");
+                editor.setContent(productImg);
+              }
+            }, 500);
+          }
+        });
       }
-      // setup: function(editor) {
-      //   editor.on("init", function(e) {
-      //     if (that.productImg) {
-      //       editor.setContent(that.productImg);
-      //     }
-      //   });
-      // }
     });
   },
   destroyed() {
