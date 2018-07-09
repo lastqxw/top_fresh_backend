@@ -207,7 +207,7 @@ export default {
     },
     handleSuccess(res, file) {
       console.log(file);
-      this.defaultList=[];
+      this.defaultList = [];
       this.defaultList.push({
         imgUrl: file.response.data,
         imgName: file.name
@@ -334,6 +334,7 @@ export default {
           this.value6 = res.data[0].acCreattime;
           this.value7 = res.data[0].acEndtime;
           this.content = res.data[0].acImg;
+          sessionStorage.setItem("acImg", res.data[0].acImg);
         }
       });
     }
@@ -365,6 +366,13 @@ export default {
         editor.on("init", function(e) {
           if (that.content) {
             editor.setContent(that.content);
+          } else {
+            setTimeout(() => {
+              if (type != "add") {
+                var acImg = sessionStorage.getItem("acImg");
+                editor.setContent(acImg);
+              }
+            }, 500);
           }
         });
       }

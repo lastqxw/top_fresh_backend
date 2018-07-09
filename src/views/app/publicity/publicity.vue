@@ -82,8 +82,9 @@ export default {
       this.selectContent(params).then(res => {
         console.log(res);
         if (res.code == 100000) {
-          //   this.content = res.data[0].content;
-          tinymce.activeEditor.setContent(res.data[0].content);
+          this.content = res.data[0].content;
+          sessionStorage.setItem("content", res.data[0].content);
+          // tinymce.activeEditor.setContent(res.data[0].content);
           this.id = res.data[0].id;
         }
       });
@@ -157,14 +158,19 @@ export default {
       table_default_styles: {
         width: "100%",
         borderCollapse: "collapse"
+      },
+      setup: function(editor) {
+        editor.on("init", function(e) {
+          if (that.content) {
+            editor.setContent(that.content);
+          } else {
+            setTimeout(() => {
+              var content = sessionStorage.getItem("content");
+              editor.setContent(content);
+            }, 500);
+          }
+        });
       }
-      //   setup: function(editor) {
-      //     editor.on("init", function(e) {
-      //       if (that.content) {
-      //         editor.setContent(that.content);
-      //       }
-      //     });
-      //   }
     });
   },
   destroyed() {
