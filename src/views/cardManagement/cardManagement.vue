@@ -98,6 +98,11 @@ export default {
           align: "center"
         },
         {
+          title: "指向商品名称",
+          key: "odProductName",
+          align: "center"
+        },
+        {
           title: "激活时间",
           key: "usetime",
           width: 150,

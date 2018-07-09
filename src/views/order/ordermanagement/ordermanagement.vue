@@ -330,7 +330,7 @@ export default {
       this.selectOrderListBack(params).then(res => {
         console.log(res);
         if (res.code == 100000) {
-          this.tableData1 = res.data;
+          this.tableData1 = res.data.reverse();
           this.count = res.count;
         } else {
           this.$Message.error(res.message);
