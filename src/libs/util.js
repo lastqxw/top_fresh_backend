@@ -7,7 +7,7 @@ let util = {
 
 };
 util.title = function (title) {
-    title = title || 'iView admin';
+    title = title || '极味生鲜管理端';
     window.document.title = title;
 };
 
@@ -27,7 +27,7 @@ const ajaxUrl = env === 'development'
     env === 'production' ?
     'http://39.107.126.201:8080' :
 
-    'http://39.107.126.201:8080' ;
+    'http://39.107.126.201:8080';
 
 axios.defaults.baseURL = ajaxUrl
 // axios.defaults.headers = { 'X-Requested-With': 'XMLHttpRequest' }
@@ -41,6 +41,17 @@ util.get = function (url, params) {
             params: params,
         }).then(res => {
             resolve(res)
+            if (res.data.code == 100002) {
+                alert("登录失效")
+                var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+                if (keys) {
+                    for (var i = keys.length; i--;)
+                        document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
+                }
+                window.location.href = "http://39.107.126.201:82/login"
+            } else {
+                return res.data
+            }
         })
     })
 }

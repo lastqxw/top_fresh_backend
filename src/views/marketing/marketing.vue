@@ -124,7 +124,7 @@ export default {
           width: 150,
           align: "center",
           render: (h, params) => {
-            return h("span", [this.useScope(params.row.useScope)]);
+            return h("span", [this.useScope1(params.row.useScope)]);
           }
         },
         {
@@ -211,7 +211,7 @@ export default {
     };
   },
   methods: {
-    useScope(use) {
+    useScope1(use) {
       switch (use) {
         case "ALL":
           return "全部";
@@ -223,7 +223,8 @@ export default {
           return "现货";
           break;
         default:
-          use;
+          return use;
+          break;
       }
     },
     ok() {
@@ -286,14 +287,6 @@ export default {
           this.tableData1 = data;
         }
       });
-    },
-    formatDate(date) {
-      const y = date.getFullYear();
-      let m = date.getMonth() + 1;
-      m = m < 10 ? "0" + m : m;
-      let d = date.getDate();
-      d = d < 10 ? "0" + d : d;
-      return y + "-" + m + "-" + d;
     },
     changePageSize(pageSize) {
       this.pageSize = pageSize;

@@ -25,5 +25,13 @@ export default {
                     return res.data
                 })
         },
+        // 查询红包列表
+        getRedEnvelope(params) {
+            return Util.get("fresh_show/redEnvelope/getRedEnvelope", params)
+                .then(res => {
+                    console.log(res)
+                    return res.data
+                })
+        },
     }
 }
