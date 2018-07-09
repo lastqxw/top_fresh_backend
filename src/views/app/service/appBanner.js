@@ -70,5 +70,21 @@ export default {
                     return res.data
                 })
         },
+        //查询首页宣传配置
+        selectContent(params) {
+            return Util.get('fresh_show/banner/selectContent', params)
+                .then(res => {
+                    console.log(res)
+                    return res.data
+                })
+        },
+        //查询首页宣传配置
+        updataContent(params) {
+            return Util.get('fresh_show/banner/updateContent', params)
+                .then(res => {
+                    console.log(res)
+                    return res.data
+                })
+        },
     }
 }
