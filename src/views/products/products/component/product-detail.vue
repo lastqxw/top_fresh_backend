@@ -189,7 +189,7 @@ export default {
       visible: false,
       uploadList: [],
       uploadList2: [],
-      delList: [],
+      imgUrl: [],
       value: "",
       value1: "",
       value2: "",
@@ -320,11 +320,15 @@ export default {
       this.updateProduct(params).then(res => {
         console.log(res);
         if (res.code == 100000) {
-          for (var i = 0; i < that.delList.length; i++) {
+          var imgList = sessionStorage.obj;
+          var obj= JSON.parse(imgList);
+          console.log(obj);
+          for (var i = 0; i < obj.length; i++) {
+            console.log(111111);
             var params = {
               token: that.token,
               staffId: that.staffId,
-              imgId: that.delList[i].imgId
+              imgId: obj[i].imgId
             };
             that.deteleProImg(params).then(res => {
               console.log(res);
@@ -386,7 +390,9 @@ export default {
               }
             ];
             that.defaultList2 = res.data.proImgs ? res.data.proImgs : [];
-            that.delList = res.data.proImgs ? res.data.proImgs : [];
+            var img=res.data.proImgs ? res.data.proImgs : [];
+            sessionStorage.obj= JSON.stringify(img)
+            // that.imgUrl = res.data.proImgs ? res.data.proImgs : [];
             that.$nextTick(() => {
               that.uploadList = that.$refs.upload.fileList;
               that.uploadList2 = that.$refs.upload2.fileList;
@@ -527,7 +533,11 @@ export default {
     },
     handleRemove2(file) {
       const fileList = this.$refs.upload2.fileList;
-      this.$refs.upload2.fileList.splice(fileList.indexOf(file), 1);
+      this.defaultList2.splice(fileList.indexOf(file), 1);
+      // this.$refs.upload2.fileList.splice(fileList.indexOf(file), 1);
+      this.uploadList2 = this.defaultList2;
+      console.log(this.uploadList2);
+      console.log(this.defaultList2);
     },
     handlePublish() {
       if (this.canPublish()) {
