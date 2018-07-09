@@ -282,6 +282,14 @@ export const appRouter = [{
                 component: () =>
                     import ('@/views/app/appRecommendedProducts/appRecommendedProducts.vue')
             },
+            {
+                path: 'publicity',
+                title: '宣传介绍',
+                name: 'publicity',
+                icon: 'compose',
+                component: () =>
+                    import ('@/views/app/publicity/publicity.vue')
+            },
         ]
     },
     {

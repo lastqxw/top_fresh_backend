@@ -397,13 +397,13 @@ export default {
               that.uploadList = that.$refs.upload.fileList;
               that.uploadList2 = that.$refs.upload2.fileList;
             });
-            that.productImg = res.data.productImg;
+            // that.productImg = res.data.productImg;
+            console.log(res.data.productImg);
+            tinymce.activeEditor.setContent(res.data.productImg);
             that.value4 = res.data.productAddress;
             that.value5 = res.data.productSendType
               ? res.data.productSendType
               : "";
-            console.log(that.defaultList);
-            console.log(that.defaultList1);
             that.value6 = res.data.productBeginDate;
             that.value7 = res.data.productEndDate;
             that.value8 = res.data.productNum;
@@ -427,7 +427,7 @@ export default {
       console.log(file);
       console.log(res);
       console.log(this.defaultList);
-      this.defaultList=[];
+      this.defaultList = [];
       this.defaultList.push({
         imgUrl: file.response.data,
         imgName: file.name
@@ -526,7 +526,7 @@ export default {
       }
     },
     handleRemove(file) {
-      this.defaultList=[];
+      this.defaultList = [];
       const fileList = this.$refs.upload.fileList;
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
     },
@@ -675,14 +675,14 @@ export default {
       table_default_styles: {
         width: "100%",
         borderCollapse: "collapse"
-      },
-      setup: function(editor) {
-        editor.on("init", function(e) {
-          if (that.productImg) {
-            editor.setContent(that.productImg);
-          }
-        });
       }
+      // setup: function(editor) {
+      //   editor.on("init", function(e) {
+      //     if (that.productImg) {
+      //       editor.setContent(that.productImg);
+      //     }
+      //   });
+      // }
     });
   },
   destroyed() {
