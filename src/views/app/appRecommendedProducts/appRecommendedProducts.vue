@@ -80,7 +80,6 @@ export default {
               },
               on: {
                 click: () => {
-                  // console.log(params,'12')
                   // this.show(params.index)
                 }
               }
@@ -159,7 +158,6 @@ export default {
         productPtype: val
       };
       this.getProduct(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.objectList = res.data;
         }
@@ -177,7 +175,6 @@ export default {
         productIshot: 1
       };
       this.updateProIsHotBack(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success({
             content: "添加成功",
@@ -205,7 +202,6 @@ export default {
             productIshot: 2
           };
           this.updateProIsHotBack(params).then(res => {
-            console.log(res);
             if (res.code == 100000) {
               this.$Message.success({
                 content: "删除成功",
@@ -232,7 +228,6 @@ export default {
         productIshot: 1
       };
       this.selectHotListBack(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.tableData1 = res.data;
           this.count = res.count;

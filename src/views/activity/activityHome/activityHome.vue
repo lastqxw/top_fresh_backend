@@ -181,7 +181,6 @@ export default {
               },
               on: {
                 click: () => {
-                  // console.log(params,'12')
                   // this.show(params.index)
                 }
               }
@@ -256,11 +255,9 @@ export default {
   },
   methods: {
     getshart(val) {
-      console.log(val);
       this.acCreattime = val;
     },
     getend(val) {
-      console.log(val);
       this.acEndtime = val;
     },
     newActive() {
@@ -271,7 +268,6 @@ export default {
       this.visible = true;
     },
     handleSuccess(res, file) {
-      console.log(file);
       this.defaultList.push({
         imgUrl: file.response.data,
         imgName: file.name
@@ -358,7 +354,6 @@ export default {
       var staffId = Cookies.get("staffId");
       var type = this.activeType;
 
-      console.log(this.defaultList);
       var params = {
         token,
         staffId,
@@ -369,7 +364,6 @@ export default {
         acType: this.activeType
       };
       this.addActivity(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success({
             content: "添加活动成功",
@@ -427,7 +421,6 @@ export default {
             acId: index
           };
           this.deleteActivity(params).then(res => {
-            console.log(res);
             if (res.code == 100000) {
               this.$Message.success({
                 content: "删除成功",
@@ -457,7 +450,6 @@ export default {
         acType: this.acType == 0 ? "" : this.acType
       };
       this.selectlist(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.tableData1 = res.data;
           this.count = res.count;

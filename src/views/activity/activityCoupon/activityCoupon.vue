@@ -205,7 +205,6 @@ export default {
       var that = this;
       var token = Cookies.get("token");
       var staffId = Cookies.get("staffId");
-      console.log(this.defaultList);
       var params = {
         token,
         staffId,
@@ -216,7 +215,6 @@ export default {
         acType: 1
       };
       this.addActivity(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success({
             content: "添加活动成功",
@@ -245,7 +243,6 @@ export default {
         acId: this.activeId
       };
       this.updateActivity(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success({
             content: "修改活动成功",
@@ -272,7 +269,6 @@ export default {
         couponsNum: this.couponNum
       };
       this.editCoupons(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success({
             content: "添加成功",
@@ -319,7 +315,6 @@ export default {
             activityId: ""
           };
           this.editCoupons(params).then(res => {
-            console.log(res);
             if (res.code == 100000) {
               this.$Message.success({
                 content: "删除成功",
@@ -348,7 +343,6 @@ export default {
         pageSize: this.pageSize
       };
       this.selectCouponsList(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.tableData1 = res.data;
           this.count = res.totalNum;
@@ -379,7 +373,6 @@ export default {
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
     },
     handleSuccess(res, file) {
-      console.log(file);
       this.defaultList=[];
       this.defaultList.push({
         imgUrl: file.response.data,
@@ -388,7 +381,6 @@ export default {
       this.$nextTick(() => {
         this.uploadList = this.$refs.upload.fileList;
       });
-      console.log(this.defaultList);
     },
     handleFormatError(file) {
       this.$Notice.warning({
@@ -433,7 +425,6 @@ export default {
         acId: type
       };
       this.selectByPrimaryKey(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.articleTitle = res.data[0].acTitle;
           this.defaultList = [];
@@ -459,7 +450,6 @@ export default {
       pageSize: this.pageSize
     };
     this.selectCouponsList(params).then(res => {
-      console.log(res);
       if (res.code == 100000) {
         this.couponList = res.data;
       }

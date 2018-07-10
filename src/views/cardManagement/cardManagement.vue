@@ -54,6 +54,10 @@ export default {
         {
           value: "1",
           label: "已激活"
+		},
+		{
+          value: "3",
+          label: "已使用"
         },
         {
           value: "6",
@@ -84,7 +88,7 @@ export default {
           key: "state",
           align: "center",
           render: (h, params) => {
-            return h("span", [params.row.state == 6 ? "激活" : "未激活"]);
+            return h("span", [params.row.state == 6 ? "激活" : params.row.state == 1 ? "未激活" :"已使用" ]);
           }
         },
         {
@@ -104,7 +108,7 @@ export default {
         },
         {
           title: "激活时间",
-          key: "usetime",
+          key: "jihuotime",
           width: 150,
           align: "center"
         },
@@ -133,16 +137,18 @@ export default {
     pljihuo() {
       var that = this;
       console.log(this.id);
-      var ids = [];
+      var ids ='';
       for (var i = 0; i < this.id.length; i++) {
-        ids.push(this.id[i].odId);
-      }
+		// ids.push(this.id[i].odId);
+		ids += this.id[i].odId+","
+	  }
+	  console.log(ids.substring(0,ids.length-1))
       var token = Cookies.get("token");
       var staffId = Cookies.get("staffId");
       var params = {
         token,
         staffId,
-        odIds: ids
+        odIds: ids.substring(0,ids.length-1)
       };
       this.updateBatchState(params).then(res => {
         console.log(res);
@@ -183,7 +189,7 @@ export default {
         console.log(res);
         if (res.code == 100000) {
           for (var i = 0; i < res.data.length; i++) {
-            if (res.data[i].state == 6) {
+            if (res.data[i].state == 6 || res.data[i].state==3 ) {
               res.data[i]._disabled = true;
             } else {
               res.data[i]._disabled = false;

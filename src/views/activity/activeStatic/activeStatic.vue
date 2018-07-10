@@ -116,7 +116,6 @@ export default {
       var that = this;
       var token = Cookies.get("token");
       var staffId = Cookies.get("staffId");
-      console.log(this.defaultList);
       var params = {
         token,
         staffId,
@@ -127,7 +126,6 @@ export default {
         acType: 4
       };
       this.addActivity(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success({
             content: "添加活动成功",
@@ -141,8 +139,6 @@ export default {
       });
     },
     editorImg(file, res) {
-      console.log(file);
-      console.log(res);
       tinymce.execCommand(
         "mceInsertContent",
         false,
@@ -153,7 +149,6 @@ export default {
       var that = this;
       var token = Cookies.get("token");
       var staffId = Cookies.get("staffId");
-      console.log(this.defaultList);
       var params = {
         token,
         staffId,
@@ -165,7 +160,6 @@ export default {
         acId: this.activeId
       };
       this.updateActivity(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success({
             content: "修改活动成功",
@@ -187,7 +181,6 @@ export default {
         acImg: tinymce.activeEditor.getContent()
       };
       this.updateActivity(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success("更新成功");
         } else {
@@ -206,7 +199,6 @@ export default {
       this.visible = true;
     },
     handleSuccess(res, file) {
-      console.log(file);
       this.defaultList = [];
       this.defaultList.push({
         imgUrl: file.response.data,
@@ -241,7 +233,6 @@ export default {
       return check;
     },
     handleSuccess1(res, file) {
-      console.log(file);
       this.$refs.child.insertImg(file.response.data);
     },
     handleFormatError1(file) {
@@ -297,7 +288,6 @@ export default {
       }
     },
     showImageSelector(cb) {
-      console.log(this.$refs.btn);
       $("#btn").click();
     }
   },
@@ -321,7 +311,6 @@ export default {
         acId: type
       };
       this.selectByPrimaryKey(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.articleTitle = res.data[0].acTitle;
           this.defaultList.push({
