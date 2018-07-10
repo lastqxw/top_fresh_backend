@@ -115,13 +115,13 @@
 
 				</p>
 				<p class="margin-top-10">
-					<Icon type="android-time"></Icon>&nbsp;&nbsp;库&nbsp;&nbsp;&nbsp; 存：
-					<Input v-model="value8" placeholder="请输入商品库存" style="width: 70%"></Input>
+					<Icon type="android-time"></Icon>&nbsp;&nbsp;商品单位：
+					<Input v-model="value8" placeholder="请输入商品单位" style="width: 70%"></Input>
 				</p>
-				<p class="margin-top-10">
+				<!-- <p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;积&nbsp;&nbsp;&nbsp; 分：
 					<Input v-model="value9" placeholder="请输入商品积分" style="width: 70%"></Input>
-				</p>
+				</p> -->
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;商品产地：
 					<Input v-model="value4" placeholder="请输入商品产地" style="width: 66%"></Input>
@@ -302,9 +302,9 @@ export default {
         // 商品规格
         productDetail: this.value2,
         // 库存
-        productNum: this.value8,
-        // 积分
-        productScore: this.value9,
+        productUnit: this.value8,
+        // // 积分
+        // productScore: this.value9,
         // 商品配送方式
         productSendType: this.value5,
         // 开始时间
@@ -407,8 +407,8 @@ export default {
               : "";
             that.value6 = res.data.productBeginDate;
             that.value7 = res.data.productEndDate;
-            that.value8 = res.data.productNum;
-            that.value9 = res.data.productScore;
+            that.value8 = res.data.productUnit;
+            // that.value9 = res.data.productScore;
             that.model2 = res.data.productIsUse;
           } else {
             that.$Message.error(res.message);
@@ -597,9 +597,9 @@ export default {
         // 商品规格
         productDetail: this.value2,
         // 库存
-        productNum: this.value8,
+        productUnit: this.value8,
         // 积分
-        productScore: this.value9,
+        // productScore: this.value9,
         // 商品配送方式
         productSendType: this.value5,
         // 开始时间

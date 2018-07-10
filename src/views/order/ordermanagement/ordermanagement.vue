@@ -102,7 +102,7 @@ export default {
         },
         {
           value: "4",
-          label: "已完成"
+          label: "待评价"
         },
         {
           value: "5",
@@ -292,7 +292,7 @@ export default {
           return "待收货";
           break;
         case "4":
-          return "已完成";
+          return "待评价";
           break;
         case "5":
           return "已取消";

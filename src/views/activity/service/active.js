@@ -5,7 +5,6 @@ export default {
         addActivity(params) {
             return Util.get('fresh_show/activity/addActivity', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -13,7 +12,6 @@ export default {
         selectCouponsList(params) {
             return Util.get('fresh_show/coupons/selectCouponsList', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -21,7 +19,6 @@ export default {
         selectCouponsList(params) {
             return Util.get('fresh_show/coupons/selectCouponsList', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -29,7 +26,6 @@ export default {
         editCoupons(params) {
             return Util.get('fresh_show/coupons/editCoupons', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -37,7 +33,6 @@ export default {
         selectlist(params) {
             return Util.get('fresh_show/activity/selectlist', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -45,7 +40,6 @@ export default {
         selectByPrimaryKey(params) {
             return Util.get('fresh_show/activity/selectByPrimaryKey', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -53,7 +47,6 @@ export default {
         updateActivity(params) {
             return Util.post('fresh_show/activity/updateActivity', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -61,7 +54,6 @@ export default {
         deleteActivity(params) {
             return Util.get('fresh_show/activity/deleteActivity', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -69,7 +61,6 @@ export default {
         updateProBack(params) {
             return Util.get('fresh_show//pr/updatePro_back', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -77,7 +68,6 @@ export default {
         selectListBack(params) {
             return Util.get('fresh_show//pr/selectList_back', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -85,7 +75,6 @@ export default {
         getProduct(params) {
             return Util.get("fresh_show/pr/selectList_back", params)
                 .then(res => {
-                    console.log(res.data)
                     if (res.data.code == 100000) {
                         return res.data;
                     }
@@ -96,7 +85,6 @@ export default {
         addTogetherOrderInfo(params) {
             return Util.get("fresh_show/togetherOrder/addTogetherOrderInfo", params)
                 .then(res => {
-                    console.log(res.data)
                     if (res.data.code == 100000) {
                         return res.data;
                     }
@@ -107,7 +95,6 @@ export default {
         getTogetherOrderListHT(params) {
             return Util.get("fresh_show/togetherOrder/getTogetherOrderListHT", params)
                 .then(res => {
-                    console.log(res.data)
                     if (res.data.code == 100000) {
                         return res.data;
                     }
@@ -118,7 +105,6 @@ export default {
         deleteTogetherOrderInfo(params) {
             return Util.get("fresh_show/togetherOrder/deleteTogetherOrderInfo", params)
                 .then(res => {
-                    console.log(res.data)
                     if (res.data.code == 100000) {
                         return res.data;
                     }

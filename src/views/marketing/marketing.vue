@@ -131,11 +131,14 @@ export default {
           title: "规则",
           key: "couponsMin",
           align: "center",
-          render: (h, params) => {
-            return h("span", [
-              "满" + params.row.couponsMin,
-              " 减" + params.row.couponsValue
-            ]);
+        //   render: (h, params) => {
+        //     return h("span", [
+        //       "满" + params.row.couponsMin,
+        //       " 减" + params.row.couponsValue
+        //     ]);
+		//   }
+		render: (h, params) => {
+            return h("span", [this.couponsMin1(params.row.couponsType,params.row.couponsMin,params.row.couponsValue)]);
           }
         },
         {
@@ -211,6 +214,15 @@ export default {
     };
   },
   methods: {
+	couponsMin1(type,couponsMin,couponsValue){
+		var manjian= "满" +couponsMin + "元减" + couponsValue + "元";
+		var zhijian = "直减金额为：" + couponsValue + "元"
+		if(type==1){
+			return manjian
+		}else  if (type==2){
+			return zhijian
+		}
+	},
     useScope1(use) {
       switch (use) {
         case "ALL":

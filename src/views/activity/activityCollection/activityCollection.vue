@@ -173,7 +173,6 @@ export default {
       var that = this;
       var token = Cookies.get("token");
       var staffId = Cookies.get("staffId");
-      console.log(this.defaultList);
       var params = {
         token,
         staffId,
@@ -185,7 +184,6 @@ export default {
         acId: this.activeId
       };
       this.updateActivity(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success({
             content: "修改活动成功",
@@ -210,7 +208,6 @@ export default {
         productNum: this.productNum
       };
       this.updateProBack(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success({
             content: "添加成功",
@@ -238,7 +235,6 @@ export default {
         productIsuse: 1
       };
       this.getProduct(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.productList = res.data;
         }
@@ -248,7 +244,6 @@ export default {
       var that = this;
       var token = Cookies.get("token");
       var staffId = Cookies.get("staffId");
-      console.log(this.defaultList);
       var params = {
         token,
         staffId,
@@ -259,7 +254,6 @@ export default {
         acType: 3
       };
       this.addActivity(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success({
             content: "添加活动成功",
@@ -284,7 +278,6 @@ export default {
         pageSize: this.pageSize
       };
       this.selectListBack(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.tableData1 = res.data;
           this.count = res.count;
@@ -309,13 +302,11 @@ export default {
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
     },
     handleSuccess(res, file) {
-      console.log(file);
       this.defaultList = [];
       this.defaultList.push({ imgUrl: file.response.data, imgName: file.name });
       this.$nextTick(() => {
         this.uploadList = this.$refs.upload.fileList;
       });
-      console.log(this.defaultList);
     },
     handleFormatError(file) {
       this.$Notice.warning({
@@ -363,7 +354,6 @@ export default {
         acId: type
       };
       this.selectByPrimaryKey(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.articleTitle = res.data[0].acTitle;
           this.defaultList.push({

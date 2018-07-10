@@ -51,7 +51,6 @@ export default {
   },
   methods: {
     up() {
-      console.log(1111);
     },
     updata() {
       var that = this;
@@ -65,9 +64,7 @@ export default {
         // 图文信息介绍
         content: tinymce.activeEditor.getContent()
       };
-      console.log(params);
       this.updataContent(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success("修改成功");
         }
