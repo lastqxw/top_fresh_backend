@@ -286,11 +286,12 @@ export default {
         var params = {
           token,
           staffId,
-          setRedEnvelope: 1,
+          activityNewuser: 1,
           setRedNumN: this.count,
           redEnvelopeId: this.type
         };
         this.setRedEnvelope(params).then(res => {
+			console.log(1)
           if (res.code == 100000) {
             this.$Message.success("新注册用户，获取红包设置成功");
           }
@@ -300,12 +301,13 @@ export default {
         var params1 = {
           token,
           staffId,
-          setRedEnvelope: 1,
+          activityPayfull: 1,
           setRedNumP: that.count1,
           payNum: that.money,
           redEnvelopeId: that.type1
         };
         that.setRedEnvelope(params1).then(res => {
+			console.log(2)
           if (res.code == 100000) {
             this.$Message.success("订单实际付款金额满N元时，获取红包设置成功");
           }
@@ -315,13 +317,15 @@ export default {
         var params2 = {
           token,
           staffId,
-          setRedEnvelope: 1,
+          activityFirstpay: 1,
           setRedNumF: that.count2,
           redEnvelopeId: that.type2
         };
-        that.setRedEnvelope(params1).then(res => {
+        that.setRedEnvelope(params2).then(res => {
+			console.log(3)
           if (res.code == 100000) {
-            this.$Message.success("设置用户第一次下单，获取的红包设置成功");
+			this.$Message.success("设置用户第一次下单，获取的红包设置成功");
+			this.loading=false
           }
         });
       }
