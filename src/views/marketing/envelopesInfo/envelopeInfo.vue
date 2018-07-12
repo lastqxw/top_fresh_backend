@@ -1,8 +1,8 @@
 /*
  * @Author: By.zhangTeng 
  * @Date: 2018-06-25 18:03:23 
- * @Last Modified by: By.zhangTeng
- * @Last Modified time: 2018-06-26 10:37:43
+ * @Last Modified by: ZT.zhangTeng
+ * @Last Modified time: 2018-07-12 16:12:45
  */
 <style scoped>
 .ivu-form .ivu-form-item-label {
@@ -103,7 +103,6 @@ export default {
           redEnevlopeContent[i].couponId + ":" + redEnevlopeContent[i].number
         );
       }
-      console.log(arrayCoupons.join(","));
       var params = {
         token,
         staffId,
@@ -112,7 +111,6 @@ export default {
       };
       var that = this;
       this.addRedEnvelope(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success({
             content: "添加成功",
@@ -135,7 +133,6 @@ export default {
           redEnevlopeContent[i].couponId + ":" + redEnevlopeContent[i].number
         );
       }
-      console.log(arrayCoupons.join(","));
       var params = {
         token,
         staffId,
@@ -144,7 +141,6 @@ export default {
         arrayCoupons: arrayCoupons.join(",")
       };
       this.editRedEnvelope(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success({
             content: "修改成功"
@@ -155,16 +151,12 @@ export default {
       });
     },
     remove(index) {
-      console.log(index);
       this.redEnevlopeContent.splice(index, 1);
     },
     change(val) {
-      console.log(val);
       this.couponName = val.split(",")[1];
-      console.log(this.couponName);
     },
     sub() {
-      console.log(this.formItem.arrayCoupons);
       this.redEnevlopeContent.push({
         couponName: this.couponName,
         number: this.number,
@@ -175,7 +167,6 @@ export default {
   mounted() {
     var token = Cookies.get("token");
     var staffId = Cookies.get("staffId");
-    console.log(this.$route);
     var redEnvelopeId = this.$route.params.redEnvelopeId;
     this.redEnvelopeId = redEnvelopeId;
     if (redEnvelopeId != "add") {
@@ -186,7 +177,6 @@ export default {
         redEnvelopeId
       };
       this.getRedEnvelopeInfo(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.formItem.redEnvelopeName = res.data[0].redEnvelopeName;
           for (var i = 0; i < res.data.length; i++) {
@@ -206,7 +196,6 @@ export default {
       pageNum: 1
     };
     this.selectCouponsList(params).then(res => {
-      console.log(res);
       if (res.code == 100000) {
         this.productList = res.data;
       }

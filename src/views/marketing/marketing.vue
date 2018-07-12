@@ -249,7 +249,6 @@ export default {
       };
       var that = this;
       this.deleteCoupons(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success({
             content: "删除成功",

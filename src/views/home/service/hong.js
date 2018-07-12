@@ -5,7 +5,6 @@ export default {
         addSystemNotice(params) {
             return Util.get('fresh_show/sysnotice/addSystemNotice', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -13,7 +12,6 @@ export default {
         selectSystemNotice(params) {
             return Util.get('fresh_show/sysnotice/selectSystemNotice', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -21,7 +19,6 @@ export default {
         deleteSystemNotice(params) {
             return Util.get('fresh_show/sysnotice/deleteSystemNotice', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },

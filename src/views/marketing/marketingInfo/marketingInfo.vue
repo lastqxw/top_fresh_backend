@@ -1,8 +1,8 @@
 /*
  * @Author: By.zhangTeng 
  * @Date: 2018-06-25 18:03:23 
- * @Last Modified by: By.zhangTeng
- * @Last Modified time: 2018-06-26 10:37:43
+ * @Last Modified by: ZT.zhangTeng
+ * @Last Modified time: 2018-07-12 16:14:37
  */
 <style scoped>
 .ivu-form .ivu-form-item-label {
@@ -89,18 +89,15 @@ export default {
   },
   methods: {
     start(val) {
-      console.log(val);
       this.formItem.couponsStartTime = val;
     },
     isMan(val) {
       val == 2 ? (this.isZui = false) : (this.isZui = true);
     },
     end(val) {
-      console.log(val);
       this.formItem.couponsEndTime = val;
     },
     isShop() {
-      console.log("1111111");
       if (this.formItem.useScope == "商品") {
         this.block = "block";
       } else {
@@ -108,7 +105,6 @@ export default {
       }
     },
     selectProduct(val) {
-      console.log(val);
       // this.formItem.useScope = val;
     },
     sub() {
@@ -117,7 +113,6 @@ export default {
       var token = Cookies.get("token");
       this.formItem.staffId = staffId;
       this.formItem.token = token;
-      console.log(this.formItem);
       var id = this.$route.params.couponId;
       var params = this.formItem;
       if (this.formItem.useScope == "商品") {
@@ -125,7 +120,6 @@ export default {
       }
       if (id == "add") {
         this.addCoupons(params).then(res => {
-          console.log(res);
           if (res.code == 100000) {
             this.$Message.success({
               content: "添加成功",
@@ -138,7 +132,6 @@ export default {
       } else {
         params.couponsId = id;
         this.editCoupons(params).then(res => {
-          console.log(res);
           if (res.code == 100000) {
             this.$Message.success("修改成功");
           } else {
@@ -149,13 +142,11 @@ export default {
     }
   },
   beforeMount() {
-    console.log(this.$route);
     var couponsId = this.$route.params.couponId;
     var staffId = Cookies.get("staffId");
     var token = Cookies.get("token");
     this.formItem.staffId = staffId;
     this.formItem.token = token;
-    console.log(this.formItem);
     var params1 = {
       token,
       staffId,
@@ -163,7 +154,6 @@ export default {
       pageSize: "1000000"
     };
     this.getProduct(params1).then(res => {
-      console.log(res);
       if (res.code == 100000) {
         this.productList = res.data;
       }
@@ -175,7 +165,6 @@ export default {
         staffId
       };
       this.selectByPrimaryKey(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.formItem = res.data;
           if (

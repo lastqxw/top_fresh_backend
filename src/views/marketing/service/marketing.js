@@ -5,7 +5,6 @@ export default {
         selectCouponsList(params) {
             return Util.get('fresh_show/coupons/selectCouponsList', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -13,7 +12,6 @@ export default {
         selectByPrimaryKey(params) {
             return Util.get('fresh_show/coupons/selectByPrimaryKey', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -21,7 +19,6 @@ export default {
         deleteCoupons(params) {
             return Util.get('fresh_show/coupons/deleteCoupons', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -29,7 +26,6 @@ export default {
         addCoupons(params) {
             return Util.post('fresh_show/coupons/addCoupons', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -37,7 +33,6 @@ export default {
         editCoupons(params) {
             return Util.post('fresh_show/coupons/editCoupons', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -45,7 +40,6 @@ export default {
         getProduct(params) {
             return Util.get('fresh_show/pr/selectList_back', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -54,7 +48,6 @@ export default {
         getRedEnvelope(params) {
             return Util.get("fresh_show/redEnvelope/getRedEnvelope", params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -62,7 +55,6 @@ export default {
         addRedEnvelope(params) {
             return Util.get("fresh_show/redEnvelope/addRedEnvelope", params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -70,7 +62,6 @@ export default {
         editRedEnvelope(params) {
             return Util.get("fresh_show/redEnvelope/editRedEnvelope", params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -78,7 +69,6 @@ export default {
         deleteRedEnvelope(params) {
             return Util.get("fresh_show/redEnvelope/deleteRedEnvelope", params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -86,7 +76,6 @@ export default {
         getRedEnvelopeInfo(params) {
             return Util.get("fresh_show/redEnvelope/getRedEnvelopeInfo", params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -94,7 +83,6 @@ export default {
         getList(params) {
             return Util.get("fresh_show/score/getList", params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -102,7 +90,6 @@ export default {
         updateScore(params) {
             return Util.get("fresh_show/score/updateScore", params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },

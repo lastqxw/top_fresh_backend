@@ -77,7 +77,6 @@ export default {
         staffId: that.staffId
       };
       this.selectContent(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.content = res.data[0].content;
           sessionStorage.setItem("content", res.data[0].content);
@@ -87,8 +86,6 @@ export default {
       });
     },
     editorImg(file, res) {
-      console.log(file);
-      console.log(res);
       tinymce.execCommand(
         "mceInsertContent",
         false,
@@ -120,7 +117,6 @@ export default {
       return check;
     },
     showImageSelector(cb) {
-      console.log(this.$refs.btn);
       $("#btn").click();
     }
   },

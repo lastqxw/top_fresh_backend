@@ -96,8 +96,6 @@ export default {
               },
               on: {
                 click: () => {
-                  // console.log(params,'12')
-                  // this.show(params.index)
                 }
               }
             });
@@ -162,7 +160,6 @@ export default {
       staffId
     };
     this.selectOrderPrimaryKeyBack(params).then(res => {
-      console.log(res);
       if (res.code == 100000) {
         this.order = res.data;
         var type = res.data.orderState;

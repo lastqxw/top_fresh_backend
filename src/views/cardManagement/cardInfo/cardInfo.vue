@@ -135,7 +135,6 @@ export default {
         state: this.state
       };
       this.updateLading(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success("添加成功");
         } else {
@@ -147,7 +146,6 @@ export default {
       this.loading = true;
     },
     handleSuccess(file) {
-      console.log(file);
       if (file.code == 100000) {
         this.random = file.data[0];
         this.cardNumber = file.data[1];

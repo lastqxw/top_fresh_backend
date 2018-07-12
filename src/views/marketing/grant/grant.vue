@@ -194,8 +194,6 @@ export default {
   },
   methods: {
     isValue(val) {
-      console.log(typeof val == "object");
-      console.log(val.data == null);
       if (typeof val == "object" && val.data == null) {
         this.disabled = true;
       } else if (val) {
@@ -204,13 +202,11 @@ export default {
       }
     },
     datarange(val) {
-      console.log(val);
       this.startPayTime = val[0];
       this.endPayTime = val[1];
       this.disabled = false;
     },
     datarange1(val) {
-      console.log(val);
       this.startPayProductTime = val[0];
       this.endPayProductTime = val[1];
       this.disabled = false;
@@ -234,7 +230,6 @@ export default {
         orderConditionFlag: orderConditionFlag
       };
       this.selectComeDownRedEnvelope(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           that.people = res.data;
           that.loading2 = false;
@@ -264,7 +259,6 @@ export default {
         redEnvelopeId: this.type5
       };
       this.comeDownRedEnvelope(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success("发放成功");
           that.loading1 = false;
@@ -296,9 +290,7 @@ export default {
           setRedNumN: this.count,
           redEnvelopeId: this.type
         };
-        console.log(params);
         this.setRedEnvelope(params).then(res => {
-          console.log(res);
           if (res.code == 100000) {
             this.$Message.success("新注册用户，获取红包设置成功");
           }
@@ -314,7 +306,6 @@ export default {
           redEnvelopeId: that.type1
         };
         that.setRedEnvelope(params1).then(res => {
-          console.log(res);
           if (res.code == 100000) {
             this.$Message.success("订单实际付款金额满N元时，获取红包设置成功");
           }
@@ -329,7 +320,6 @@ export default {
           redEnvelopeId: that.type2
         };
         that.setRedEnvelope(params1).then(res => {
-          console.log(res);
           if (res.code == 100000) {
             this.$Message.success("设置用户第一次下单，获取的红包设置成功");
           }
@@ -344,7 +334,6 @@ export default {
           redEnvelopeId: that.type3
         };
         that.setRedEnvelope(params1).then(res => {
-          console.log(res);
           if (res.code == 100000) {
             this.$Message.success("用户下单后分享，好友领的红包设置成功");
           }
@@ -364,7 +353,6 @@ export default {
       redEnvelopeName: ""
     };
     this.getRedEnvelope(params).then(res => {
-      console.log(res);
       if (res.code == 100000) {
         this.typeList = res.data;
       }
@@ -389,7 +377,6 @@ export default {
       pageSize: 1000000
     };
     this.getRedEnvelope(params).then(res => {
-      console.log(res);
       if (res.code == 100000) {
         this.couponList = res.data;
       } else {

@@ -89,7 +89,6 @@ export default {
               },
               on: {
                 click: () => {
-                  // console.log(params,'12')
                   // this.show(params.index)
                 }
               }
@@ -233,13 +232,10 @@ export default {
         productName: product_name
       };
       this.getProduct(params).then(res => {
-        console.log(res);
         if(res.code==100000){
           data = res.data;
-        console.log(data);
         this.tableData1 = data;
         this.count = res.count;
-        console.log(this.tableData1);
         }else{
           this.$Message.error(res.message)
         }
@@ -267,7 +263,6 @@ export default {
         productId: this.productId
       };
       this.removeProduct(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success("删除成功");
           this.mockTableData1(this.pageNum);

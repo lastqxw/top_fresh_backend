@@ -74,7 +74,6 @@
 					// 			},
 					// 			on: {
 					// 				click: () => {
-					// 					// console.log(params,'12')
 					// 					// this.show(params.index)
 					// 				}
 					// 			}
@@ -125,7 +124,6 @@
 				let data = [];
 				var token = Cookies.get("token"),
 					staffId = Cookies.get("staffId");
-				console.log(this.$route);
 				var productId = this.$route.params.evaluateId
 				var params = {
 					token: token,
@@ -135,12 +133,10 @@
 					productId,
 				};
 				this.selectevaluationlist(params).then(res => {
-					console.log(res);
 					if (res.code == 100000) {
 						data = res.data;
 						this.tableData1 = data;
 						this.count = res.count;
-						console.log(this.tableData1);
 					} else {
 						this.$Message.error(res.message)
 					}
@@ -162,7 +158,6 @@
 					evaluationId: this.productId
 				};
 				this.deleteEvaluation(params).then(res => {
-					console.log(res);
 					if (res.code == 100000) {
 						this.$Message.success("删除成功");
 						this.mockTableData1();

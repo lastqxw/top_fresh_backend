@@ -5,7 +5,6 @@ export default {
         getBanner(params) {
             return Util.get('fresh_show/banner/selectBannerList_back', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -13,7 +12,6 @@ export default {
         removeBanner(params) {
             return Util.get('fresh_show/banner/delBanner_back', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -21,7 +19,6 @@ export default {
         addBanner(params) {
             return Util.get('fresh_show/banner/addBanner_back', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -29,7 +26,6 @@ export default {
         getProduct(params) {
             return Util.get("fresh_show/pr/selectList_back", params)
                 .then(res => {
-                    console.log(res.data)
                     if (res.data.code == 100000) {
                         return res.data;
                     }
@@ -40,7 +36,6 @@ export default {
         selectHotListBack(params) {
             return Util.get("fresh_show/pr/selectHotList_back", params)
                 .then(res => {
-                    console.log(res.data)
                     return res.data
                 })
         },
@@ -48,7 +43,6 @@ export default {
         updateProIsHotBack(params) {
             return Util.get("fresh_show/pr/updateProIsHot_back", params)
                 .then(res => {
-                    console.log(res.data)
                     return res.data;
 
 
@@ -58,7 +52,6 @@ export default {
         selectlist(params) {
             return Util.get('fresh_show/activity/selectlist', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -66,7 +59,6 @@ export default {
         updateActivity(params) {
             return Util.get('fresh_show/activity/updateHotActivity', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -74,7 +66,6 @@ export default {
         selectContent(params) {
             return Util.get('fresh_show/banner/selectContent', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -82,7 +73,6 @@ export default {
         updataContent(params) {
             return Util.get('fresh_show/banner/updateContent', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },

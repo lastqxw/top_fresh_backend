@@ -5,7 +5,6 @@ export default {
         getStaffList(params) {
             return Util.get('fresh_show/staff/getStaffList', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -13,7 +12,6 @@ export default {
         getStaffInfoBack(params) {
             return Util.get('fresh_show/staff/getStaffInfoBack', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -21,7 +19,6 @@ export default {
         updateStaffFeng(params) {
             return Util.get('fresh_show/staff/updateStaffFeng', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -29,7 +26,6 @@ export default {
         updateStaffJie(params) {
             return Util.get('fresh_show/staff/updateStaffJie', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -37,7 +33,6 @@ export default {
         selectOrderListBack(params) {
             return Util.get('fresh_show/order/selectOrderList_back', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -45,7 +40,6 @@ export default {
         getRedEnvelope(params) {
             return Util.get("fresh_show/redEnvelope/getRedEnvelope", params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -53,7 +47,6 @@ export default {
         chaxun(params) {
             return Util.post('fresh_show/staffC/kuaidiCode', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -61,7 +54,6 @@ export default {
         comeDownRedEnvelope(params) {
             return Util.get('fresh_show/redEnvelope/comeDownRedEnvelope', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },

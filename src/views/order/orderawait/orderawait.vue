@@ -143,7 +143,6 @@ export default {
         orderState: 2
       };
       this.selectOrderListBack(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.count = res.count;
           this.tableData1 = res.data;
@@ -206,7 +205,6 @@ export default {
             orderSendcode: this.value
           };
           that.sendOrderBack(params).then(res => {
-            console.log(res);
             if (res.code == 100000) {
               this.$Message.success({
                 content: "发货成功",

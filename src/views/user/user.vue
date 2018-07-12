@@ -155,7 +155,6 @@ export default {
           staffid: id
         };
         this.updateStaffFeng(params).then(res => {
-          console.log(res);
           if (res.code == 100000) {
             this.$Message.success({
               content: "用户封禁成功",
@@ -174,7 +173,6 @@ export default {
           staffid: id
         };
         this.updateStaffJie(params).then(res => {
-          console.log(res);
           if (res.code == 100000) {
             this.$Message.success({
               content: "用户解封成功",
@@ -200,12 +198,10 @@ export default {
       if (staffPhone != "") {
         params.staffPhone = staffPhone;
       }
-      console.log(staffIsdel);
       if (staffIsdel != "" && staffIsdel != "0") {
         params.staffIsdel = staffIsdel;
       }
       this.getStaffList(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           var data = res.data;
           this.count = res.count;

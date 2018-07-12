@@ -72,13 +72,10 @@ export default {
         pageSize: this.pageSize
       };
       this.selectevaluationlist(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           data = res.data;
-          console.log(data);
           this.tableData1 = data;
           this.count = res.count;
-          console.log(this.tableData1);
         } else {
           this.$Message.error(res.message);
         }
