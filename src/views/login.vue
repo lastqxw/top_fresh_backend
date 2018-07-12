@@ -66,7 +66,6 @@ export default {
         staffPassword: this.form.password
       };
       this.login(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           Cookies.set("user", this.form.userName);
           Cookies.set("password", this.form.password);

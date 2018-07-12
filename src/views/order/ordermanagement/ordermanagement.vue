@@ -237,13 +237,10 @@ export default {
         num: "044149697173"
       };
       var code = "shunfeng," + val;
-      console.log(code);
-      console.log(Encrypt(code));
       var params = {
         code: Encrypt("shunfeng," + val)
       };
       this.chaxun(params).then(res => {
-        console.log(res);
         if (res.status == 200) {
           this.wuliu = res.data.reverse();
         } else {
@@ -313,7 +310,6 @@ export default {
       var orderCode = this.orderCode;
       var orderCreatetime = this.orderCreatetime;
       var orderState = this.orderState == 0 ? "" : this.orderState;
-      console.log(orderPaytime, orderCode, orderCreatetime, orderState);
       if (orderPaytime != "") {
         params.orderPaytime = orderPaytime;
       }
@@ -326,9 +322,7 @@ export default {
       if (orderState != "") {
         params.orderState = orderState;
       }
-      console.log(params);
       this.selectOrderListBack(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.tableData1 = res.data.reverse();
           this.count = res.count;
@@ -357,12 +351,10 @@ export default {
       return y + "-" + m + "-" + d;
     },
     changePageSize(pageSize) {
-      console.log(pageSize);
       this.pageSize = pageSize;
       this.mockTableData1();
     },
     changePage(pageNum) {
-      console.log(pageNum);
       this.pageNum = pageNum;
       this.mockTableData1();
       // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server

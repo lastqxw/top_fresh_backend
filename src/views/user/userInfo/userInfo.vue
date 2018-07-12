@@ -229,14 +229,10 @@ export default {
         num: "044149697173"
       };
       var code = "shunfeng," + val;
-      console.log(code);
-      console.log(Encrypt(code));
       var params = {
         code: Encrypt("shunfeng," + val)
       };
       this.chaxun(params).then(res => {
-        console.log(res);
-        console.log(res.status == 200);
         if (res.status == 200) {
           this.wuliu = res.data.reverse();
           this.shouw = true;
@@ -258,7 +254,6 @@ export default {
       }
       this.comeDownRedEnvelope(params)
       .then(res => {
-        console.log(res)
         if(res.code==100000){
           this.$Message.success("发送成功")
           this.modal1=false
@@ -277,7 +272,6 @@ export default {
           staffid: id
         };
         this.updateStaffFeng(params).then(res => {
-          console.log(res);
           if (res.code == 100000) {
             this.$Message.success("用户封禁成功");
             that.type = "封禁";
@@ -292,7 +286,6 @@ export default {
           staffid: id
         };
         this.updateStaffJie(params).then(res => {
-          console.log(res);
           if (res.code == 100000) {
             this.$Message.success("用户解封成功");
             that.type = "正常";
@@ -343,7 +336,6 @@ export default {
         pageNum: this.pageNum
       };
       this.selectOrderListBack(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.tableData1 = res.data;
           this.count = res.count;
@@ -380,7 +372,6 @@ export default {
       staffId
     };
     this.getStaffInfoBack(params).then(res => {
-      console.log(res);
       if (res.code == 100000) {
         this.userid = staffid, this.phone = res.data.staffPhone;
         this.nickName = res.data.staffNickname;
@@ -400,7 +391,6 @@ export default {
       pageSize: 1000000
     };
     this.getRedEnvelope(params).then(res => {
-      console.log(res);
       if (res.code == 100000) {
         this.couponsList = res.data;
       } else {

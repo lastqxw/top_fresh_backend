@@ -5,7 +5,6 @@ export default {
         getLadingList(params) {
             return Util.get('fresh_show/orderTail/getLadingList', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -13,7 +12,6 @@ export default {
         updateLading(params) {
             return Util.get('fresh_show/orderTail/updateLading', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -21,7 +19,6 @@ export default {
         getProduct1(params) {
             return Util.get("fresh_show/pr/selectList_back", params)
                 .then(res => {
-                    console.log(res.data)
                     if (res.data.code == 100000) {
                         return res.data;
                     }
@@ -33,7 +30,6 @@ export default {
         updateBatchState(params) {
             return Util.get("fresh_show/orderTail/updateBatchState", params)
                 .then(res => {
-                    console.log(res.data)
                     if (res.data.code == 100000) {
                         return res.data;
                     }

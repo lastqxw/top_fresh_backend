@@ -5,7 +5,6 @@ export default {
         selectevaluationlist(params) {
             return Util.get('fresh_show/feedback/selectfeedbacklist', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },

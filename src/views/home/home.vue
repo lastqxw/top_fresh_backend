@@ -189,7 +189,6 @@ export default {
           }
           this.deleteSystemNotice(params)
           .then( res => {
-              console.log(res)
               if(res.code==100000){
                   this.$Message.success("删除成功")
                   that.mockTableData1()
@@ -212,7 +211,6 @@ export default {
           };
           this.addSystemNotice(params)
           .then( res => {
-              console.log(res)
               if(res.code==100000){
                   this.$Message.success("添加成功")
                   that.mockTableData1();
@@ -237,7 +235,6 @@ export default {
         }
         this.selectSystemNotice(params)
         .then( res => {
-            console.log(res)
             if(res.code==100000){
                 this.resultValue=res.data;
                 this.count=res.count
@@ -267,12 +264,10 @@ export default {
       this.newToDoItemValue = "";
     },
     changePageSize(pageSize) {
-      console.log(pageSize);
       this.pageSize = pageSize;
       this.mockTableData1();
     },
     changePage(pageNum) {
-      console.log(pageNum);
       this.pageNum = pageNum;
       this.mockTableData1();
       // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server

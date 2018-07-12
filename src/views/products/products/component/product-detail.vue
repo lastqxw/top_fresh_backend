@@ -230,7 +230,6 @@ export default {
   },
   methods: {
     up() {
-      console.log(111111);
     },
     cancel() {
       this.$router.go(-1);
@@ -243,7 +242,6 @@ export default {
         productId
       };
       this.removeProduct(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$router.go(-1);
         } else {
@@ -316,22 +314,17 @@ export default {
         // 商品轮播图list
         // proImgs:this.uploadList,
       };
-      console.log(params);
       this.updateProduct(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           var imgList = sessionStorage.obj;
           var obj= JSON.parse(imgList);
-          console.log(obj);
           for (var i = 0; i < obj.length; i++) {
-            console.log(111111);
             var params = {
               token: that.token,
               staffId: that.staffId,
               imgId: obj[i].imgId
             };
             that.deteleProImg(params).then(res => {
-              console.log(res);
               if (res.code == 100000) {
               }
             });
@@ -348,11 +341,9 @@ export default {
             };
             if (i != proImg.length - 1) {
               that.saveProImg(params).then(res => {
-                console.log(res);
               });
             } else {
               that.saveProImg(params).then(res => {
-                console.log(res);
                 if (res.code == 100000) {
                   this.$Message.success("修改成功");
                 }
@@ -374,7 +365,6 @@ export default {
           productId: productId
         };
         that.selectProduct(params).then(res => {
-          console.log(res);
           if (res.code == 100000) {
             that.articleTitle = res.data.productName;
             that.productInfo = res.data.productInfo;
@@ -399,7 +389,6 @@ export default {
             });
             that.productImg = res.data.productImg;
             sessionStorage.setItem("productImg", res.data.productImg);
-            // console.log(res.data.productImg);
             tinymce.activeEditor.setContent(res.data.productImg);
             that.value4 = res.data.productAddress;
             that.value5 = res.data.productSendType
@@ -425,9 +414,6 @@ export default {
       this.visible = true;
     },
     handleSuccess(res, file) {
-      console.log(file);
-      console.log(res);
-      console.log(this.defaultList);
       this.defaultList = [];
       this.defaultList.push({
         imgUrl: file.response.data,
@@ -438,8 +424,6 @@ export default {
       });
     },
     editorImg(file, res) {
-      console.log(file);
-      console.log(res);
       tinymce.execCommand(
         "mceInsertContent",
         false,
@@ -471,9 +455,6 @@ export default {
       return check;
     },
     handleSuccess2(res, file) {
-      console.log(file);
-      console.log(res);
-      console.log(this.defaultList);
       this.defaultList2.push({
         imgUrl: file.response.data,
         imgName: file.name
@@ -536,8 +517,6 @@ export default {
       this.defaultList2.splice(fileList.indexOf(file), 1);
       // this.$refs.upload2.fileList.splice(fileList.indexOf(file), 1);
       this.uploadList2 = this.defaultList2;
-      console.log(this.uploadList2);
-      console.log(this.defaultList2);
     },
     handlePublish() {
       if (this.canPublish()) {
@@ -572,7 +551,6 @@ export default {
           order: i
         });
       }
-      console.log(proImg);
       var params = {
         // token
         token: this.token,
@@ -611,9 +589,7 @@ export default {
         // 商品轮播图list
         // proImg: proImg
       };
-      console.log(params);
       this.addProduct(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           // 调用添加商品轮播图的接口
           for (var i = 0; i < proImg.length; i++) {
@@ -627,11 +603,9 @@ export default {
             };
             if (i != proImg.length - 1) {
               that.saveProImg(params).then(res => {
-                console.log(res);
               });
             } else {
               that.saveProImg(params).then(res => {
-                console.log(res);
                 if (res.code == 100000) {
                   this.$Message.success("添加成功，返回列表");
                   that.$router.go(-1);
@@ -643,7 +617,6 @@ export default {
       });
     },
     showImageSelector(cb) {
-      console.log(this.$refs.btn);
       $("#btn").click();
     }
   },

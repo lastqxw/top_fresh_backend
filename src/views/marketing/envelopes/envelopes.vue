@@ -134,7 +134,6 @@ export default {
         redEnvelopeId
       };
       this.deleteRedEnvelope(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success("删除成功");
           this.mockTableData1();
@@ -155,7 +154,6 @@ export default {
         couponsNum: this.coupons
       };
       this.getRedEnvelope(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.count = res.count;
           this.tableData1 = res.data;

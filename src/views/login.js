@@ -5,7 +5,6 @@ export default {
         login(params){
             return Util.get('fresh_show/staffC/BackLogin',params)
             .then(res => {
-                console.log(res)
                 return res.data
             })
         },

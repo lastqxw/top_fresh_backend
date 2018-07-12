@@ -141,7 +141,6 @@ export default {
   mounted(){
       
       if(this.$route.params.couponid != 0){
-        console.log('11111')
         this.formValidate= {
         name: "123",
         type: 0,

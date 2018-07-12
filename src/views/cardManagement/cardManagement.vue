@@ -131,18 +131,15 @@ export default {
       this.mockTableData1();
     },
     jihuo(val) {
-      console.log(val);
       this.id = val;
     },
     pljihuo() {
       var that = this;
-      console.log(this.id);
       var ids ='';
       for (var i = 0; i < this.id.length; i++) {
 		// ids.push(this.id[i].odId);
 		ids += this.id[i].odId+","
 	  }
-	  console.log(ids.substring(0,ids.length-1))
       var token = Cookies.get("token");
       var staffId = Cookies.get("staffId");
       var params = {
@@ -151,7 +148,6 @@ export default {
         odIds: ids.substring(0,ids.length-1)
       };
       this.updateBatchState(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.$Message.success({
             content: "激活成功",
@@ -175,10 +171,7 @@ export default {
         staffId,
         pageNum: this.pageNum,
         pageSize: this.pageSize
-        // card: this.number,
-        // state: this.type
       };
-      console.log(this.type);
       if (this.type != 0 || this.type != "") {
         params.state = this.type;
       }
@@ -186,7 +179,6 @@ export default {
         params.card = this.number;
       }
       this.getLadingList(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           for (var i = 0; i < res.data.length; i++) {
             if (res.data[i].state == 6 || res.data[i].state==3 ) {

@@ -5,7 +5,6 @@ export default {
         getProduct(params){
             return Util.get("fresh_show/pr/selectList_back",params)
             .then(res => {
-                console.log(res.data)
                 if(res.data.code==100000){
                    return res.data;
                 }
@@ -16,7 +15,6 @@ export default {
         removeProduct(params){
             return Util.get('/fresh_show/pr/delPro_back',params)
             .then( res => {
-                console.log(res)
                 return res.data
             })
         },
@@ -24,7 +22,6 @@ export default {
         addProduct(params){
             return Util.post('fresh_show/pr/addPro_back',params)
             .then(res => {
-                console.log(res)
                 return res.data
             })
         },
@@ -32,7 +29,6 @@ export default {
         updateProduct(params){
             return Util.get('fresh_show/pr/updatePro_back',params)
             .then(res => {
-                console.log(res)
                 return res.data
             })
         },
@@ -40,7 +36,6 @@ export default {
         selectProduct(params){
             return Util.get('fresh_show/pro/selectProDetaiById',params)
             .then(res => {
-                console.log(res)
                 return res.data
             })
         },
@@ -48,7 +43,6 @@ export default {
         saveProImg(params){
             return Util.get("fresh_show/img/saveProImg",params)
             .then(res => {
-                console.log(res)
                 return res.data
             })
         },
@@ -56,7 +50,6 @@ export default {
         deteleProImg(params){
             return Util.get("fresh_show/img/deteleProImg",params)
             .then(res => {
-                console.log(res)
                 return res.data
             })
         },
@@ -64,7 +57,6 @@ export default {
         updateProImg(params){
             return Util.get("fresh_show/img/updateProImg",params)
             .then(res => {
-                console.log(res)
                 return res.data
             })
         },
@@ -72,7 +64,6 @@ export default {
         selectevaluationlist(params){
             return Util.get("fresh_show/evaluation/selectevaluationlist",params)
             .then(res => {
-                console.log(res)
                 return res.data
             })
         },
@@ -80,7 +71,6 @@ export default {
         deleteEvaluation(params){
             return Util.get("fresh_show/evaluation/deleteEvaluation",params)
             .then(res => {
-                console.log(res)
                 return res.data
             })
         }

@@ -5,7 +5,6 @@ export default {
         selectOrderListBack(params) {
             return Util.get('fresh_show/order/selectOrderList_back', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -13,7 +12,6 @@ export default {
         selectOrderPrimaryKeyBack(params) {
             return Util.get('fresh_show/order/selectOrderPrimaryKey_back', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -21,7 +19,6 @@ export default {
         sendOrderBack(params) {
             return Util.get('fresh_show/order/sendOrder_back', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -29,7 +26,6 @@ export default {
         chaxun(params) {
             return Util.post('fresh_show/staffC/kuaidiCode', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },

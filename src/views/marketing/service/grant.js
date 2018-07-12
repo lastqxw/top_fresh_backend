@@ -5,7 +5,6 @@ export default {
         setRedEnvelope(params) {
             return Util.get('fresh_show/redEnvelope/setRedEnvelope', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -13,7 +12,6 @@ export default {
         selectComeDownRedEnvelope(params) {
             return Util.get('fresh_show/redEnvelope/selectComeDownRedEnvelope', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -21,7 +19,6 @@ export default {
         comeDownRedEnvelope(params) {
             return Util.get('fresh_show/redEnvelope/comeDownRedEnvelope', params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },
@@ -29,7 +26,6 @@ export default {
         getRedEnvelope(params) {
             return Util.get("fresh_show/redEnvelope/getRedEnvelope", params)
                 .then(res => {
-                    console.log(res)
                     return res.data
                 })
         },

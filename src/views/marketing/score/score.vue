@@ -49,7 +49,6 @@ export default {
         confValue: this.score
       };
       this.updateScore(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           var params1 = {
             token,
@@ -58,7 +57,6 @@ export default {
             confValue: this.money
           };
           this.updateScore(params1).then(res => {
-            console.log(res);
             if (res.code == 100000) {
               this.$Message.success("修改成功");
               that.mockTableData1()
@@ -79,7 +77,6 @@ export default {
         staffId
       };
       this.getList(params).then(res => {
-        console.log(res);
         if (res.code == 100000) {
           this.score = res.data[0].confValue;
           this.money = res.data[1].confValue;
