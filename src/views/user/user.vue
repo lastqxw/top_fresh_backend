@@ -75,8 +75,8 @@ export default {
           align: "center"
         },
         {
-          title: "代金券数",
-          key: "range",
+          title: "用户总积分数",
+          key: "staffAllscore",
           align: "center"
         },
         {
@@ -134,7 +134,7 @@ export default {
                     }
                   }
                 },
-                params.row.staffIsdel == 1 ? "封禁" : "解封"
+                params.row.staffIsdel==null ? "封禁" : params.row.staffIsdel == 1 ? "封禁" : "解封"
               )
             ]);
           }

@@ -11,7 +11,7 @@
 					</Col>
 					<Col span="18">
 						<Row>
-							<Col span="6">
+							<Col span="8">
 								<span class="margin-left-10">用户手机号:</span>
 								<Input v-model="phone"   readonly style="width: 200px"></Input>
 							</Col>
@@ -23,12 +23,12 @@
 								<span class="margin-left-10">状态:</span>
 								<Input v-model="type"  readonly style="width: 200px"></Input>
 							</Col>
-							<Col span="6">
+							<Col span="4">
 								<Button class="margin-left-20" type="error" @click="fengjin(userid,type)" >{{fengjie}}</Button>
 							</Col>
 						</Row>
 						<Row style='margin-top:20px'>
-							<Col span="6">
+							<Col span="8">
 								<span class="margin-left-10">用户注册时间:</span>
 								<Input v-model="coupon"   readonly style="width: 200px"></Input>
 							</Col>
@@ -37,10 +37,10 @@
 								<Input v-model="integral"  readonly style="width: 200px"></Input>
 							</Col>
 							<Col span="6">
-								<span class="margin-left-10"></span>
-								
+								<span class="margin-left-10">累计积分</span>
+								<Input v-model="staffAllscore"  readonly style="width: 200px"></Input>								
 							</Col>
-							<Col span="6">
+							<Col span="4">
 								<Button class="margin-left-20" type="info"  @click="fared">发红包</Button>
 							</Col>
 						</Row>
@@ -109,7 +109,8 @@ export default {
       staffPhotourl:
         "http://liushiming.oss-cn-qingdao.aliyuncs.com/picture/20180622/351449321529647739657.png",
       coupon: "",
-      integral: "",
+	  integral: "",
+	  staffAllscore:"",
       active: "",
       type: "",
       count: 10,
@@ -375,7 +376,8 @@ export default {
       if (res.code == 100000) {
         this.userid = staffid, this.phone = res.data.staffPhone;
         this.nickName = res.data.staffNickname;
-        this.integral = res.data.staffScore;
+		this.integral = res.data.staffScore;
+		this.staffAllscore=res.data.staffAllscore;
         this.type = res.data.staffType == 1 ? "正常" : "封禁";
         this.fengjie = res.data.staffType == 1 ? "封禁" : "解封";
         this.coupon = res.data.staffCreatdate;

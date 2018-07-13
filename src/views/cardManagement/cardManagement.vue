@@ -23,6 +23,8 @@
 				<div style="margin: 10px;overflow: hidden">
                     <div style="float:left">
                         <Button type="primary" @click="pljihuo">批量激活</Button>
+						<Button type="success" @click="daochu">生成所有卡券文件</Button>
+						<a  class="ivu-btn ivu-btn-primary" :href="url" v-if="isshow">生成成功，点击下载</a>
                     </div>
 					<div style="float: right;">
 						<Page show-elevator show-sizer @on-page-size-change="changePageSize" :total="count" :current="1" @on-change="changePage"></Page>
@@ -41,10 +43,12 @@ export default {
     return {
       type: "",
       name: "",
-      number: "",
+	  number: "",
+	  isshow:false,
       count: 10,
       pageSize: 10,
-      pageNum: 1,
+	  pageNum: 1,
+	  url:"",
       id: [],
       typeList: [
         {
@@ -162,7 +166,27 @@ export default {
       this.$router.push({
         name: "card-info"
       });
-    },
+	},
+	daochu(){
+		var token = Cookies.get("token");
+	  var staffId = Cookies.get("staffId");
+	  var params={
+		  token,
+		  staffId
+	  }
+	  this.daochuorderTail(params)
+	  .then(res => {
+		  console.log(res)
+		  if(res.code==100000){
+			  console.log(11111)
+			  this.isshow=true;
+			  var url=res.data+"?token="+token+"&staffId="+staffId;
+			  this.url=url
+		  }else{
+			  this.$Message.error(res.message)
+		  }
+	  })
+	},
     mockTableData1() {
       var token = Cookies.get("token");
       var staffId = Cookies.get("staffId");
