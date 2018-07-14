@@ -135,6 +135,13 @@ export const otherRouter = {
             name: 'evaluate-info',
             component: () =>
                 import ('../views/products/products/evaluate/evaluate.vue')
+		},
+		{
+            path: 'headline/:topId',
+            title: '头条信息',
+            name: 'headline-info',
+            component: () =>
+                import ('../views/management/headline/headlineInfo/headlineInfo.vue')
         },
     ]
 }
@@ -321,6 +328,30 @@ export const appRouter = [{
             component: () =>
                 import ('@/views/feedback/feedback.vue')
         }, ]
+	},
+	{
+        path: '/management',
+        icon: 'android-checkbox',
+        name: 'management',
+        title: '官网管理',
+        component: Main,
+        children: [{
+                path: 'headline',
+                title: '官网头条管理',
+                name: 'headline',
+                icon: 'compose',
+                component: () =>
+                    import ('@/views/management/headline/headline.vue')
+            },
+            {
+                path: 'leaving',
+                title: '官网留言管理',
+                name: 'leaving',
+                icon: 'compose',
+                component: () =>
+                    import ('@/views/management/leaving/leaving.vue')
+            }
+        ]
     },
 ];
 

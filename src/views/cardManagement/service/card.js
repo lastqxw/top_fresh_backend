@@ -35,6 +35,16 @@ export default {
                     }
 
                 })
+		},
+		// 	导出卡券
+		daochuorderTail(params) {
+            return Util.get("fresh_show/orderTail/daochuorderTail", params)
+                .then(res => {
+                    if (res.data.code == 100000) {
+                        return res.data;
+                    }
+
+                })
         },
 
     }

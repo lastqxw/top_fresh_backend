@@ -15,9 +15,6 @@ const ajaxUrl = env === 'development'
     // 吴俊杰
     // ?
     // 'http://192.168.10.76:8080' :
-    // 白晨
-    // ?
-    // 'http://192.168.10.106:8090':
     // 刘世名
     // ?
     // 'http://192.168.10.141:8080' :
@@ -30,8 +27,6 @@ const ajaxUrl = env === 'development'
     'http://39.107.126.201:8080';
 
 axios.defaults.baseURL = ajaxUrl
-// axios.defaults.headers = { 'X-Requested-With': 'XMLHttpRequest' }
-// axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 axios.defaults.timeout = 30000
 util.get = function (url, params) {
     return new Promise((resolve, reject) => {
