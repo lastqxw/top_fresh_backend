@@ -10,7 +10,6 @@ util.title = function (title) {
     title = title || '极味生鲜管理端';
     window.document.title = title;
 };
-
 const ajaxUrl = env === 'development'
     // 吴俊杰
     // ?
