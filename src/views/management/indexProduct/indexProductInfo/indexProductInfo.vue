@@ -7,13 +7,17 @@
 		<Row>
 			<Col span="24">
 			<Card>
+				<p slot="title">
+					<Icon type="ios-film-outline"></Icon>
+					官网商品管理
+				</p>
 				<Form :label-width="120">
 					<!-- 商品名称 -->
-					<FormItem label="头条标题" :error="articleError">
-						<Input v-model="articleTitle" @on-blur="handleArticletitleBlur" icon="android-list" />
+					<FormItem label="商品名称" :error="articleError">
+						<Input v-model="netPro.netTitle" icon="android-list" style="width: 300px" />
 					</FormItem>
 					<!-- 商品主图 -->
-					<FormItem label="头条主图">
+					<FormItem label="商品主图">
 						<div class="demo-upload-list" v-for="item in uploadList">
 							<template v-if="item.status == 'finished'">
 								<img :src="item.imgUrl">
@@ -37,10 +41,33 @@
 							<img :src="imgName" v-if="visible" style="width: 100%">
 						</Modal>
 					</FormItem>
-					<FormItem label="头条详情">
-						<div>
-							<textarea id="articleEditor" v-model="value3"></textarea>
-						</div>
+					<FormItem label="雄蟹数量(两)" :error="articleError">
+						<Input v-model="netPro.netMale" icon="android-list" style="width: 300px" />
+					</FormItem>
+					<FormItem label="雌蟹数量(两)" :error="articleError">
+						<Input v-model="netPro.netFemale" icon="android-list" style="width: 300px" />
+					</FormItem>
+					<FormItem label="商品类型">
+						<Select v-model="netPro.netType" style="width:200px">
+							<Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+						</Select>
+					</FormItem>
+					<FormItem label="商品包装">
+						<Select v-model="netPro.netType2" style="width:200px">
+							<Option v-for="item in bzcityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+						</Select>
+					</FormItem>
+					<FormItem label="商品价格" :error="articleError">
+						<Input v-model="netPro.netPrice" icon="android-list" style="width: 300px" />
+					</FormItem>
+					<FormItem label="赠品" :error="articleError">
+						<Input v-model="netPro.netGift" icon="android-list" style="width: 300px" />
+					</FormItem>
+					<FormItem label="包装类型" :error="articleError">
+						<Input v-model="netPro.netPacking" icon="android-list" style="width: 300px" />
+					</FormItem>
+					<FormItem label="商品链接" :error="articleError">
+						<Input v-model="netPro.netLink" icon="android-list" style="width: 300px" />
 					</FormItem>
 					<FormItem v-if="isAdd">
 						<span class="publish-button">
@@ -64,9 +91,6 @@
 				</Form>
 			</Card>
 			</Col>
-			<Upload :action="url" :on-success="editorImg" style="display:none">
-				<Button type="ghost" icon="ios-cloud-upload-outline" @click="up" ref="btn" id="btn">Upload files</Button>
-			</Upload>
 		</Row>
 		<Modal v-model="modal1" title="系统提示" @on-ok="ok" @on-cancel="cancel1">
 			<p>是否删除该商品</p>
@@ -84,36 +108,59 @@
 		mixins: [getProduct],
 		data() {
 			return {
+				netPro: {
+					netTitle: "",
+					netMale: "",
+					netFemale: "",
+					netType: "",
+					netType2: "",
+					netPrice: "",
+					netGift: "",
+					netPacking: "",
+					netLink: "",
+				},
 				modal1: false,
+				netId: "",
 				url: "",
 				isAdd: true,
 				defaultList: [],
-				productId: "",
-				topId: "",
-				productInfo: "",
-				productDetail: null,
 				token: Cookies.get("token"),
 				staffId: Cookies.get("staffId"),
 				imgName: "",
 				visible: false,
 				uploadList: [],
-				imgUrl: [],
-				value: "",
-				value1: "",
-				value2: "",
-				value3: "",
-				productImg: null,
-				articleTitle: "",
 				articleError: "",
-				publishLoading: false
+				publishLoading: false,
+				cityList: [
+					{
+						value: '1',
+						label: '卡券'
+					},
+					{
+						value: '2',
+						label: '现货'
+					},
+				],
+				bzcityList: [
+					{
+						value: '3',
+						label: '3对装'
+					},
+					{
+						value: '4',
+						label: '4对装'
+					},
+					{
+						value: '5',
+						label: '5对装'
+					},
+				],
 			};
 		},
 		methods: {
-			up() {
-			},
 			cancel() {
 				this.$router.push({
-					name: "headline"
+					name: "indexProduct"
 				})
 			},
 			ok() {
@@ -121,19 +168,18 @@
 				var params = {
 					token: this.token,
 					staffId: this.staffId,
-					topId: this.topId
+					netId: this.id
 				}
-				this.deleteTopline(params)
+				this.delNetPro(params)
 					.then(res => {
 						console.log(res)
 						if (res.code == 100000) {
 							this.$Message.success("删除成功");
-							this.$router.push({
-								name: "headline"
+							that.$router.push({
+								name: "indexProduct"
 							})
 						} else {
 							this.$Message.error(res.message)
-
 						}
 					})
 			},
@@ -145,48 +191,47 @@
 			},
 			updata() {
 				var that = this;
-				var params = {
-					token: this.token,
-					staffId: this.staffId,
-					topId: this.topId,
-					topTitle: this.articleTitle,
-					topCover: this.defaultList[0].imgUrl,
-					topContent: tinymce.activeEditor.getContent(),
-				}
-				this.updataTopline(params)
-					.then(res => {
-						console.log(res)
-						if (res.code == 100000) {
-							this.$Message.success("修改成功")
-						}
-					})
+				var params = this.netPro;
+				params.token = this.token;
+				params.staffId = this.staffId;
+				params.netId = this.netId;
+				params.netImg = this.defaultList[0].imgUrl;
+				this.addNetPro(params).then(res => {
+					console.log(res)
+					if (res.code == 100000) {
+						this.$Message.success("修改成功")
+					} else {
+						this.$Message.error(res.message)
+					}
+				})
 			},
 			topDetails() {
-				var topId = this.$route.params.topId;
+				var netId = this.$route.params.netId;
 				var that = this;
-				if (topId != "add") {
+				if (netId != "add") {
 					this.isAdd = false;
 					var params = {
-						token: that.token,
-						staffId: that.staffId,
-						topId: topId,
-					};
-					that.selectTopline(params).then(res => {
+						token: this.token,
+						staffId: this.staffId,
+						netId: netId
+					}
+					this.getlist(params).then(res => {
+						console.log(res)
 						if (res.code == 100000) {
-							this.articleTitle = res.data[0].topTitle;
-							this.defaultList = [{
-								imgUrl: res.data[0].topCover,
-								imgName: res.data[0].topTitle,
-							}]
-							this.$nextTick(() => {
-								this.uploadList = this.$refs.upload.fileList;
-							});
-							sessionStorage.setItem("topContent", res.data[0].topContent)
-							this.productImg = res.data[0].topContent;
-						} else {
-							that.$Message.error(res.message);
+							this.netPro = res.data[0];
+							if (res.data[0].netImg) {
+								this.defaultList.push({
+									imgUrl: res.data[0].netImg,
+									imgName: res.data[0].netTitle
+								})
+								this.$nextTick(() => {
+									this.uploadList = this.$refs.upload.fileList;
+								});
+							} else {
+								this.$Message.error(res.message)
+							}
 						}
-					});
+					})
 				}
 			},
 			handleView(name) {
@@ -202,13 +247,6 @@
 				this.$nextTick(() => {
 					this.uploadList = this.$refs.upload.fileList;
 				});
-			},
-			editorImg(file, res) {
-				tinymce.execCommand(
-					"mceInsertContent",
-					false,
-					'<img alt="Smiley face"  src="' + res.response.data + '"/>'
-				);
 			},
 			handleFormatError(file) {
 				this.$Notice.warning({
@@ -234,64 +272,30 @@
 				}
 				return check;
 			},
-			handleArticletitleBlur() {
-				if (this.articleTitle.length !== 0) {
-					// this.articleError = '';
-					localStorage.articleTitle = this.articleTitle; // 本地存储文章标题
-					if (!this.articlePathHasEdited) {
-						let date = new Date();
-						let year = date.getFullYear();
-						let month = date.getMonth() + 1;
-						let day = date.getDate();
-						this.fixedLink =
-							window.location.host + "/" + year + "/" + month + "/" + day + "/";
-						this.articlePath = this.articleTitle;
-						this.articlePathHasEdited = true;
-						this.showLink = true;
-					}
-				} else {
-					// this.articleError = '文章标题不可为空哦';
-					this.$Message.error("商品名称不可为空哦");
-				}
-			},
 			handleRemove(file) {
 				this.defaultList = [];
 				const fileList = this.$refs.upload.fileList;
 				this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
 			},
-			handlePublish() {
-				if (this.canPublish()) {
-					this.publishLoading = true;
-					setTimeout(() => {
-						this.publishLoading = false;
-						this.$Notice.success({
-							title: "保存成功",
-							desc: "文章《" + this.articleTitle + "》保存成功"
-						});
-					}, 1000);
-				}
-			},
 			// 添加
 			add() {
 				var that = this;
-				var params = {
-					token: this.token,
-					staffId: this.staffId,
-					topTitle: this.articleTitle,
-					topCover: this.defaultList[0].imgUrl,
-					topContent: tinymce.activeEditor.getContent(),
-				}
-				this.addTopline(params)
-					.then(res => {
-						console.log(res)
-						if (res.code == 100000) {
-							this.$Message.success("添加成功，返回列表")
-							that.$router.push({
-								name: "headline",
-							})
+				var params = this.netPro;
+				params.token = this.token;
+				params.staffId = this.staffId;
+				params.netImg = this.defaultList[0].imgUrl;
+				this.addNetPro(params).then(res => {
+					console.log(res)
+					if (res.code == 100000) {
+						this.$Message.success("添加成功")
+						that.$router.push({
+							name: "indexProduct"
+						})
+					} else {
+						this.$Message.error(res.message)
+					}
+				})
 
-						}
-					})
 			},
 			showImageSelector(cb) {
 				$("#btn").click();
@@ -299,8 +303,9 @@
 		},
 		mounted() {
 			this.topDetails();
-			var topId = this.$route.params.topId;
-			this.topId = topId;
+			var netId = this.$route.params.netId;
+			this.netId = netId;
+			console.log(this.netId)
 			this.url =
 				"http://39.107.126.201:8080/fresh_show//User/uploadAll?token=" +
 				this.token +
@@ -309,51 +314,8 @@
 				"&type=1";
 			this.uploadList = this.$refs.upload.fileList;
 			var that = this;
-			tinymce.init({
-				selector: "#articleEditor",
-				branding: false,
-				elementpath: false,
-				height: 600,
-				language: "zh_CN.GB2312",
-				menubar: "edit insert view format table tools",
-				theme: "modern",
-				plugins: [
-					"advlist autolink lists link image charmap print preview imageSelector hr anchor pagebreak imagetools",
-					"searchreplace visualblocks visualchars code fullscreen fullpage",
-					"insertdatetime media nonbreaking save table contextmenu directionality",
-					"emoticons paste   colorpicker textpattern imagetools codesample"
-				],
-				toolbar1:
-					" newnote print fullscreen preview | undo redo | insert | styleselect | forecolor backcolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image emoticons media codesample imageSelector",
-				autosave_interval: "20s",
-				image_advtab: true,
-				imageSelectorCallback: this.showImageSelector,
-				table_default_styles: {
-					width: "100%",
-					borderCollapse: "collapse"
-				},
-				setup: function (editor) {
-					editor.on("init", function (e) {
-						if (that.productImg) {
-							editor.setContent(that.productImg);
-						} else {
-							setTimeout(() => {
-								if (topId != "add") {
-									var productImg = sessionStorage.getItem("topContent");
-									editor.setContent(productImg);
-								}
-							}, 500);
-						}
-					});
-				}
-			});
-		},
-		destroyed() {
-			tinymce.get("articleEditor").destroy();
-		}
-		// mounted(){
 
-		// }
+		},
 	};
 </script>
 <style>

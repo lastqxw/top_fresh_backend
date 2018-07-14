@@ -22,5 +22,48 @@ export default {
                    return res.data;
             })
 		},
+		// 修改头条
+		updataTopline(params){
+            return Util.get("fresh_show/topline/updataTopline",params)
+            .then(res => {
+                   return res.data;
+            })
+		},
+		// 留言列表
+		selectMessage(params){
+            return Util.get("fresh_show/message/selectMessage",params)
+            .then(res => {
+                   return res.data;
+            })
+		},
+		// 删除留言
+		deleteMessage(params){
+            return Util.get("fresh_show/message/deleteMessage",params)
+            .then(res => {
+                   return res.data;
+            })
+		},
+		//新增/修改官网商品
+		addNetPro(params){
+            return Util.get("fresh_show/NetPro/addNetPro",params)
+            .then(res => {
+                   return res.data;
+            })
+		},
+		//查询官网商品
+		getlist(params){
+            return Util.get("fresh_show/NetPro/getlist",params)
+            .then(res => {
+                   return res.data;
+            })
+		},
+		// 删除官网商品
+		delNetPro(params){
+            return Util.get("fresh_show/NetPro/delNetPro",params)
+            .then(res => {
+                   return res.data;
+            })
+		},
+
     }
 }
