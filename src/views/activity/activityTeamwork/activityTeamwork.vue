@@ -15,31 +15,6 @@
 						<Input v-model="articleTitle" icon="android-list" style="width:300px" />
 					</div>
 					<div>
-						<span>首页活动展示图</span>
-					</div>
-					<div class="demo-upload-list2" v-for="item in uploadList2">
-						<template v-if="item.status === 'finished'">
-							<img :src="item.imgUrl">
-							<div class="demo-upload-list-cover2">
-								<Icon type="ios-eye-outline" @click.native="handleView2(item.imgUrl)"></Icon>
-								<!-- <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon> -->
-							</div>
-						</template>
-						<template v-else>
-							<Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
-						</template>
-					</div>
-					<Upload ref="upload2" :show-upload-list="false" :default-file-list="defaultList2" :on-success="handleSuccess2" :format="['jpg','jpeg','png']"
-					 :max-size="2048" :on-format-error="handleFormatError2" :on-exceeded-size="handleMaxSize2" :before-upload="handleBeforeUpload2"
-					 multiple type="drag" :action="url" style="display: inline-block;width:58px;">
-						<div style="width: 58px;height:58px;line-height: 58px;">
-							<Icon type="camera" size="20"></Icon>
-						</div>
-					</Upload>
-					<Modal title="View Image" v-model="visible2">
-						<img :src=" imgName" style="width: 100%">
-					</Modal>
-					<div>
 						<span>活动主图</span>
 					</div>
 					<div class="demo-upload-list" v-for="item in uploadList">
