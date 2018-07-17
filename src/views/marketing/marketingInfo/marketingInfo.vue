@@ -2,7 +2,7 @@
  * @Author: By.zhangTeng 
  * @Date: 2018-06-25 18:03:23 
  * @Last Modified by: ZT.zhangTeng
- * @Last Modified time: 2018-07-12 16:14:37
+ * @Last Modified time: 2018-07-17 10:51:46
  */
 <style scoped>
 .ivu-form .ivu-form-item-label {
@@ -71,7 +71,6 @@ export default {
       formItem: {
         couponsName: "",
         couponsType: "1",
-        // couponsGet: "1",
         staffId: "",
         token: "",
         couponsName: "",
@@ -84,17 +83,21 @@ export default {
         couponsEndTime: "",
         useScope: "ALL",
         couponsIsdel: 1
-      }
+	  },
+	  couponsStartTime: "",
+      couponsEndTime: "",
     };
   },
   methods: {
     start(val) {
+		this.couponsStartTime=val;
       this.formItem.couponsStartTime = val;
     },
     isMan(val) {
       val == 2 ? (this.isZui = false) : (this.isZui = true);
     },
     end(val) {
+		this.couponsEndTime=val;
       this.formItem.couponsEndTime = val;
     },
     isShop() {
@@ -114,7 +117,8 @@ export default {
       this.formItem.staffId = staffId;
       this.formItem.token = token;
       var id = this.$route.params.couponId;
-      var params = this.formItem;
+	  var params = this.formItem;
+	  
       if (this.formItem.useScope == "商品") {
         this.formItem.useScope = this.pruductId;
       }
@@ -130,7 +134,9 @@ export default {
           }
         });
       } else {
-        params.couponsId = id;
+		params.couponsId = id;
+		params.couponsEndTime=this.couponsEndTime;
+		params.couponsStartTime=this.couponsStartTime;
         this.editCoupons(params).then(res => {
           if (res.code == 100000) {
             this.$Message.success("修改成功");
@@ -155,7 +161,8 @@ export default {
     };
     this.getProduct(params1).then(res => {
       if (res.code == 100000) {
-        this.productList = res.data;
+		this.productList = res.data;
+		
       }
     });
     if (couponsId != "add") {
@@ -166,7 +173,9 @@ export default {
       };
       this.selectByPrimaryKey(params).then(res => {
         if (res.code == 100000) {
-          this.formItem = res.data;
+		  this.formItem = res.data;
+		  this.couponsEndTime=res.data.couponsEndTime;
+		  this.couponsStartTime=res.data.couponsStartTime;
           if (
             res.data.useScope != "ALL" &&
             res.data.useScope != "A1" &&

@@ -160,7 +160,7 @@ export default {
         },
         {
           title: "订单时间",
-          key: "orderCreatetime",
+          key: "orderPaytime",
           align: "center"
         },
         {
@@ -324,7 +324,7 @@ export default {
       }
       this.selectOrderListBack(params).then(res => {
         if (res.code == 100000) {
-          this.tableData1 = res.data.reverse();
+          this.tableData1 = res.data;
           this.count = res.count;
         } else {
           this.$Message.error(res.message);

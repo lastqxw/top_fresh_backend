@@ -41,7 +41,7 @@ export default {
   mixins: [card],
   data() {
     return {
-      type: "",
+      type: "0",
       name: "",
 	  number: "",
 	  isshow:false,
@@ -57,7 +57,7 @@ export default {
         },
         {
           value: "1",
-          label: "已激活"
+          label: "未激活"
 		},
 		{
           value: "3",
@@ -65,7 +65,7 @@ export default {
         },
         {
           value: "6",
-          label: "未激活"
+          label: "已激活"
         }
       ],
       tableData1: [],
@@ -195,8 +195,9 @@ export default {
         staffId,
         pageNum: this.pageNum,
         pageSize: this.pageSize
-      };
-      if (this.type != 0 || this.type != "") {
+	  };
+	  console.log(this.type)
+      if (this.type != "0" && this.type != "") {
         params.state = this.type;
       }
       if (this.number != "") {
