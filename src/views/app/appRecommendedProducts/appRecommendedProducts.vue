@@ -47,7 +47,7 @@ export default {
       cityList: [
         {
           value: "1",
-          label: "礼卷"
+          label: "礼券"
         },
         {
           value: "2",

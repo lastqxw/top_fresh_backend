@@ -27,7 +27,7 @@
                             </Input>
                         </FormItem>
                         <FormItem>
-                            <Button @click="handleSubmit" type="primary" long>管理员登录</Button>
+                            <Button @click="handleSubmit" type="primary" long :loading="loading">管理员登录</Button>
                         </FormItem>
                     </Form>
                     <Button @click="kefu" type="success" long>客服登录</Button>
@@ -44,6 +44,7 @@ export default {
   mixins: [login],
   data() {
     return {
+		loading:false,
       form: {
         userName: "",
         password: ""
@@ -61,6 +62,7 @@ export default {
       window.location.href = "https://www.sobot.com/console/home/homeWorkOrder";
     },
     handleSubmit() {
+		this.loading=true;
       var params = {
         staffNickname: this.form.userName,
         staffPassword: this.form.password
@@ -77,8 +79,10 @@ export default {
           );
           this.$router.push({
             name: "home_index"
-          });
+		  });
+		  this.loading=false;
         } else {
+			this.loading=false;
           this.$Message.success("登录失败");
         }
       });
