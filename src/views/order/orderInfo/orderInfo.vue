@@ -31,8 +31,8 @@
 								<Input v-model="order.orderPaytime"   readonly style="width: 200px"></Input>
 							</Col>
 							<Col span="6">
-								<span class="margin-left-10">配送费:</span>
-								<Input v-model="order.orderDelivermoney"  readonly style="width: 200px"></Input>
+								<span class="margin-left-10">使用优惠:</span>
+								<Input v-model="order.youhui"  readonly style="width: 200px"></Input>
 							</Col>
 							<Col span="6">
 								<span class="margin-left-10">订单商品价格:</span>
@@ -48,10 +48,10 @@
 								<span class="margin-left-10">地址信息:</span>
 								<Input v-model="order.orderAddressinfo"   readonly style="width: 200px"></Input>
 							</Col>
-							<Col span="6">
+							<!-- <Col span="6">
 								<span class="margin-left-10">订单号:</span>
 								<Input v-model="order.orderDelivermoney"  readonly style="width: 200px"></Input>
-							</Col>
+							</Col> -->
 						</Row>
 					</Col>
                 </Row>           
@@ -114,7 +114,10 @@ export default {
         {
           title: "商品类型",
           key: "odPtypeId",
-          align: "center"
+		  align: "center",
+		  render: (h, params) => {
+            return h("span", [params.row.odPtypeId == 1 ? "礼卡" : "现货"]);
+          }
         },
         {
           title: "商品原价",
@@ -162,7 +165,8 @@ export default {
     this.selectOrderPrimaryKeyBack(params).then(res => {
       if (res.code == 100000) {
         this.order = res.data;
-        var type = res.data.orderState;
+		var type = res.data.orderState;
+		this.order.youhui="积分优惠：¥"+res.data.orderScoremoney+";\t优惠券优惠：¥"+res.data.orderCouponsmoney
         switch (type) {
           case "1":
             this.order.orderState = "代付款";

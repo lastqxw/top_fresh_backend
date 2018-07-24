@@ -121,16 +121,16 @@
 							return h("span", ["¥" + params.row.netPrice]);
 						}
 					},
-					{
-						title: "赠品",
-						key: "netGift",
-						align: "center",
-					},
-					{
-						title: "包装类型",
-						key: "netPacking",
-						align: "center",
-					},
+					// {
+					// 	title: "赠品",
+					// 	key: "netGift",
+					// 	align: "center",
+					// },
+					// {
+					// 	title: "包装类型",
+					// 	key: "netPacking",
+					// 	align: "center",
+					// },
 					{
 						title: "商品链接",
 						key: "netLink",

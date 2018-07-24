@@ -60,12 +60,12 @@
 					<FormItem label="商品价格" :error="articleError">
 						<Input v-model="netPro.netPrice" icon="android-list" style="width: 300px" />
 					</FormItem>
-					<FormItem label="赠品" :error="articleError">
+					<!-- <FormItem label="赠品" :error="articleError">
 						<Input v-model="netPro.netGift" icon="android-list" style="width: 300px" />
 					</FormItem>
 					<FormItem label="包装类型" :error="articleError">
 						<Input v-model="netPro.netPacking" icon="android-list" style="width: 300px" />
-					</FormItem>
+					</FormItem> -->
 					<FormItem label="商品链接" :error="articleError">
 						<Input v-model="netPro.netLink" icon="android-list" style="width: 300px" />
 					</FormItem>
@@ -115,8 +115,8 @@
 					netType: "",
 					netType2: "",
 					netPrice: "",
-					netGift: "",
-					netPacking: "",
+					// netGift: "",
+					// netPacking: "",
 					netLink: "",
 				},
 				modal1: false,

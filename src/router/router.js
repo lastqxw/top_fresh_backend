@@ -364,7 +364,7 @@ export const appRouter = [{
 		name: 'leaving',
 		icon: 'compose',
 		component: () =>
-			import('@/views/management/leaving/leaving.vue')
+			import('@/views/management/Leaving/Leaving.vue')
 	}
 	]
 },
