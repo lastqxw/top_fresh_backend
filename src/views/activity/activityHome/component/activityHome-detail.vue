@@ -80,11 +80,11 @@
 				visible: false,
 				uploadList: [],
 				value: '',
-				model1: '礼券',
+				model1: '礼卡',
 				cityList: [
 					{
-						value: '礼券',
-						label: '礼券'
+						value: '礼卡',
+						label: '礼卡'
 					},
 					{
 						value: '现货',

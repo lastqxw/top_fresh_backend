@@ -27,8 +27,8 @@
                         label: '全部'
                     },
                     {
-                        value: '礼券',
-                        label: '礼券'
+                        value: '礼卡',
+                        label: '礼卡'
                     },
                     {
                         value: '现货',

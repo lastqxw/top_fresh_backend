@@ -12,6 +12,9 @@
 					<FormItem label="头条标题" :error="articleError">
 						<Input v-model="articleTitle" @on-blur="handleArticletitleBlur" icon="android-list" />
 					</FormItem>
+					<FormItem label="头条描述" :error="articleError">
+						<Input v-model="toplineBeizhu"" type="textarea" :rows="4" placeholder="请输入一句话描述"></Input>
+					</FormItem>
 					<!-- 商品主图 -->
 					<FormItem label="头条主图">
 						<div class="demo-upload-list" v-for="item in uploadList">
@@ -105,7 +108,8 @@
 				productImg: null,
 				articleTitle: "",
 				articleError: "",
-				publishLoading: false
+				publishLoading: false,
+				toplineBeizhu:"",
 			};
 		},
 		methods: {
@@ -152,6 +156,7 @@
 					topTitle: this.articleTitle,
 					topCover: this.defaultList[0].imgUrl,
 					topContent: tinymce.activeEditor.getContent(),
+					topBeizhu:this.toplineBeizhu,
 				}
 				this.updataTopline(params)
 					.then(res => {
@@ -174,6 +179,7 @@
 					that.selectTopline(params).then(res => {
 						if (res.code == 100000) {
 							this.articleTitle = res.data[0].topTitle;
+							this.toplineBeizhu=res.data[0].topBeizhu;
 							this.defaultList = [{
 								imgUrl: res.data[0].topCover,
 								imgName: res.data[0].topTitle,
@@ -280,6 +286,7 @@
 					topTitle: this.articleTitle,
 					topCover: this.defaultList[0].imgUrl,
 					topContent: tinymce.activeEditor.getContent(),
+					topBeizhu:this.toplineBeizhu,
 				}
 				this.addTopline(params)
 					.then(res => {

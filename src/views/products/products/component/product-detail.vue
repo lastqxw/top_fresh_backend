@@ -202,7 +202,7 @@
 				cityList: [
 					{
 						value: "1",
-						label: "礼券"
+						label: "礼卡"
 					},
 					{
 						value: "2",
