@@ -152,10 +152,10 @@
 						value: "1",
 						label: "礼卡"
 					},
-					{
-						value: "2",
-						label: "现货"
-					}
+					// {
+					// 	value: "2",
+					// 	label: "现货"
+					// }
 				],
 				pageSize: 10,
 				pageNum: 1,
@@ -256,7 +256,6 @@
 					token,
 					staffId,
 					acTitle: this.articleTitle,
-					acSTitle:this.defaultList2[0].imgUrl,
 					acIcon: this.defaultList[0].imgUrl,
 					acCreattime: this.acCreattime,
 					acEndtime: this.acEndtime,
@@ -411,46 +410,6 @@
 				}
 				return check;
 			},
-			// 图片上传
-			handleView2(name) {
-				this.imgName = name;
-				this.visible = true;
-			},
-			handleRemove2(file) {
-				const fileList = this.$refs.upload2.fileList;
-				this.$refs.upload2.fileList.splice(fileList.indexOf(file), 1);
-			},
-			handleSuccess2(res, file) {
-				this.defaultList2 = [];
-				this.defaultList2.push({ imgUrl: file.response.data, imgName: file.name });
-				this.$nextTick(() => {
-					this.uploadList2 = this.$refs.upload2.fileList;
-				});
-			},
-			handleFormatError2(file) {
-				this.$Notice.warning({
-					title: "The file format is incorrect",
-					desc:
-						"File format of " +
-						file.name +
-						" is incorrect, please select jpg or png."
-				});
-			},
-			handleMaxSize2(file) {
-				this.$Notice.warning({
-					title: "Exceeding file size limit",
-					desc: "File  " + file.name + " is too large, no more than 2M."
-				});
-			},
-			handleBeforeUpload2() {
-				const check = this.uploadList2.length < 1;
-				if (!check) {
-					this.$Notice.warning({
-						title: "Up to one pictures can be uploaded."
-					});
-				}
-				return check;
-			}
 		},
 		mounted() {
 			var token = Cookies.get("token");
@@ -461,7 +420,6 @@
 				"&staffId=" +
 				staffId +
 				"&type=1";
-			this.uploadList = this.$refs.upload.fileList;
 			var type = this.$route.params.activeId;
 			if (type != "add") {
 				this.isAdd = false;
@@ -479,15 +437,14 @@
 							imgUrl: res.data[0].acIcon,
 							imgName: res.data[0].acTitle
 						});
-						if(res.data[0].acSTitle){
-							this.defaultList2.push({
-								imgName: res.data[0].acTitle,
-								imgUrl: res.data[0].acSTitle,
-							});
-						}
+						// if(res.data[0].acSTitle){
+						// 	this.defaultList2.push({
+						// 		imgName: res.data[0].acTitle,
+						// 		imgUrl: res.data[0].acSTitle,
+						// 	});
+						// }
 						this.$nextTick(() => {
 							this.uploadList = this.$refs.upload.fileList;
-							this.uploadList2 = this.$refs.upload2.fileList;
 						});
 						this.start = res.data[0].acCreattime;
 						this.end = res.data[0].acEndtime;

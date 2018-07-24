@@ -2,6 +2,7 @@ import axios from 'axios';
 import env from '../../build/env';
 import semver from 'semver';
 import packjson from '../../package.json';
+import qs from 'qs';
 
 let util = {
 
@@ -15,11 +16,11 @@ const ajaxUrl = env === 'development'
     // ?
     // 'http://192.168.10.76:8080' :
     // 刘世名
-    // ?
-    // 'http://192.168.10.141:8080' :
-    // 正式服务器
     ?
-    'http://39.107.126.201:8080' :
+    'http://192.168.10.141:8080/' :
+    // 正式服务器
+    // ?
+    // 'http://39.107.126.201:8080' :
     env === 'production' ?
     'http://39.107.126.201:8080' :
 
@@ -50,11 +51,13 @@ util.get = function (url, params) {
     })
 }
 util.post = function (url, params) {
+	console.log(url)
+	console.log(params)
     return new Promise((resolve, reject) => {
         axios({
             method: 'post',
             url,
-            params: params,
+			data: qs.stringify(params)
         }).then(res => {
             resolve(res)
         })

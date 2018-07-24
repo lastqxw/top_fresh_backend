@@ -10,7 +10,7 @@ export default {
 		},
 		// 添加头条
 		addTopline(params){
-            return Util.get("fresh_show/topline/addTopline",params)
+            return Util.post("fresh_show/topline/addTopline",params)
             .then(res => {
                    return res.data;       
             })
@@ -24,7 +24,7 @@ export default {
 		},
 		// 修改头条
 		updataTopline(params){
-            return Util.get("fresh_show/topline/updateTopline",params)
+            return Util.post("/fresh_show/topline/updateTopline",params)
             .then(res => {
                    return res.data;
             })
