@@ -136,20 +136,20 @@ export const otherRouter = {
 		component: () =>
 			import('../views/products/products/evaluate/evaluate.vue')
 	},
-	// {
-	// 	path: 'headline/:topId',
-	// 	title: '头条信息',
-	// 	name: 'headline-info',
-	// 	component: () =>
-	// 		import('../views/management/headline/headlineInfo/headlineInfo.vue')
-	// },
-	// {
-	// 	path: 'indexProduct/:netId',
-	// 	title: '官网商品',
-	// 	name: 'indexProduct-info',
-	// 	component: () =>
-	// 		import('../views/management/indexProduct/indexProductInfo/indexProductInfo.vue')
-	// },
+	{
+		path: 'headline/:topId',
+		title: '头条信息',
+		name: 'headline-info',
+		component: () =>
+			import('../views/management/headline/headlineInfo/headlineInfo.vue')
+	},
+	{
+		path: 'indexProduct/:netId',
+		title: '官网商品',
+		name: 'indexProduct-info',
+		component: () =>
+			import('../views/management/indexProduct/indexProductInfo/indexProductInfo.vue')
+	},
 	]
 }
 
@@ -336,38 +336,38 @@ export const appRouter = [{
 			import('@/views/feedback/feedback.vue')
 	},]
 },
-// {
-// 	path: '/management',
-// 	icon: 'android-checkbox',
-// 	name: 'management',
-// 	title: '官网管理',
-// 	component: Main,
-// 	children: [{
-// 		path: 'indexProduct',
-// 		title: '官网商品管理',
-// 		name: 'indexProduct',
-// 		icon: 'compose',
-// 		component: () =>
-// 			import('@/views/management/indexProduct/indexProduct.vue')
-// 	},
-// 	{
-// 		path: 'headline',
-// 		title: '官网头条管理',
-// 		name: 'headline',
-// 		icon: 'compose',
-// 		component: () =>
-// 			import('@/views/management/headline/headline.vue')
-// 	},
-// 	{
-// 		path: 'leaving',
-// 		title: '官网留言管理',
-// 		name: 'leaving',
-// 		icon: 'compose',
-// 		component: () =>
-// 			import('@/views/management/leaving/leaving.vue')
-// 	}
-// 	]
-// },
+{
+	path: '/management',
+	icon: 'android-checkbox',
+	name: 'management',
+	title: '官网管理',
+	component: Main,
+	children: [{
+		path: 'indexProduct',
+		title: '官网商品管理',
+		name: 'indexProduct',
+		icon: 'compose',
+		component: () =>
+			import('@/views/management/indexProduct/indexProduct.vue')
+	},
+	{
+		path: 'headline',
+		title: '官网头条管理',
+		name: 'headline',
+		icon: 'compose',
+		component: () =>
+			import('@/views/management/headline/headline.vue')
+	},
+	{
+		path: 'leaving',
+		title: '官网留言管理',
+		name: 'leaving',
+		icon: 'compose',
+		component: () =>
+			import('@/views/management/leaving/leaving.vue')
+	}
+	]
+},
 ];
 
 // 所有上面定义的路由都要写在下面的routers里

@@ -393,7 +393,22 @@
 					});
 				}
 				return check;
-			}
+			},
+			handleRemove(file) {
+				this.defaultList = [];
+				const fileList = this.$refs.upload.fileList;
+				this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+			},
+			handleRemove2(file) {
+				this.defaultList2 = [];
+				const fileList = this.$refs.upload2.fileList;
+				this.$refs.upload2.fileList.splice(fileList.indexOf(file), 1);
+			},
+			handleRemove3(file) {
+				this.defaultList3 = [];
+				const fileList = this.$refs.upload3.fileList;
+				this.$refs.upload3.fileList.splice(fileList.indexOf(file), 1);
+			},
 		},
 		beforeMount() {
 			var token = Cookies.get("token");

@@ -57,7 +57,7 @@ export default {
         },
         {
           value: "1",
-          label: "礼券"
+          label: "礼卡"
         },
         {
           value: "2",
@@ -116,7 +116,7 @@ export default {
           key: "productPtype",
           align: "center",
           render: (h, params) => {
-            return h("span", [params.row.productPtype == 1 ? "礼券" : "现货"]);
+            return h("span", [params.row.productPtype == 1 ? "礼卡" : "现货"]);
           }
         },
         {
