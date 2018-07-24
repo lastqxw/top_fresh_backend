@@ -24,7 +24,7 @@ export default {
 		},
 		// 修改头条
 		updataTopline(params){
-            return Util.post("fresh_show/topline/updateTopline",params)
+            return Util.post("/fresh_show/topline/updateTopline",params)
             .then(res => {
                    return res.data;
             })

@@ -13,7 +13,7 @@
 						<Input v-model="articleTitle" @on-blur="handleArticletitleBlur" icon="android-list" />
 					</FormItem>
 					<FormItem label="头条描述" :error="articleError">
-						<Input v-model="toplineBeizhu"" type="textarea" :rows="4" placeholder="请输入一句话描述"></Input>
+						<Input v-model="toplineBeizhu" type="textarea" :rows="4" placeholder="请输入一句话描述"></Input>
 					</FormItem>
 					<!-- 商品主图 -->
 					<FormItem label="头条主图">
