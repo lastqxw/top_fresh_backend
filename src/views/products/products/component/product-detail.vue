@@ -82,11 +82,11 @@
 				</p>
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;原&nbsp;&nbsp;&nbsp; 价：
-					<Input v-model="value" placeholder="请输入商品原价" style="width: 70%"></Input>
+					<input v-model="value" class="inputDefault" type="number" min="0" placeholder="请输入商品原价" style="width: 70%">
 				</p>
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;售&nbsp;&nbsp;&nbsp; 价：
-					<Input v-model="value1" placeholder="请输入商品售价" style="width: 70%"></Input>
+					<input v-model="value1" class="inputDefault" type="number" min="0" placeholder="请输入商品售价" style="width: 70%">
 				</p>
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;规&nbsp;&nbsp;&nbsp; 格：
@@ -630,7 +630,7 @@
 			this.productDetails();
 			var productId = this.$route.params.product_id;
 			this.url =
-				"http://39.107.126.201:8080/fresh_show//User/uploadAll?token=" +
+				"http://39.106.31.12:8080/fresh_show//User/uploadAll?token=" +
 				this.token +
 				"&staffId=" +
 				this.staffId +

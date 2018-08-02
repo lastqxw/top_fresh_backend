@@ -9,13 +9,13 @@
                     <Col span="24">
                         <span class="margin-left-10">积分获取比例:</span>
                         <span class="margin-left-10">每消费100元得：</span>
-				        <Input v-model="score" placeholder="请输入代金券名称" clearable style="width: 200px"></Input>
+				        <input v-model="score" placeholder="请输入获得积分数" class="inputDefault" type="number" min="0"  clearable style="width: 200px">
                         <span class="margin-left-10">积分</span>
                     </Col>
                     <Col span="24" style="margin-top:40px">
                         <span class="margin-left-10">积分兑现比例:</span>
                         <span class="margin-left-10">每100积分兑换：</span>
-				        <Input v-model="money" placeholder="请输入代金券名称" clearable style="width: 200px"></Input>
+				        <input v-model="money" placeholder="请输入兑换的金额" class="inputDefault" type="number" min="0" clearable style="width: 200px">
                         <span class="margin-left-10">元</span>
                     </Col>
                 </Row>
