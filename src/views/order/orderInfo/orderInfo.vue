@@ -178,7 +178,7 @@
 				this.cancelOrder(params)
 					.then(res => {
 						console.log(res)
-						if (res.code == 10000) {
+						if (res.code == 100000) {
 							this.$Message.success("关闭成功")
 							window.onload()
 						} else {
