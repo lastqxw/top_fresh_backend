@@ -28,7 +28,14 @@ export default {
                 .then(res => {
                     return res.data
                 })
+		},
+		cancelOrder(params) {
+            return Util.get('fresh_show/order/cancelOrder', params)
+                .then(res => {
+                    return res.data
+                })
         },
+
 
     }
 }

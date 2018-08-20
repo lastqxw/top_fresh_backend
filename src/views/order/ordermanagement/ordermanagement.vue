@@ -1,5 +1,5 @@
 <style lang="less">
-@import "../../../styles/common.less";
+	@import "../../../styles/common.less";
 </style>
 <template>
 	<div>
@@ -141,7 +141,6 @@
 								params.row.orderAddressinfo
 									? this.ishave(params.row.orderAddressinfo,2)
 									: "暂无"
-								
 							]);
 						}
 					},
@@ -253,7 +252,6 @@
 			// 		token,
 			// 		staffId
 			// 	}
-				
 			},
 			ishave(orderlist,index){
 				if(index == 1){
@@ -416,14 +414,15 @@
 	};
 </script>
 <style lang="less" scoped>
-li {
-  list-style: none;
-}
-.logistics {
-  p {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    color: #f54040;
-  }
-}
+	li {
+		list-style: none;
+	}
+
+	.logistics {
+		p {
+			margin-top: 10px;
+			margin-bottom: 10px;
+			color: #f54040;
+		}
+	}
 </style>

@@ -2,7 +2,7 @@
  * @Author: By.zhangTeng 
  * @Date: 2018-06-25 18:03:23 
  * @Last Modified by: ZT.zhangTeng
- * @Last Modified time: 2018-07-17 10:51:46
+ * @Last Modified time: 2018-08-02 16:14:59
  */
 <style scoped>
 .ivu-form .ivu-form-item-label {
@@ -22,14 +22,11 @@
                 <Option value="2">直减券</Option>
             </Select>
         </FormItem>
-        <FormItem label="优惠券可领取数量">
-            <Input v-model="formItem.couponsUsenum" placeholder="请输入优惠券可领取数量	" style="width: 300px"></Input>
-        </FormItem>
         <FormItem label="优惠券面值">
-            <Input v-model="formItem.couponsValue" placeholder="请输入优惠券面值" style="width: 300px"></Input>
+            <input v-model="formItem.couponsValue" class="inputDefault" type="number" min="0" placeholder="请输入优惠券面值" style="width: 300px">
         </FormItem>
         <FormItem label="最低消费可用	" v-if="isZui">
-            <Input v-model="formItem.couponsMin" placeholder="请输入最低消费可用" style="width: 300px"></Input>
+            <input v-model="formItem.couponsMin" class="inputDefault" type="number" min="0" placeholder="请输入最低消费可用" style="width: 300px">
         </FormItem>
         <FormItem label="生效时间">
             <DatePicker type="date" v-model="formItem.couponsStartTime" format="yyyy-MM-dd" placeholder="选择开始时间" style="width: 200px" @on-change="start"></DatePicker>
@@ -76,7 +73,6 @@ export default {
         couponsName: "",
         couponsType: "",
         couponsGet: "",
-        couponsUsenum: "",
         couponsValue: "",
         couponsMin: "",
         couponsStartTime: "",
