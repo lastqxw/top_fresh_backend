@@ -72,6 +72,13 @@ export const otherRouter = {
 		component: () =>
 			import('../views/cardManagement/cardInfo/cardInfo.vue')
 	},
+	// {
+	// 	path: 'cardManagement/promo/promoInfo',
+	// 	title: '录入优惠卡',
+	// 	name: 'promo-info',
+	// 	component: () =>
+	// 		import('../views/cardManagement/promoInfo/promoInfo.vue')
+	// },
 	{
 		path: 'market/:couponId',
 		title: '优惠券详情',
@@ -240,7 +247,16 @@ export const appRouter = [{
 		icon: 'arrow-swap',
 		component: () =>
 			import('@/views/cardManagement/cardManagement.vue')
-	},]
+	},
+	// {
+	// 	path: 'promo',
+	// 	title: '优惠码管理',
+	// 	name: 'promo',
+	// 	icon: 'arrow-swap',
+	// 	component: () =>
+	// 		import('@/views/cardManagement/promo/promo.vue')
+	// },
+	]
 },
 {
 	path: '/order',
