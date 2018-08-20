@@ -37,25 +37,25 @@
 						</Col>
 						<Col span="6">
 						<span class="margin-left-10">商品价格:</span>
-						<span>¥ {{order.orderPmoney}}</span>
+						<span> {{order.orderdetails[0].odProductPprice ? "¥ "+order.orderdetails[0].odProductPprice:"未查询到数据"}}</span>
 						</Col>
 						<Col span="6">
 						<span class="margin-left-10">总支付金额:</span>
-						<span>¥ {{order.orderAllmoney}}</span>
+						<span>{{order.orderAllmoney && order.orderAllmoney != "无" ?  "¥ "+order.orderAllmoney :"未查询到数据"}}</span>
 						</Col>
 					</Row>
 					<Row style='margin-top:20px'>
 						<Col span="6">
 						<span class="margin-left-10">联系人:</span>
-						<span>{{order.orderAddressinfo.split(",")[0]}}</span>
+						<span>{{order.orderAddressinfo ? this.ishave(order.orderAddressinfo,1) :"暂无信息"}}</span>
 						</Col>
 						<Col span="6">
 						<span class="margin-left-10">联系方式:</span>
-						<span>{{order.orderAddressinfo.split(",")[3]}}</span>
+						<span>{{order.orderAddressinfo ? this.ishave(order.orderAddressinfo,3) :"暂无信息"}}</span>
 						</Col>
 						<Col span="6">
 						<span class="margin-left-10">地址信息:</span>
-						<span>{{order.orderAddressinfo.split(",")[1]}} , {{order.orderAddressinfo.split(",")[2]}}</span>
+						<span>{{order.orderAddressinfo ? this.ishave(order.orderAddressinfo,2) :"暂无信息"}}</span>
 						</Col>
 						<Col span="6">
 						<span class="margin-left-10">提货类型:</span>
@@ -165,6 +165,25 @@
 			removeorder(orderId) {
 				this.modal1 = true;
 			},
+			ishave(orderlist,index){
+				if(index == 1){
+					return orderlist.split(",")[0]
+				}else if(index ==2 ){
+					let reg = /^[1][3,4,5,7,8][0-9]{9}$/;
+					if(!reg.test(orderlist.split(",")[2])){
+						return orderlist.split(",")[1]+orderlist.split(",")[2]
+					}else{
+						return orderlist.split(",")[1]
+					}
+				}else if(index == 3){
+					let reg = /^[1][3,4,5,7,8][0-9]{9}$/;
+					if(!reg.test(orderlist.split(",")[2])){
+						return orderlist.split(",")[3]
+					}else{
+						return orderlist.split(",")[2]
+					}
+				}
+			},
 			ok() {
 				// this.order.orderId
 				var token = Cookies.get("token");
@@ -209,26 +228,30 @@
 					},
 					onOk: () => {
 						// 发货
-						var token = Cookies.get("token");
-						var staffId = Cookies.get("staffId");
-						var params = {
-							token,
-							staffId,
-							orderId,
-							orderSendcode: this.value
-						};
-						that.sendOrderBack(params).then(res => {
-							if (res.code == 100000) {
-								this.$Message.success({
-									content: "发货成功",
-									onClose: function () {
-										that.mockTableData1();
-									}
-								});
-							} else {
-								this.$Message.error(res.message);
-							}
-						});
+						if (this.value) {
+							var token = Cookies.get("token");
+							var staffId = Cookies.get("staffId");
+							var params = {
+								token,
+								staffId,
+								orderId,
+								orderSendcode: this.value
+							};
+							that.sendOrderBack(params).then(res => {
+								if (res.code == 100000) {
+									this.$Message.success({
+										content: "发货成功",
+										onClose: function () {
+											that.mockTableData1();
+										}
+									});
+								} else {
+									this.$Message.error(res.message);
+								}
+							});
+						} else {
+							this.$Message.error("请输入运单号")
+						}
 					}
 				});
 			},
@@ -270,7 +293,9 @@
 					if (type == 2 && orderPaytype != 3) {
 						this.disabled = false
 					}
-					this.order.youhui = "积分优惠：¥" + res.data.orderScoremoney + ";\t优惠券优惠：¥" + res.data.orderCouponsmoney
+					var orderScoremoney= res.data.orderScoremoney ? "积分优惠：¥" +res.data.orderScoremoney : "积分优惠:未使用优惠"  
+					var orderCouponsmoney= res.data.orderCouponsmoney ? "优惠券优惠：¥" +res.data.orderCouponsmoney : "优惠券优惠:未使用优惠"  
+					this.order.youhui =orderScoremoney+"\t"+orderCouponsmoney
 					switch (type) {
 						case "1":
 							this.order.orderState = "代付款";

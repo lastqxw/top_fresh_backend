@@ -13,15 +13,15 @@
                     选择文件
                 </p>
                 <Row style="padding-bottom:10px;border-bottom:1px solid #e9eaec">
-                    <Col span="12">
+                    <Col span="4">
                         卡券编号
                     </Col>
-                    <Col span="12">
+                    <Col span="20">
                         <Upload
                             multiple
                             type="drag"
                             :on-success="handleSuccess"
-                            :action="url">
+                            :action="url" style="width: 200px">
                             <div style="padding: 20px 0">
                                 <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
                                 <p>点击或拖拽上传文件</p>
@@ -32,7 +32,7 @@
                 <Row style="padding-bottom:13px;padding-top:20px;border-bottom:1px solid #e9eaec">
                     <Col span="12">
                         <span>文件中卡券个数</span>
-                         <Input v-model="cardNumber" disabled placeholder="1000个" style="width:200px"></Input>
+                         <Input v-model="cardNumber" disabled placeholder="0个" style="width:200px"></Input>
                     </Col>
                     <Col span="12">
                         <span> 请选择对应的实体商品</span>

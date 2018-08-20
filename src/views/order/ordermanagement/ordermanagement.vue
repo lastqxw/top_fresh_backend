@@ -7,16 +7,16 @@
 			<Card>
 				<span>订单号：</span>
 				<Input v-model="orderCode" placeholder="请输入订单编号" clearable style="width: 200px"></Input>
-				<!-- <span class="margin-left-10">类型：</span>
-                <Select v-model="model1" style="width:200px">
+				<span class="margin-left-10">类型：</span>
+				<Select v-model="model1" style="width:100px">
                     <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                </Select> -->
+                </Select>
 				<span class="margin-left-10">状态：</span>
-				<Select v-model="orderState" style="width:200px">
+				<Select v-model="orderState" style="width:100px">
                     <Option v-for="item in statusList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                 </Select>
 				<span class="margin-left-10">时间范围：</span>
-				<DatePicker type="daterange" placement="bottom-end" placeholder="选择时间" style="width: 200px" @on-change="data"></DatePicker>
+				<DatePicker type="daterange" placement="bottom-end" placeholder="选择时间" style="width: 100px" @on-change="data"></DatePicker>
 				<Button class="margin-left-10" type="success" icon="android-add" @click="search">查找</Button>
 
 			</Card>
@@ -25,6 +25,10 @@
 			<Card>
 				<Table stripe border :columns="tableColumns1" :data="tableData1"></Table>
 				<div style="margin: 10px;overflow: hidden">
+					<!-- <div style="float:left">
+						<Button type="success" @click="daochu">生成导出订单文件</Button>
+						<a class="ivu-btn ivu-btn-primary" :href="url" v-if="isshow">生成成功，点击下载</a>
+					</div> -->
 					<div style="float: right;">
 						<Page show-elevator show-sizer @on-page-size-change="changePageSize" :total="count" :current="1" @on-change="changePage"></Page>
 					</div>
@@ -57,7 +61,9 @@
 			return {
 				shouw: true,
 				wuliu: null,
+				// isshow: false,
 				Logistics: false,
+				model1:"",
 				orderCode: "",
 				orderState: "",
 				count: 10,
@@ -121,7 +127,7 @@
 						render: (h, params) => {
 							return h("span", [
 								params.row.orderAddressinfo
-									? params.row.orderAddressinfo.split(",")[0]
+									? this.ishave(params.row.orderAddressinfo,1)
 									: "暂无"
 							]);
 						}
@@ -133,7 +139,7 @@
 						render: (h, params) => {
 							return h("span", [
 								params.row.orderAddressinfo
-									? params.row.orderAddressinfo.split(",")[1] + params.row.orderAddressinfo.split(",")[2]
+									? this.ishave(params.row.orderAddressinfo,2)
 									: "暂无"
 							]);
 						}
@@ -145,7 +151,7 @@
 						render: (h, params) => {
 							return h("span", [
 								params.row.orderAddressinfo
-									? params.row.orderAddressinfo.split(",")[3]
+									? this.ishave(params.row.orderAddressinfo,3)
 									: "暂无"
 							]);
 						}
@@ -153,7 +159,14 @@
 					{
 						title: "订单金额",
 						key: "orderAllmoney",
-						align: "center"
+						align: "center",
+						render: (h, params) => {
+							return h("span", [
+								params.row.orderAllmoney
+									? params.row.orderAllmoney
+									: "暂无"
+							]);
+						}
 					},
 					{
 						title: "订单时间",
@@ -231,6 +244,33 @@
 			data(val) {
 				this.orderCreatetime = val[0];
 				this.orderPaytime = val[1];
+			// },
+			// daochu() {
+			// 	var token = Cookies.get("token");
+			// 	var staffId = Cookies.get("staffId");
+			// 	var params = {
+			// 		token,
+			// 		staffId
+			// 	}
+			},
+			ishave(orderlist,index){
+				if(index == 1){
+					return orderlist.split(",")[0]
+				}else if(index ==2 ){
+					let reg = /^[1][3,4,5,7,8][0-9]{9}$/;
+					if(!reg.test(orderlist.split(",")[2])){
+						return orderlist.split(",")[1]+orderlist.split(",")[2]
+					}else{
+						return orderlist.split(",")[1]
+					}
+				}else if(index == 3){
+					let reg = /^[1][3,4,5,7,8][0-9]{9}$/;
+					if(!reg.test(orderlist.split(",")[2])){
+						return orderlist.split(",")[3]
+					}else{
+						return orderlist.split(",")[2]
+					}
+				}
 			},
 			showMode(val) {
 				this.Logistics = true;

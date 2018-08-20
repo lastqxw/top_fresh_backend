@@ -10,40 +10,40 @@
 					<img :src="staffPhotourl" alt="" style="width:80%;margin-left:10%">
 					</Col>
 					<Col span="18">
-					<Row>
-						<Col span="8">
-						<span class="margin-left-10">用户手机号:</span>
-						<Input v-model="phone" readonly style="width: 200px"></Input>
-						</Col>
-						<Col span="6">
-						<span class="margin-left-10">用户昵称:</span>
-						<Input v-model="nickName" readonly style="width: 200px"></Input>
-						</Col>
-						<Col span="6">
-						<span class="margin-left-10">状态:</span>
-						<Input v-model="type" readonly style="width: 200px"></Input>
-						</Col>
-						<Col span="4">
-						<Button class="margin-left-20" type="error" @click="fengjin(userid,type)">{{fengjie}}</Button>
-						</Col>
-					</Row>
-					<Row style='margin-top:20px'>
-						<Col span="8">
-						<span class="margin-left-10">用户注册时间:</span>
-						<Input v-model="coupon" readonly style="width: 200px"></Input>
-						</Col>
-						<Col span="6">
-						<span class="margin-left-10">积分数:</span>
-						<Input v-model="integral" readonly style="width: 200px"></Input>
-						</Col>
-						<Col span="6">
-						<span class="margin-left-10">累计积分</span>
-						<Input v-model="staffAllscore" readonly style="width: 200px"></Input>
-						</Col>
-						<Col span="4">
-						<Button class="margin-left-20" type="info" @click="fared">发红包</Button>
-						</Col>
-					</Row>
+						<Row>
+							<Col span="8">
+								<span class="margin-left-10">用户手机号:</span>
+								<span>{{phone}}</span>
+							</Col>
+							<Col span="6">
+								<span class="margin-left-10">用户昵称:</span>
+								<span>{{nickName}}</span>
+							</Col>
+							<Col span="6">
+								<span class="margin-left-10">状态:</span>
+								<span>{{type}}</span>
+							</Col>
+							<Col span="4">
+								<Button class="margin-left-20" type="error" @click="fengjin(userid,type)">{{fengjie}}</Button>
+							</Col>
+						</Row>
+						<Row style='margin-top:20px'>
+							<Col span="8">
+								<span class="margin-left-10">用户注册时间:</span>
+								<span>{{coupon}}</span>
+							</Col>
+							<Col span="6">
+								<span class="margin-left-10">积分数:</span>
+								<span>{{integral}}</span>
+							</Col>
+							<Col span="6">
+								<span class="margin-left-10">累计积分</span>
+								<span>{{staffAllscore}}</span>
+							</Col>
+							<Col span="4">
+								<Button class="margin-left-20" type="info" @click="fared">发红包</Button>
+							</Col>
+						</Row>
 					</Col>
 				</Row>
 			</Card>

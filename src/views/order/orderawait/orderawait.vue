@@ -34,11 +34,6 @@
 						width: 150,
 						align: "center"
 					},
-					// {
-					//   title: "商品名称",
-					//   key: "type",
-					//   align: "center"
-					// },
 					{
 						title: "联系人",
 						key: "orderAddressinfo",
@@ -46,7 +41,7 @@
 						render: (h, params) => {
 							return h("span", [
 								params.row.orderAddressinfo
-									? params.row.orderAddressinfo.split(",")[0]
+									? this.ishave(params.row.orderAddressinfo,1)
 									: "暂无"
 							]);
 						}
@@ -54,23 +49,24 @@
 					{
 						title: "收货地址信息",
 						key: "orderAddressinfo",
+						width: 300,
 						align: "center",
 						render: (h, params) => {
 							return h("span", [
 								params.row.orderAddressinfo
-									? params.row.orderAddressinfo.split(",")[1]
+									? this.ishave(params.row.orderAddressinfo,2)
 									: "暂无"
 							]);
 						}
 					},
 					{
 						title: "联系方式",
-						key: "type",
+						key: "orderAddressinfo",
 						align: "center",
 						render: (h, params) => {
 							return h("span", [
 								params.row.orderAddressinfo
-									? params.row.orderAddressinfo.split(",")[2]
+									? this.ishave(params.row.orderAddressinfo,3)
 									: "暂无"
 							]);
 						}
@@ -78,12 +74,36 @@
 					{
 						title: "订单金额",
 						key: "orderAllmoney",
-						align: "center"
+						align: "center",
+						render: (h, params) => {
+							return h("span", [
+								params.row.orderAllmoney
+									? params.row.orderAllmoney
+									: "暂无"
+							]);
+						}
 					},
 					{
-						title: "下单时间",
-						key: "orderCreatetime",
-						align: "center"
+						title: "订单时间",
+						key: "orderPaytime",
+						align: "center",
+						render: (h, params) => {
+							return h("span", [
+								params.row.orderPaytime
+									? params.row.orderPaytime
+									: "暂无"
+							]);
+						}
+					},
+					{
+						title: "订单类型",
+						key: "type",
+						align: "center",
+						render: (h, params) => {
+							return h("span", [
+								params.row.type == 1 ? "实货" : params.row.type == 2 ? "礼卡" : "虚拟提货券"
+							]);
+						}
 					},
 					{
 						title: "管理",
@@ -132,6 +152,25 @@
 			};
 		},
 		methods: {
+			ishave(orderlist,index){
+				if(index == 1){
+					return orderlist.split(",")[0]
+				}else if(index ==2 ){
+					let reg = /^[1][3,4,5,7,8][0-9]{9}$/;
+					if(!reg.test(orderlist.split(",")[2])){
+						return orderlist.split(",")[1]+orderlist.split(",")[2]
+					}else{
+						return orderlist.split(",")[1]
+					}
+				}else if(index == 3){
+					let reg = /^[1][3,4,5,7,8][0-9]{9}$/;
+					if(!reg.test(orderlist.split(",")[2])){
+						return orderlist.split(",")[3]
+					}else{
+						return orderlist.split(",")[2]
+					}
+				}
+			},
 			mockTableData1() {
 				var token = Cookies.get("token");
 				var staffId = Cookies.get("staffId");
