@@ -107,10 +107,10 @@ export default {
           value: "1",
           label: "优惠卷领取"
         },
-        // {
-        //   value: "2",
-        //   label: "多人拼团"
-        // },
+        {
+          value: "2",
+          label: "多人拼团"
+        },
         {
           value: "3",
           label: "商品集锦"
