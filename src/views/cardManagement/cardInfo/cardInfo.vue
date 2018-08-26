@@ -171,7 +171,7 @@ export default {
     };
     this.getProduct1(params).then(res => {
       if (res.code == 100000) {
-        this.productList = res.data;
+        this.productList = res.data.filter(x => x.productPtype === '2');
       }
     });
   }

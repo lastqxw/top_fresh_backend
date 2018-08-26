@@ -378,8 +378,8 @@ export default {
         this.nickName = res.data.staffNickname;
 		this.integral = res.data.staffScore;
 		this.staffAllscore=res.data.staffAllscore;
-        this.type = res.data.staffType == 1 ? "正常" : "封禁";
-        this.fengjie = res.data.staffType == 1 ? "封禁" : "解封";
+        this.type = res.data.staffType == 1 ? "封禁" : "正常";
+        this.fengjie = res.data.staffType == 1 ? "解封" : "封禁";
         this.coupon = res.data.staffCreatdate;
         this.staffPhotourl = res.data.staffPhotourl
           ? res.data.staffPhotourl
