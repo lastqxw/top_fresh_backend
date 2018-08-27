@@ -135,7 +135,7 @@ export default {
           align: "center"
         },
         {
-          title: "订单时间",
+          title: "订单支付时间",
           key: "orderCreatetime",
           align: "center"
         },
@@ -295,7 +295,7 @@ export default {
     status(type) {
       switch (type) {
         case "1":
-          return "代付款";
+          return "待付款";
           break;
         case "2":
           return "已付款";
