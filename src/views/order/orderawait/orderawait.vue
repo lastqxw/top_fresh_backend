@@ -84,7 +84,7 @@
 						}
 					},
 					{
-						title: "订单时间",
+						title: "订单支付时间",
 						key: "orderPaytime",
 						align: "center",
 						render: (h, params) => {

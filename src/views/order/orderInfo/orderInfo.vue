@@ -259,7 +259,7 @@
 			status(type) {
 				switch (type) {
 					case "1":
-						return "代付款";
+						return "待付款";
 						break;
 					case "2":
 						return "已付款";
@@ -305,7 +305,7 @@
 					this.order.youhui =orderScoremoney+"\t"+orderCouponsmoney
 					switch (type) {
 						case "1":
-							this.order.orderState = "代付款";
+							this.order.orderState = "待付款";
 							break;
 						case "2":
 							this.order.orderState = "已付款";

@@ -63,7 +63,7 @@
 				wuliu: null,
 				// isshow: false,
 				Logistics: false,
-				model1:"0",
+				model1: "0",
 				orderCode: "",
 				orderState: "",
 				count: 10,
@@ -131,7 +131,7 @@
 						render: (h, params) => {
 							return h("span", [
 								params.row.orderAddressinfo
-									? this.ishave(params.row.orderAddressinfo,1)
+									? this.ishave(params.row.orderAddressinfo, 1)
 									: "暂无"
 							]);
 						}
@@ -143,8 +143,12 @@
 						render: (h, params) => {
 							return h("span", [
 								params.row.orderAddressinfo
-									? this.ishave(params.row.orderAddressinfo,2)
+									? this.ishave(params.row.orderAddressinfo, 2)
 									: "暂无"
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 							]);
 						}
 					},
@@ -155,7 +159,7 @@
 						render: (h, params) => {
 							return h("span", [
 								params.row.orderAddressinfo
-									? this.ishave(params.row.orderAddressinfo,3)
+									? this.ishave(params.row.orderAddressinfo, 3)
 									: "暂无"
 							]);
 						}
@@ -173,14 +177,14 @@
 						}
 					},
 					{
-						title: "订单时间",
+						title: "订单支付时间",
 						key: "orderPaytime",
 						align: "center",
 						render: (h, params) => {
 							return h("span", [
 								params.row.orderPaytime
 									? params.row.orderPaytime
-									: params.row.orderCreatetime
+									: "暂无"
 							]);
 						}
 					},
@@ -255,30 +259,31 @@
 			data(val) {
 				this.orderCreatetime = val[0];
 				this.orderPaytime = val[1];
-			// },
-			// daochu() {
-			// 	var token = Cookies.get("token");
-			// 	var staffId = Cookies.get("staffId");
-			// 	var params = {
-			// 		token,
-			// 		staffId
-			// 	}
+				// },
+				// daochu() {
+				// 	var token = Cookies.get("token");
+				// 	var staffId = Cookies.get("staffId");
+				// 	var params = {
+				// 		token,
+				// 		staffId
+				// 	}
+
 			},
-			ishave(orderlist,index){
-				if(index == 1){
+			ishave(orderlist, index) {
+				if (index == 1) {
 					return orderlist.split(",")[0]
-				}else if(index ==2 ){
+				} else if (index == 2) {
 					let reg = /^[1][3,4,5,7,8][0-9]{9}$/;
-					if(!reg.test(orderlist.split(",")[2])){
-						return orderlist.split(",")[1]+orderlist.split(",")[2]
-					}else{
+					if (!reg.test(orderlist.split(",")[2])) {
+						return orderlist.split(",")[1] + orderlist.split(",")[2]
+					} else {
 						return orderlist.split(",")[1]
 					}
-				}else if(index == 3){
+				} else if (index == 3) {
 					let reg = /^[1][3,4,5,7,8][0-9]{9}$/;
-					if(!reg.test(orderlist.split(",")[2])){
+					if (!reg.test(orderlist.split(",")[2])) {
 						return orderlist.split(",")[3]
-					}else{
+					} else {
 						return orderlist.split(",")[2]
 					}
 				}
@@ -338,7 +343,7 @@
 			status(type) {
 				switch (type) {
 					case "1":
-						return "代付款";
+						return "待付款";
 						break;
 					case "2":
 						return "已付款";

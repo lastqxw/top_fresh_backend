@@ -22,7 +22,7 @@
 							<img :src="item.imgUrl">
 							<div class="demo-upload-list-cover">
 								<Icon type="ios-eye-outline" @click.native="handleView(item.imgUrl)"></Icon>
-								<!-- <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon> -->
+								<Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
 							</div>
 						</template>
 						<template v-else>
