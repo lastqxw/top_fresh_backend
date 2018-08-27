@@ -63,7 +63,7 @@
 				wuliu: null,
 				// isshow: false,
 				Logistics: false,
-				model1:"",
+				model1:"0",
 				orderCode: "",
 				orderState: "",
 				count: 10,
@@ -74,16 +74,20 @@
 				Refund: false,
 				cityList: [
 					{
-						value: "全部",
+						value: "0",
 						label: "全部"
 					},
 					{
-						value: "卡券",
-						label: "卡券"
+						value: "1",
+						label: "实货"
 					},
 					{
-						value: "现货",
-						label: "现货"
+						value: "2",
+						label: "礼卡"
+					},
+					{
+						value: "3",
+						label: "虚拟提货券"
 					}
 				],
 				statusList: [
@@ -171,7 +175,14 @@
 					{
 						title: "订单时间",
 						key: "orderPaytime",
-						align: "center"
+						align: "center",
+						render: (h, params) => {
+							return h("span", [
+								params.row.orderPaytime
+									? params.row.orderPaytime
+									: params.row.orderCreatetime
+							]);
+						}
 					},
 					{
 						title: "订单状态",
@@ -357,6 +368,7 @@
 				var orderCode = this.orderCode;
 				var orderCreatetime = this.orderCreatetime;
 				var orderState = this.orderState == 0 ? "" : this.orderState;
+				var type = this.model1 == 0 ? "" : this.model1;
 				if (orderPaytime != "") {
 					params.orderPaytime = orderPaytime;
 				}
@@ -368,6 +380,9 @@
 				}
 				if (orderState != "") {
 					params.orderState = orderState;
+				}
+				if (type != "") {
+					params.type = type;
 				}
 				this.selectOrderListBack(params).then(res => {
 					if (res.code == 100000) {
