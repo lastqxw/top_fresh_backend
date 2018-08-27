@@ -71,7 +71,7 @@ export default {
         },
         //查询首页宣传配置
         updataContent(params) {
-            return Util.get('fresh_show/banner/updateContent', params)
+            return Util.post('fresh_show/banner/updateContent', params)
                 .then(res => {
                     return res.data
                 })

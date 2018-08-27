@@ -16,7 +16,7 @@
 				<span class="demo-upload-list1" style="margin-left: 30px">首页展示图:</span>
 				<div class="demo-upload-list" v-for="item in uploadList">
 					<template v-if="item.status === 'finished'">
-						<img :src="item.imgUrl" style="width:100%;height:auto">
+						<img :src="item.imgUrl" style="width:100%;height:400px">
 						<div class="demo-upload-list-cover">
 							<Icon type="ios-eye-outline" @click.native="handleView(item.imgUrl)"></Icon>
 							<Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
@@ -414,7 +414,7 @@
 			var token = Cookies.get("token");
 			var staffId = Cookies.get("staffId");
 			this.url =
-				"http://39.107.126.201:8080/fresh_show//User/uploadAll?token=" +
+				"http://39.106.31.12:8080/fresh_show//User/uploadAll?token=" +
 				token +
 				"&staffId=" +
 				staffId +

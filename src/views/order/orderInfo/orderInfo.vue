@@ -1,11 +1,11 @@
 <style lang="less">
-@import "../../../styles/common.less";
+	@import "../../../styles/common.less";
 </style>
 <template>
 	<div>
 		<Row>
 			<Card>
-                <Row>
+				<Row>
 					<Col span="24">
 					<Row>
 						<Col span="6">
@@ -74,7 +74,7 @@
 						</Col>
 					</Row>
 					</Col>
-                </Row>           
+				</Row>
 			</Card>
 		</Row>
 		<Row style="margin-top:20px;">
@@ -82,6 +82,10 @@
 				<Table stripe border :columns="tableColumns1" :data="order.orderdetails"></Table>
 			</Card>
 		</Row>
+		<Modal v-model="modal1" title="系统提示" @on-ok="ok" @on-cancel="cancel">
+			<p>是否关闭该订单</p>
+
+		</Modal>
 	</div>
 </template>
 <script>
@@ -249,7 +253,6 @@
 						} else {
 							this.$Message.error("请输入运单号")
 						}
-
 					}
 				});
 			},

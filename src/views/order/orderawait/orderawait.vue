@@ -1,19 +1,19 @@
 <style lang="less">
-@import "../../../styles/common.less";
+	@import "../../../styles/common.less";
 </style>
 <template>
-    <div>
-        <Row>
-            <Card>
-                <Table stripe border :columns="tableColumns1" :data="tableData1"></Table>
-                <div style="margin: 10px;overflow: hidden">
-                    <div style="float: right;">
-                        <Page show-elevator show-sizer @on-page-size-change="changePageSize" :total="count" :current="1" @on-change="changePage"></Page>
-                    </div>
-                </div>
-            </Card>
-        </Row>
-    </div>
+	<div>
+		<Row>
+			<Card>
+				<Table stripe border :columns="tableColumns1" :data="tableData1"></Table>
+				<div style="margin: 10px;overflow: hidden">
+					<div style="float: right;">
+						<Page show-elevator show-sizer @on-page-size-change="changePageSize" :total="count" :current="1" @on-change="changePage"></Page>
+					</div>
+				</div>
+			</Card>
+		</Row>
+	</div>
 </template>
 <script>
 	import Cookies from "js-cookie";
@@ -28,7 +28,7 @@
 				pageSize: 10,
 				value: "",
 				tableColumns1: [
-				{
+					{
 						title: "订单号",
 						key: "orderCode",
 						width: 150,
@@ -56,7 +56,6 @@
 								params.row.orderAddressinfo
 									? this.ishave(params.row.orderAddressinfo,2)
 									: "暂无"
-								
 							]);
 						}
 					},

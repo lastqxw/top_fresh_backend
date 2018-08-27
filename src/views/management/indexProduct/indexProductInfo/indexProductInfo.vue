@@ -42,10 +42,10 @@
 						</Modal>
 					</FormItem>
 					<FormItem label="雄蟹数量(两)" :error="articleError">
-						<Input v-model="netPro.netMale" icon="android-list" style="width: 300px" />
+						<input v-model="netPro.netMale" class="inputDefault" type="number" min="0" icon="android-list" style="width: 300px" />
 					</FormItem>
 					<FormItem label="雌蟹数量(两)" :error="articleError">
-						<Input v-model="netPro.netFemale" icon="android-list" style="width: 300px" />
+						<input v-model="netPro.netFemale" icon="android-list" class="inputDefault" type="number" min="0" style="width: 300px" />
 					</FormItem>
 					<FormItem label="商品类型">
 						<Select v-model="netPro.netType" style="width:200px">
@@ -58,7 +58,7 @@
 						</Select>
 					</FormItem>
 					<FormItem label="商品价格" :error="articleError">
-						<Input v-model="netPro.netPrice" icon="android-list" style="width: 300px" />
+						<input v-model="netPro.netPrice" icon="android-list" style="width: 300px" class="inputDefault" type="number" min="0" />
 					</FormItem>
 					<!-- <FormItem label="赠品" :error="articleError">
 						<Input v-model="netPro.netGift" icon="android-list" style="width: 300px" />
@@ -307,7 +307,7 @@
 			this.netId = netId;
 			console.log(this.netId)
 			this.url =
-				"http://39.107.126.201:8080/fresh_show//User/uploadAll?token=" +
+				"http://39.106.31.12:8080/fresh_show//User/uploadAll?token=" +
 				this.token +
 				"&staffId=" +
 				this.staffId +
