@@ -82,11 +82,11 @@
 				</p>
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;原&nbsp;&nbsp;&nbsp; 价：
-					<Input v-model="value" placeholder="请输入商品原价" style="width: 70%"></Input>
+					<input v-model="value" class="inputDefault" type="number" min="0" placeholder="请输入商品原价" style="width: 70%">
 				</p>
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;售&nbsp;&nbsp;&nbsp; 价：
-					<Input v-model="value1" placeholder="请输入商品售价" style="width: 70%"></Input>
+					<input v-model="value1" class="inputDefault" type="number" min="0" placeholder="请输入商品售价" style="width: 70%">
 				</p>
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;规&nbsp;&nbsp;&nbsp; 格：
@@ -106,12 +106,12 @@
 				</p>
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;提货日期/现货开售时间：
-					<DatePicker type="date" split-panels placeholder="选择开始时间" style="width: 66%" v-model="value6"></DatePicker>
+					<DatePicker type="date" split-panels placeholder="选择开始时间" style="width: 66%" v-model="value6" @on-change="star"></DatePicker>
 
 				</p>
 				<p class="margin-top-10">
 					<Icon type="android-time"></Icon>&nbsp;&nbsp;提货截止日期/现货截止时间：
-					<DatePicker type="date" split-panels placeholder="选择结束时间" style="width: 66%" v-model="value7"></DatePicker>
+					<DatePicker type="date" split-panels placeholder="选择结束时间" style="width: 66%" v-model="value7" @on-change="endTime"></DatePicker>
 
 				</p>
 				<p class="margin-top-10">
@@ -221,7 +221,11 @@
 				],
 				articleTitle: "",
 				articleError: "",
-				publishLoading: false
+				publishLoading: false,
+				// 开始时间
+				productBeginDate: "",
+				// 结束时间
+				productEndDate:"",
 			};
 		},
 		methods: {
@@ -229,6 +233,12 @@
 			},
 			cancel() {
 				this.$router.go(-1);
+			},
+			star(val){
+				this.productBeginDate=val
+			},
+			endTime(val){
+				this.productEndDate=val
 			},
 			ok() {
 				var productId = this.$route.params.product_id;
@@ -253,16 +263,6 @@
 			updata() {
 				var that = this;
 				var productId = this.$route.params.product_id;
-				var begin = new Date(this.value6);
-				var begin_value =
-					begin.getFullYear() +
-					"-" +
-					(begin.getMonth() + 1) +
-					"-" +
-					begin.getDate();
-				var end = new Date(this.value7);
-				var end_value =
-					end.getFullYear() + "-" + (end.getMonth() + 1) + "-" + end.getDate();
 				var proImg = [];
 				for (var i = 0; i < this.uploadList2.length; i++) {
 					proImg.push({
@@ -303,9 +303,9 @@
 						// 商品配送方式
 						productSendType: this.value5,
 						// 开始时间
-						productBeginDate: begin_value,
+						productBeginDate: this.productBeginDate,
 						// 结束时间
-						productEndDate: end_value,
+						productEndDate: this.productEndDate,
 						// 是否上架
 						productIsUse: this.model2
 						// 商品轮播图list
@@ -322,6 +322,7 @@
 									imgId: obj[i].imgId
 								};
 								that.deteleProImg(params).then(res => {
+									console.log(res)
 									if (res.code == 100000) {
 									}
 								});
@@ -343,6 +344,7 @@
 									that.saveProImg(params).then(res => {
 										if (res.code == 100000) {
 											this.$Message.success("修改成功");
+											that.productDetails();
 										}
 									});
 								}
@@ -396,7 +398,9 @@
 								? res.data.productSendType
 								: "";
 							that.value6 = res.data.productBeginDate;
+							that.productBeginDate = res.data.productBeginDate;
 							that.value7 = res.data.productEndDate;
+							that.productEndDate = res.data.productEndDate;
 							that.value8 = res.data.productUnit;
 							// that.value9 = res.data.productScore;
 							that.model2 = res.data.productIsUse;
@@ -534,16 +538,6 @@
 			// 添加
 			add() {
 				var that = this;
-				var begin = new Date(this.value6);
-				var begin_value =
-					begin.getFullYear() +
-					"-" +
-					(begin.getMonth() + 1) +
-					"-" +
-					begin.getDate();
-				var end = new Date(this.value7);
-				var end_value =
-					end.getFullYear() + "-" + (end.getMonth() + 1) + "-" + end.getDate();
 				var proImg = [];
 				for (var i = 0; i < this.uploadList2.length; i++) {
 					proImg.push({
@@ -583,9 +577,9 @@
 						// 商品配送方式
 						productSendType: this.value5,
 						// 开始时间
-						productBeginDate: begin_value,
+						productBeginDate:this.productBeginDate,
 						// 结束时间
-						productEndDate: end_value,
+						productEndDate: this.productEndDate,
 						// 是否上架
 						productIsUse: this.model2
 						// 商品轮播图list
@@ -617,7 +611,7 @@
 							}
 						}
 					});
-				}else {
+				} else {
 					this.$Message.error("请输入商品原价,如无优惠，请输入相同的价格！！！")
 				}
 
@@ -630,7 +624,7 @@
 			this.productDetails();
 			var productId = this.$route.params.product_id;
 			this.url =
-				"http://39.107.126.201:8080/fresh_show//User/uploadAll?token=" +
+				"http://39.106.31.12:8080/fresh_show//User/uploadAll?token=" +
 				this.token +
 				"&staffId=" +
 				this.staffId +

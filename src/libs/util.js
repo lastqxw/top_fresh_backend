@@ -16,15 +16,15 @@ const ajaxUrl = env === 'development'
     // ?
     // 'http://192.168.10.76:8080' :
     // 刘世名
-    ?
-    'http://192.168.10.141:8080/' :
-    // 正式服务器
     // ?
-    // 'http://39.107.126.201:8080' :
+    // 'http://192.168.10.141:8080/' :
+    // 正式服务器
+    ?
+    'http://39.106.31.12:8080' :
     env === 'production' ?
-    'http://39.107.126.201:8080' :
+    'http://39.106.31.12:8080' :
 
-    'http://39.107.126.201:8080';
+    'http://39.106.31.12:8080';
 
 axios.defaults.baseURL = ajaxUrl
 axios.defaults.timeout = 30000
@@ -43,7 +43,7 @@ util.get = function (url, params) {
                     for (var i = keys.length; i--;)
                         document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
                 }
-                window.location.href = "http://39.107.126.201:82/login"
+                window.location.href = "http://admin.jiweishengxian.com/login"
             } else {
                 return res.data
             }

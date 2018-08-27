@@ -309,7 +309,7 @@
 			var topId = this.$route.params.topId;
 			this.topId = topId;
 			this.url =
-				"http://39.107.126.201:8080/fresh_show//User/uploadAll?token=" +
+				"http://39.106.31.12:8080/fresh_show//User/uploadAll?token=" +
 				this.token +
 				"&staffId=" +
 				this.staffId +

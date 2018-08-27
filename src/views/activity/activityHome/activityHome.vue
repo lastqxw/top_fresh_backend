@@ -107,10 +107,10 @@ export default {
           value: "1",
           label: "优惠卷领取"
         },
-        // {
-        //   value: "2",
-        //   label: "多人拼团"
-        // },
+        {
+          value: "2",
+          label: "多人拼团"
+        },
         {
           value: "3",
           label: "商品集锦"
@@ -471,7 +471,7 @@ export default {
     var token = Cookies.get("token");
     var staffId = Cookies.get("staffId");
     this.url =
-      "http://39.107.126.201:8080/fresh_show//User/uploadAll?token=" +
+      "http://39.106.31.12:8080/fresh_show//User/uploadAll?token=" +
       token +
       "&staffId=" +
       staffId +

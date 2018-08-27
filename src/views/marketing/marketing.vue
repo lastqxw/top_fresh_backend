@@ -154,16 +154,6 @@ export default {
           }
         },
         {
-          title: "已发放数量",
-          key: "couponsReceiveNum",
-          align: "center"
-        },
-        {
-          title: "可使用数量",
-          key: "couponsUsenum",
-          align: "center"
-        },
-        {
           title: "操作",
           key: "action",
           width: 150,

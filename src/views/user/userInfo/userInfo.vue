@@ -1,51 +1,51 @@
 <style lang="less">
-@import "../../../styles/common.less";
+	@import "../../../styles/common.less";
 </style>
 <template>
 	<div>
 		<Row>
 			<Card>
-                <Row>
+				<Row>
 					<Col span="6">
-						<img :src="staffPhotourl" alt="" style="width:80%;margin-left:10%">
+					<img :src="staffPhotourl" alt="" style="width:80%;margin-left:10%">
 					</Col>
 					<Col span="18">
 						<Row>
 							<Col span="8">
 								<span class="margin-left-10">用户手机号:</span>
-								<Input v-model="phone"   readonly style="width: 200px"></Input>
+								<span>{{phone}}</span>
 							</Col>
 							<Col span="6">
 								<span class="margin-left-10">用户昵称:</span>
-								<Input v-model="nickName"  readonly style="width: 200px"></Input>
+								<span>{{nickName}}</span>
 							</Col>
 							<Col span="6">
 								<span class="margin-left-10">状态:</span>
-								<Input v-model="type"  readonly style="width: 200px"></Input>
+								<span>{{type}}</span>
 							</Col>
 							<Col span="4">
-								<Button class="margin-left-20" type="error" @click="fengjin(userid,type)" >{{fengjie}}</Button>
+								<Button class="margin-left-20" type="error" @click="fengjin(userid,type)">{{fengjie}}</Button>
 							</Col>
 						</Row>
 						<Row style='margin-top:20px'>
 							<Col span="8">
 								<span class="margin-left-10">用户注册时间:</span>
-								<Input v-model="coupon"   readonly style="width: 200px"></Input>
+								<span>{{coupon}}</span>
 							</Col>
 							<Col span="6">
 								<span class="margin-left-10">积分数:</span>
-								<Input v-model="integral"  readonly style="width: 200px"></Input>
+								<span>{{integral}}</span>
 							</Col>
 							<Col span="6">
 								<span class="margin-left-10">累计积分</span>
-								<Input v-model="staffAllscore"  readonly style="width: 200px"></Input>								
+								<span>{{staffAllscore}}</span>
 							</Col>
 							<Col span="4">
-								<Button class="margin-left-20" type="info"  @click="fared">发红包</Button>
+								<Button class="margin-left-20" type="info" @click="fared">发红包</Button>
 							</Col>
 						</Row>
 					</Col>
-                </Row>           
+				</Row>
 			</Card>
 		</Row>
 		<Row style="margin-top:20px;">
@@ -58,36 +58,29 @@
 				</div>
 			</Card>
 		</Row>
-    <Modal
-        v-model="modal1"
-        title="请选择给用户发送的红包"
-        @on-ok="ok"
-        @on-cancel="cancel">
-        <p>
-          <span>选择红包</span>
-          <Select v-model="couponId" style="width:200px">
+		<Modal v-model="modal1" title="请选择给用户发送的红包" @on-ok="ok" @on-cancel="cancel">
+			<p>
+				<span>选择红包</span>
+				<Select v-model="couponId" style="width:200px">
             <Option v-for="item in couponsList" :value="item.redEnvelopeId" :key="item.redEnvelopeId">{{ item.redEnvelopeName }}</Option>
           </Select>
-        </p>
-        <p></p>
-        <p></p>
-    </Modal>
-    <Modal
-                v-model="Logistics"
-                cancel-text	=""
-                title="物流详情">
-            <ul class="logistics" v-if="shouw">
-                <li v-for="item in wuliu">
-                    <p>{{item.ftime}}</p>
-                    {{item.context}}
-                </li>
-            </ul>
-            <ul class="logistics" v-else>
-                <li>
-                   <p>暂无物流信息</p>
-                </li>
-            </ul>
-        </Modal>
+			</p>
+			<p></p>
+			<p></p>
+		</Modal>
+		<Modal v-model="Logistics" cancel-text="" title="物流详情">
+			<ul class="logistics" v-if="shouw">
+				<li v-for="item in wuliu">
+					<p>{{item.ftime}}</p>
+					{{item.context}}
+				</li>
+			</ul>
+			<ul class="logistics" v-else>
+				<li>
+					<p>暂无物流信息</p>
+				</li>
+			</ul>
+		</Modal>
 	</div>
 </template>
 <script>
@@ -401,16 +394,18 @@ export default {
     });
   }
 };
+
 </script>
 <style lang="less" scoped>
-li {
-  list-style: none;
-}
-.logistics {
-  p {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    color: #f54040;
-  }
-}
+	li {
+		list-style: none;
+	}
+
+	.logistics {
+		p {
+			margin-top: 10px;
+			margin-bottom: 10px;
+			color: #f54040;
+		}
+	}
 </style>

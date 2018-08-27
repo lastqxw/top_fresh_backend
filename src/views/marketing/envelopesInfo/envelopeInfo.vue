@@ -2,7 +2,7 @@
  * @Author: By.zhangTeng 
  * @Date: 2018-06-25 18:03:23 
  * @Last Modified by: ZT.zhangTeng
- * @Last Modified time: 2018-07-12 16:12:45
+ * @Last Modified time: 2018-08-02 15:42:19
  */
 <style scoped>
 .ivu-form .ivu-form-item-label {
@@ -22,7 +22,7 @@
                 </Select>
             </FormItem>
             <FormItem label="红包内涵优惠券个数">
-                <Input v-model="number" placeholder="请输入红包内涵优惠券个数" style="width: 300px"></Input>
+                <input v-model="number" class="inputDefault" type="number" min="0"  placeholder="请输入红包内涵优惠券个数" style="width: 300px">
             </FormItem>
             <FormItem  style="border-bottom:1px solid #ddd;padding-bottom:20px">
                 <Button type="primary" @click="sub">添加</Button>

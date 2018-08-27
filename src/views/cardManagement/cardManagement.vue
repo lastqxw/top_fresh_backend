@@ -169,23 +169,25 @@ export default {
 	},
 	daochu(){
 		var token = Cookies.get("token");
-	  var staffId = Cookies.get("staffId");
-	  var params={
-		  token,
-		  staffId
-	  }
-	  this.daochuorderTail(params)
-	  .then(res => {
-		  console.log(res)
-		  if(res.code==100000){
-			  console.log(11111)
-			  this.isshow=true;
-			  var url=res.data+"?token="+token+"&staffId="+staffId;
-			  this.url=url
-		  }else{
-			  this.$Message.error(res.message)
-		  }
-	  })
+		var staffId = Cookies.get("staffId");
+		var params={
+			token,
+			staffId
+		}
+	  	this.daochuorderTail(params)
+		.then(res => {
+			console.log(res)
+			if(res.code==100000){
+				console.log(11111)
+				this.isshow=true;
+				var url="http://39.106.31.12:8080/"+res.data.split("/")[4]+"/"+res.data.split("/")[5]+"?token="+token+"&staffId="+staffId;
+				console.log(url)
+				// var url=res.data.substring(64,)+"?token="+token+"&staffId="+staffId;
+				this.url=url
+			}else{
+				this.$Message.error(res.message)
+			}
+		})
 	},
     mockTableData1() {
       var token = Cookies.get("token");

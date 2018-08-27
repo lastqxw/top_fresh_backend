@@ -28,6 +28,12 @@ export default {
                 .then(res => {
                     return res.data
                 })
-        },
+		},
+		selectByTrigger(params){
+			return Util.get("fresh_show/redEnvelope/selectByTrigger", params)
+			.then(res => {
+				return res.data
+			})
+		}
     }
 }
