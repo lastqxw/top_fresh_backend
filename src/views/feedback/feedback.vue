@@ -46,7 +46,7 @@
 					},
 					{
 						title: "手机号",
-						key: "feedbackPhone",
+						key: "feedbackBeizhu",
 						align: "center"
 					},
 					{
