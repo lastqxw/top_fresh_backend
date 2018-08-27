@@ -69,7 +69,7 @@
 						<span> </span>
 						</Col>
 						<Col span="4" style="float:right;">
-						<Button type="error" @click="removeorder(order.orderId)">关闭订单</Button>
+						<Button type="error" @click="removeorder(order.orderId)" :disabled="isFive">关闭订单</Button>
 						<Button type="success" @click="handleRender(order.orderId)" :disabled="disabled">发货</Button>
 						</Col>
 					</Row>
@@ -94,6 +94,7 @@
 				order: [],
 				value: "",
 				orderType: "",
+				isFive:false,
 				modal1: false,
 				disabled: true,
 				disabled1: true,
@@ -290,6 +291,12 @@
 					if (type == 2 && orderPaytype != 3) {
 						this.disabled = false
 					}
+					if(type==5){
+						this.isFive=true
+					}
+					if(thType==3){
+						this.order.orderAllmoney="0"
+					}	
 					var orderScoremoney= res.data.orderScoremoney ? "积分优惠：¥" +res.data.orderScoremoney : "积分优惠:未使用优惠"  
 					var orderCouponsmoney= res.data.orderCouponsmoney ? "优惠券优惠：¥" +res.data.orderCouponsmoney : "优惠券优惠:未使用优惠"  
 					this.order.youhui =orderScoremoney+"\t"+orderCouponsmoney
