@@ -2,26 +2,67 @@ import axios from 'axios';
 import env from '../../build/env';
 import semver from 'semver';
 import packjson from '../../package.json';
+import qs from 'qs';
 
 let util = {
 
 };
 util.title = function (title) {
-    title = title || 'iView admin';
+    title = title || '极味生鲜管理端';
     window.document.title = title;
 };
-
 const ajaxUrl = env === 'development'
-    ? 'http://127.0.0.1:8888'
-    : env === 'production'
-        ? 'https://www.url.com'
-        : 'https://debug.url.com';
+    // 吴俊杰
+    // ?
+    // 'http://192.168.10.76:8080' :
+    // 刘世名
+    // ?
+    // 'http://192.168.10.141:8080/' :
+    // 正式服务器
+    ?
+    'http://39.106.31.12:8080' :
+    env === 'production' ?
+    'http://39.106.31.12:8080' :
 
-util.ajax = axios.create({
-    baseURL: ajaxUrl,
-    timeout: 30000
-});
+    'http://39.106.31.12:8080';
 
+axios.defaults.baseURL = ajaxUrl
+axios.defaults.timeout = 30000
+util.get = function (url, params) {
+    return new Promise((resolve, reject) => {
+        axios({
+            method: 'get',
+            url,
+            params: params,
+        }).then(res => {
+            resolve(res)
+            if (res.data.code == 100002) {
+                alert("登录失效")
+                var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+                if (keys) {
+                    for (var i = keys.length; i--;)
+                        document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
+                }
+                window.location.href = "http://admin.jiweishengxian.com/login"
+            } else {
+                return res.data
+            }
+        })
+    })
+}
+util.post = function (url, params) {
+	console.log(url)
+	console.log(params)
+    return new Promise((resolve, reject) => {
+        axios({
+            method: 'post',
+            url,
+			data: qs.stringify(params)
+        }).then(res => {
+            resolve(res)
+        })
+    })
+}
 util.inOf = function (arr, targetArr) {
     let res = true;
     arr.forEach(item => {
@@ -98,16 +139,13 @@ util.setCurrentPath = function (vm, name) {
     });
     let currentPathArr = [];
     if (name === 'home_index') {
-        currentPathArr = [
-            {
-                title: util.handleTitle(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'home_index')),
-                path: '',
-                name: 'home_index'
-            }
-        ];
+        currentPathArr = [{
+            title: util.handleTitle(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'home_index')),
+            path: '',
+            name: 'home_index'
+        }];
     } else if ((name.indexOf('_index') >= 0 || isOtherRouter) && name !== 'home_index') {
-        currentPathArr = [
-            {
+        currentPathArr = [{
                 title: util.handleTitle(vm, util.getRouterObjByName(vm.$store.state.app.routers, 'home_index')),
                 path: '/home',
                 name: 'home_index'
@@ -136,16 +174,13 @@ util.setCurrentPath = function (vm, name) {
             }
         })[0];
         if (currentPathObj.children.length <= 1 && currentPathObj.name === 'home') {
-            currentPathArr = [
-                {
-                    title: '首页',
-                    path: '',
-                    name: 'home_index'
-                }
-            ];
+            currentPathArr = [{
+                title: '首页',
+                path: '',
+                name: 'home_index'
+            }];
         } else if (currentPathObj.children.length <= 1 && currentPathObj.name !== 'home') {
-            currentPathArr = [
-                {
+            currentPathArr = [{
                     title: '首页',
                     path: '/home',
                     name: 'home_index'
@@ -160,8 +195,7 @@ util.setCurrentPath = function (vm, name) {
             let childObj = currentPathObj.children.filter((child) => {
                 return child.name === name;
             })[0];
-            currentPathArr = [
-                {
+            currentPathArr = [{
                     title: '首页',
                     path: '/home',
                     name: 'home_index'

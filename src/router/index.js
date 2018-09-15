@@ -3,12 +3,17 @@ import iView from 'iview';
 import Util from '../libs/util';
 import VueRouter from 'vue-router';
 import Cookies from 'js-cookie';
-import {routers, otherRouter, appRouter} from './router';
+import {
+    routers,
+    otherRouter,
+    appRouter
+} from './router';
 
 Vue.use(VueRouter);
 
 // 路由配置
 const RouterConfig = {
+	base: '/admin/',
     mode: 'history',
     routes: routers
 };

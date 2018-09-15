@@ -8,6 +8,25 @@
     transform: translate(-50%,-50%);
     transition: all 3s;
 }
+.vue-scroller-bars-wraper{
+	overflow: auto !important;
+}
+.inputDefault{
+	display: inline-block;
+    width: 100%;
+    height: 32px;
+    line-height: 1.5;
+    padding: 4px 7px;
+    font-size: 12px;
+    border: 1px solid #dddee1;
+    border-radius: 4px;
+    color: #495060;
+    background-color: #fff;
+    background-image: none;
+    position: relative;
+    cursor: text;
+    transition: border .2s ease-in-out,background .2s ease-in-out,box-shadow .2s ease-in-out;
+}
 .main{
     position: absolute;
     width: 100%;
@@ -115,7 +134,7 @@
             right: 0;
             top: 0;
             height: 100%;
-            width: 250px;
+            width: 200px;
             .switch-theme-con{
                 display: inline-block;
                 width: 40px;

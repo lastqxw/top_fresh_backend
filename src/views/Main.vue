@@ -34,7 +34,7 @@
                 <div class="header-avator-con">
                     <full-screen v-model="isFullScreen" @on-change="fullscreenChange"></full-screen>
                     <lock-screen></lock-screen>
-                    <message-tip v-model="mesCount"></message-tip>
+                    <!-- <message-tip v-model="mesCount"></message-tip> -->
                     
                     <div class="user-dropdown-menu-con">
                         <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
@@ -44,7 +44,7 @@
                                     <Icon type="arrow-down-b"></Icon>
                                 </a>
                                 <DropdownMenu slot="list">
-                                    <DropdownItem name="ownSpace">个人中心</DropdownItem>
+                                    <!-- <DropdownItem name="ownSpace">个人中心</DropdownItem> -->
                                     <DropdownItem name="loginout" divided>退出登录</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
