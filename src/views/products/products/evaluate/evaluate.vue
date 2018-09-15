@@ -62,24 +62,24 @@
 						key: "evaluationContent",
 						align: "center"
 					},
-					// {
-					// 	title: "评价图片",
-					// 	key: "producturl",
-					// 	align: "center",
-					// 	render: (h, params) => {
-					// 		return h("img", {
-					// 			attrs: {
-					// 				src: this.evaluateImg(params.row.producturl),
-					// 				width: " 100%"
-					// 			},
-					// 			on: {
-					// 				click: () => {
-					// 					// this.show(params.index)
-					// 				}
-					// 			}
-					// 		});
-					// 	}
-					// },
+					{
+						title: "评价图片",
+						key: "producturl",
+						align: "center",
+						render: (h, params) => {
+							return h("img", {
+								attrs: {
+									src: this.evaluateImg(params.row.producturl),
+									width: " 100%"
+								},
+								on: {
+									click: () => {
+										// this.show(params.index)
+									}
+								}
+							});
+						}
+					},
 					{
 						title: "操作",
 						key: "action",

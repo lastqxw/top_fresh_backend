@@ -114,6 +114,10 @@
 					{
 						value: "5",
 						label: "已取消"
+					},
+					{
+						value: "6",
+						label: "已完成"
 					}
 				],
 				tableData1: [],
@@ -145,10 +149,6 @@
 								params.row.orderAddressinfo
 									? this.ishave(params.row.orderAddressinfo, 2)
 									: "暂无"
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 							]);
 						}
 					},
@@ -356,6 +356,9 @@
 						break;
 					case "5":
 						return "已取消";
+						break;
+					case "6":
+						return "已完成";
 						break;
 				}
 			},

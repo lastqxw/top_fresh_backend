@@ -172,7 +172,7 @@
 					{
 						title: "商品编号",
 						key: "productId",
-						width: 80,
+						width: 120,
 						align: "center"
 					},
 					{
@@ -184,6 +184,30 @@
 						title: "拼团价格",
 						key: "priceTogether",
 						align: "center"
+					},
+					{
+						title: "拼团人数",
+						key: "peopleInNum",
+						align: "center",
+						render: (h, params) => {
+							return h("span", [
+								params.row.peopleInNum
+									? params.row.peopleInNum
+									: "0"
+							]);
+						}
+					},
+					{
+						title: "成功团数",
+						key: "successNum",
+						align: "center",
+						render: (h, params) => {
+							return h("span", [
+								params.row.successNum
+									? params.row.successNum
+									: "0"
+							]);
+						}
 					},
 					{
 						title: "操作",

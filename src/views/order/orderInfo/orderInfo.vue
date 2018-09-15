@@ -268,10 +268,13 @@
 						return "待收货";
 						break;
 					case "4":
-						return "已完成";
+						return "待评价";
 						break;
 					case "5":
 						return "已取消";
+						break;
+					case "6":
+						return "已完成";
 						break;
 				}
 			}
@@ -291,7 +294,7 @@
 					var type = res.data.orderState;
 					var orderPaytype = res.data.orderPaytype;
 					var thType = res.data.type;
-					if (type == 2 && orderPaytype != 3) {
+					if (type == 2 && thType != 3) {
 						this.disabled = false
 					}
 					if(type==5){
